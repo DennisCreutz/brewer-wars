@@ -134,8 +134,6 @@ scripts that read `original/brewers-wars/`.
 - **`canvas-confetti` (Podium page)** logs a harmless jsdom "Not implemented: HTMLCanvasElement's
   getContext()" console notice during tests. This is expected, not a regression — the hook
   feature-detects canvas support and no-ops rather than throwing.
-- No git repository has been initialized for this project. Don't assume `git` commands work
-  here unless/until one exists.
 
 ## What's genuinely missing (don't assume these exist)
 
@@ -145,4 +143,5 @@ scripts that read `original/brewers-wars/`.
 - No dedicated accessibility audit tool was run (a reasonable baseline of aria-labels/roles/
   semantic HTML exists throughout, added ad hoc while building each screen).
 
-See `app/README.md` for the user-facing project description and the full war-lifecycle walkthrough.
+See `README.md` (repo root) for a short project overview and `app/README.md` for the
+user-facing project description and the full war-lifecycle walkthrough.
