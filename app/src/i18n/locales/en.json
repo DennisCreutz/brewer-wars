@@ -1,0 +1,271 @@
+{
+  "common": {
+    "appName": "Brewer Wars",
+    "tagline": "Draw your fate. Build your deck. Claim your glory.",
+    "phases": {
+      "preparation": "Preparation",
+      "personal-draw": "Personal Draw",
+      "commander-selection": "Commander Selection",
+      "overview": "Overview",
+      "scoring": "Points & Voting",
+      "concluded": "Concluded"
+    },
+    "buttons": {
+      "next": "Next",
+      "back": "Back",
+      "exitToMenu": "Exit to Menu",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "continue": "Continue",
+      "startWar": "Start War",
+      "conclude": "Conclude",
+      "openInScryfall": "Open in Scryfall",
+      "delete": "Delete",
+      "retry": "Retry"
+    },
+    "language": "Language",
+    "loading": "Loading…",
+    "players": "Players",
+    "player": "Player",
+    "unknownError": "Something went wrong. Please try again.",
+    "hotSeat": {
+      "prompt": "Pass the device to {{name}}",
+      "reveal": "Tap when you're ready and no one else is looking"
+    }
+  },
+  "landing": {
+    "title": "Brewer Wars",
+    "subtitle": "A chibi-fantasy Commander deckbuilding format",
+    "newWar": "Start a New War",
+    "loadWar": "Resume a War",
+    "noWars": "No wars yet — start your first one above.",
+    "createdAt": "Started {{date}}",
+    "phaseLabel": "Currently: {{phase}}",
+    "deleteConfirm": "Delete this war? This cannot be undone.",
+    "languageSelector": "English"
+  },
+  "wizard": {
+    "title": "Prepare for War",
+    "stepOf": "Step {{current}} of {{total}}",
+    "steps": {
+      "players": "Players",
+      "modifiers": "Modifiers",
+      "gameMode": "Game Mode",
+      "points": "Points",
+      "review": "Review"
+    },
+    "players": {
+      "title": "Who's brewing?",
+      "addPlayer": "Add Player",
+      "removePlayer": "Remove",
+      "namePlaceholder": "Player {{index}} name",
+      "minMaxHint": "Between {{min}} and {{max}} players."
+    },
+    "modifiers": {
+      "title": "Choose your modifiers",
+      "globalCount": "Global modifiers to draw",
+      "personalCount": "Personal modifiers per player",
+      "scoreCount": "Score modifiers to draw",
+      "maxHint": "Up to {{max}} (limited by how many distinct categories exist).",
+      "disabledHint": "Set to 0 to disable this modifier deck entirely.",
+      "advancedToggle": "Advanced: enable/disable individual cards",
+      "allEnabledByDefault": "All cards are enabled by default.",
+      "scoreDisabledByCustomMode": "Disabled by the Custom game mode's \"disable score modifiers\" option.",
+      "kind": {
+        "global": "Global",
+        "personal": "Personal",
+        "score": "Score"
+      },
+      "selectAll": "Select all",
+      "selectNone": "Select none",
+      "filterPlaceholder": "Filter cards by name…",
+      "enabledOfTotal": "{{enabled}}/{{total}} enabled",
+      "noCardsMatch": "No cards match your filter."
+    },
+    "gameMode": {
+      "title": "Game mode",
+      "normal": "Normal",
+      "custom": "Custom",
+      "draft": "Draft personal modifiers (draw 3, pick 1)",
+      "disableScoreModifiers": "Disable score modifiers (only win + best-brewer points)",
+      "hiddenPersonalModifiers": "Hide personal modifiers from other players until scoring",
+      "nonSharedPersonalDecks": "Give each player their own independent personal deck"
+    },
+    "points": {
+      "title": "Scoring",
+      "winPoints": "Points for winning the game",
+      "votePoints": "Points per best-brewer vote"
+    },
+    "review": {
+      "title": "Ready for war?",
+      "startWar": "Start War",
+      "disabledCardsNote_one": "{{count}} card individually disabled via Advanced settings.",
+      "disabledCardsNote_other": "{{count}} cards individually disabled via Advanced settings.",
+      "noCustomOptions": "No custom options enabled."
+    },
+    "numberField": {
+      "decrease": "Decrease {{label}}",
+      "increase": "Increase {{label}}"
+    }
+  },
+  "preparation": {
+    "title": "Preparation Phase",
+    "intro": "The global and score modifiers are drawn for everyone before personal draws begin.",
+    "startWar": "Start War",
+    "drawing": "Drawing modifiers…",
+    "globalModifiers": "Global Modifiers",
+    "scoreModifiers": "Score Modifiers",
+    "noneDrawn": "None drawn this war.",
+    "commanderCounter": "Potential Commanders",
+    "continueToPersonalDraw": "Continue to Personal Draws",
+    "commanderArchiveProgress": "{{loaded}} / {{total}} cards catalogued…"
+  },
+  "commanderCounter": {
+    "label_one": "{{count}} potential commander",
+    "label_other": "{{count}} potential commanders",
+    "loading": "Summoning the commander archive…",
+    "tooltip": "An upper bound based on machine-checkable rules only; artwork/flavor rules must still be verified by eye.",
+    "scryfallNote": "Note: not all modifiers can be expressed as a Scryfall search — double-check artwork/flavor rules yourself."
+  },
+  "personalDraw": {
+    "title": "Personal Draw",
+    "hotSeatPrompt": "Pass the device to {{name}}",
+    "hotSeatReveal": "Tap when you're ready and no one else is looking",
+    "drawButton": "Draw Personal Modifier",
+    "draftDrawButton": "Draw 3 Candidates",
+    "draftPrompt": "Choose one of these three",
+    "pickCandidate": "Choose {{name}}",
+    "yourModifiers": "Your Modifiers",
+    "noneYet": "No personal modifiers yet.",
+    "commanderCounterPersonal": "Your Potential Commanders",
+    "whatHappened": "What Just Happened",
+    "cardKept": "Kept!",
+    "rejectionReasons": {
+      "conflict": "Conflicts with a modifier you already have — discarded.",
+      "solo-not-first": "A solo effect can only ever be your sole modifier — discarded.",
+      "zero-commanders": "That would leave zero valid commanders — redrawing…"
+    },
+    "done": "{{name}} is done drawing",
+    "passDevice": "Pass the device to the next player",
+    "allDone": "Everyone has drawn their personal modifiers",
+    "continueToCommanderSelection": "Continue to Commander Selection",
+    "lowCommanderCount": {
+      "title": "Too Few Commanders?",
+      "body_one": "Only {{count}} commander would satisfy your modifiers. Redraw all your personal modifiers?",
+      "body_other": "Only {{count}} commanders would satisfy your modifiers. Redraw all your personal modifiers?",
+      "redrawAll": "Redraw All",
+      "keep": "Keep These"
+    }
+  },
+  "commanderSelection": {
+    "title": "Commander Selection",
+    "hotSeatPrompt": "Pass the device to {{name}}",
+    "instructions": "Choose your commander from the filtered list below.",
+    "checkedRules": "Automatically checked",
+    "manualRules": "Verify yourself",
+    "appliedRule": "{{name}} applied",
+    "confirmCommander": "Lock in this Commander",
+    "confirmWarning": "Your choice is final once locked in.",
+    "searchPlaceholder": "Search commanders…",
+    "noResults": "No commanders match every rule — try adjusting your search or filters, or double-check your drawn modifiers.",
+    "showingCount": "Showing {{shown}} of {{total}} commanders",
+    "loadMore": "Load {{count}} More",
+    "allDone": "Everyone has chosen a commander",
+    "continueToOverview": "Continue to Overview",
+    "globalRulesTitle": "Global Commander Rules",
+    "personalRulesTitle": "Your Commander Rules",
+    "noModifiers": "No commander-specific modifiers here.",
+    "edhrecRankUnknown": "EDHREC rank unknown",
+    "edhrecDeckCount_one": "{{count}} deck",
+    "edhrecDeckCount_other": "{{count}} decks",
+    "edhrecDeckCountUnknown": "deck count unknown",
+    "filters": {
+      "colorLabel": "Colour Identity",
+      "colorMode": {
+        "atLeast": "At least these colours",
+        "exact": "Exactly these colours"
+      },
+      "colorNames": {
+        "W": "White",
+        "U": "Blue",
+        "B": "Black",
+        "R": "Red",
+        "G": "Green"
+      },
+      "manaValueLabel": "Mana Value",
+      "manaValueOperatorAria": "Mana value comparison",
+      "manaValuePlaceholder": "Any",
+      "manaValueOperators": {
+        "eq": "=",
+        "lte": "≤",
+        "gte": "≥"
+      },
+      "sortLabel": "Sort by",
+      "sortOptions": {
+        "edhrec": "Popularity (EDHREC)",
+        "manaValueAsc": "Mana Value ↑",
+        "manaValueDesc": "Mana Value ↓",
+        "name": "Name (A-Z)"
+      },
+      "clearFilters": "Clear Filters"
+    }
+  },
+  "overview": {
+    "title": "War Overview",
+    "globalModifiers": "Global Modifiers",
+    "scoreModifiers": "Score Modifiers",
+    "playerModifiers": "{{name}}'s Modifiers",
+    "commanderLabel": "Commander",
+    "personalModifiersLabel": "Personal Modifiers",
+    "hiddenModifiers": "Hidden until scoring",
+    "commanderHidden": "Hidden until scoring",
+    "beginBattle": "Begin the Battle"
+  },
+  "scoring": {
+    "title": "Points & Voting",
+    "revealTitle": "The Big Reveal",
+    "gameWinner": "Who won the game?",
+    "winBonusHint": "+{{points}} points",
+    "winnerNone": "No one yet",
+    "scoreCards": "Score Modifiers",
+    "noScoreCards": "No score modifiers this war — none were drawn, or they were disabled.",
+    "scoreCardInputLabel": "{{cardName}} — times for {{name}}",
+    "bestBrewer": "Best Deck Brewer Vote",
+    "bestBrewerHint": "Each player votes for one other player.",
+    "voteBonusHint": "+{{points}} per vote",
+    "voteForPlaceholder": "No vote yet",
+    "voteBestBrewerPrompt": "Who do you think built the best deck?",
+    "voteForCandidate": "Vote for {{name}}",
+    "voteConfirm": "Confirm Vote",
+    "votingComplete": "Everyone has voted!",
+    "voteLogHeading": "Who Voted for Whom",
+    "votedFor": "{{voter}} voted for {{votedFor}}",
+    "voteTallyHeading": "Votes Received",
+    "voteTally_one": "{{count}} vote",
+    "voteTally_other": "{{count}} votes",
+    "voteBonusEarned": "+{{points}} pts",
+    "liveTotal": "Live Total",
+    "colWin": "Win",
+    "colVotes": "Votes",
+    "colCards": "Cards",
+    "colTotal": "Total",
+    "conclude": "Conclude War",
+    "concludeHint": "Declare a game winner before concluding the war.",
+    "revealedCommander": "Commander: {{name}}",
+    "revealedModifiers": "Personal Modifiers"
+  },
+  "podium": {
+    "title": "The War Is Over",
+    "winner": "Champion",
+    "coWinners": "Champions",
+    "finalScore": "Final Score",
+    "rank": "#{{place}}",
+    "winBonusLabel": "Win Bonus",
+    "votesReceived_one": "{{count}} vote",
+    "votesReceived_other": "{{count}} votes",
+    "scoreCardBonusLabel": "Score Cards",
+    "totalLabel": "Total",
+    "newWar": "Start a New War",
+    "backToLanding": "Back to Landing"
+  }
+}

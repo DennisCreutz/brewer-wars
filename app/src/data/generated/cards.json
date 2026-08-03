@@ -1,0 +1,2864 @@
+[
+  {
+    "id": "rarity-common",
+    "name": "Rarity Common",
+    "description": "All non-land cards must be of the Common rarity. The Commander is not affected by this.",
+    "artPrompt": "a row of identical, low-detail goblin soldiers marching in formation under a dull gray sky",
+    "modifier": "global",
+    "category": "rarity",
+    "target": "deck",
+    "difficulty": 3,
+    "solo": false
+  },
+  {
+    "id": "rarity-uncommon",
+    "name": "Rarity Uncommon",
+    "description": "All non-land cards must be of the Uncommon rarity. The Commander is not affected by this.",
+    "artPrompt": "a small group of modest adventurers with mismatched armor and curious expressions, posing near a wooden signpost",
+    "modifier": "global",
+    "category": "rarity",
+    "target": "deck",
+    "difficulty": 3,
+    "solo": false
+  },
+  {
+    "id": "rarity-rare",
+    "name": "Rarity Rare",
+    "description": "All non-land cards must be of the Rare rarity. The Commander is not affected by this.",
+    "artPrompt": "a striking hero mid-battle with a glowing sword, framed by magical runes and dramatic lighting",
+    "modifier": "global",
+    "category": "rarity",
+    "target": "deck",
+    "difficulty": 3,
+    "solo": false
+  },
+  {
+    "id": "rarity-mythic",
+    "name": "Rarity Mythic",
+    "description": "All non-land cards must be of the Mythic rarity. The Commander is not affected by this.",
+    "artPrompt": "a mythical golden huge very old dragon flying over a city.",
+    "modifier": "global",
+    "category": "rarity",
+    "target": "deck",
+    "difficulty": 3,
+    "solo": false
+  },
+  {
+    "id": "price-lt-30-euro",
+    "name": "Price < 30 Euro",
+    "description": "The total price of the deck must be less than 30 Euro. The cheapest version of the card (any artwork) on cardmarket.com determines the price.",
+    "artPrompt": "a bargain bin of worn-out magical items on a dusty market stall, with a faded 30 Euro sign",
+    "modifier": "global",
+    "category": "price",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "price-lt-50-euro",
+    "name": "Price < 50 Euro",
+    "description": "The total price of the deck must be less than 50 Euro. The cheapest version of the card (any artwork) on cardmarket.com determines the price.",
+    "artPrompt": "a traveling merchant displaying mid-range enchanted goods on a patterned rug, haggling with a robed buyer",
+    "modifier": "global",
+    "category": "price",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "price-lt-100-euro",
+    "name": "Price < 100 Euro",
+    "description": "The total price of the deck must be less than 100 Euro. The cheapest version of the card (any artwork) on cardmarket.com determines the price.",
+    "artPrompt": "an upscale magic shop with glowing items in glass cases, each labeled under 100 Euro, with a rich client browsing",
+    "modifier": "global",
+    "category": "price",
+    "target": "deck",
+    "difficulty": 1,
+    "solo": false
+  },
+  {
+    "id": "price-lt-150-euro",
+    "name": "Price < 150 Euro",
+    "description": "The total price of the deck must be less than 150 Euro. The cheapest version of the card (any artwork) on cardmarket.com determines the price.",
+    "artPrompt": "a boutique magic stall displaying rare items like glowing rings and floating trinkets, with a 150 Euro max sign in enchanted script",
+    "modifier": "global",
+    "category": "price",
+    "target": "deck",
+    "difficulty": 1,
+    "solo": false
+  },
+  {
+    "id": "price-lt-300-euro",
+    "name": "Price < 300 Euro",
+    "description": "The total price of the deck must be less than 300 Euro. The cheapest version of the card (any artwork) on cardmarket.com determines the price.",
+    "artPrompt": "a secure vault with well-lit magical cases holding powerful artifacts, each tagged with a glowing 300 Euro price label",
+    "modifier": "global",
+    "category": "price",
+    "target": "deck",
+    "difficulty": 1,
+    "solo": false
+  },
+  {
+    "id": "price-lt-500-euro",
+    "name": "Price < 500 Euro",
+    "description": "The total price of the deck must be less than 500 Euro. The cheapest version of the card (any artwork) on cardmarket.com determines the price.",
+    "artPrompt": "an elite collectors gallery filled with legendary cards and arcane relics behind magical glass, with a 500 Euro entrance sign",
+    "modifier": "global",
+    "category": "price",
+    "target": "deck",
+    "difficulty": 1,
+    "solo": false
+  },
+  {
+    "id": "price-gt-1000-euro",
+    "name": "Price > 1000 Euro",
+    "description": "The total price of the deck must be over 1000 Euro. The cheapest version of the card (any artwork) on cardmarket.com determines the price.",
+    "artPrompt": "a golden pedestal with a glowing ultra-rare card under glass, surrounded by jewels and enchanted security",
+    "modifier": "global",
+    "category": "price",
+    "target": "deck",
+    "difficulty": 1,
+    "solo": false
+  },
+  {
+    "id": "num-decks-lt-20k",
+    "name": "#Decks < 20k",
+    "description": "The Commander must have less than 20,000 decks on EDHREC.",
+    "artPrompt": "a commander standing on a large floating leaderboard showing 19,999 decks, surrounded by fans throwing magical streamers",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 20000
+    }
+  },
+  {
+    "id": "num-decks-lt-15k",
+    "name": "#Decks < 15k",
+    "description": "The Commander must have less than 15,000 decks on EDHREC.",
+    "artPrompt": "a confident MTG commander signing autographs at a mid-sized tournament booth, with enchanted banners showing 15k decks",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 15000
+    }
+  },
+  {
+    "id": "num-decks-lt-10k",
+    "name": "#Decks < 10k",
+    "description": "The Commander must have less than 10,000 decks on EDHREC.",
+    "artPrompt": "a proud MTG commander standing in front of a scoreboard showing 9,999 decks, with a backdrop of cheering fans and magical confetti",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 10000
+    }
+  },
+  {
+    "id": "num-decks-lt-5k",
+    "name": "#Decks < 5k",
+    "description": "The Commander must have less than 5,000 decks on EDHREC.",
+    "artPrompt": "a normal looking MTG commander stands in front of a small crowd of about 10 people wearing a t-shirt with the word 4,999 on it",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 5000
+    }
+  },
+  {
+    "id": "num-decks-lt-2k",
+    "name": "#Decks < 2k",
+    "description": "The Commander must have less than 2,000 decks on EDHREC.",
+    "artPrompt": "a niche commander sitting at a cozy tavern table with a small group of fans, holding a scroll marked 2k builds",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 2000
+    }
+  },
+  {
+    "id": "num-decks-lt-1k",
+    "name": "#Decks < 1k",
+    "description": "The Commander must have less than 1,000 decks on EDHREC.",
+    "artPrompt": "a dusty MTG commander sitting alone on the ground in a dark alleyway of a city, looking lonely. The number 999 is drawn in chalk on the floor.",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 1000
+    }
+  },
+  {
+    "id": "num-decks-lt-500",
+    "name": "#Decks < 500",
+    "description": "The Commander must have less than 500 decks on EDHREC.",
+    "artPrompt": "an obscure commander reading an old book in a dusty archive, surrounded by cobwebbed boxes labeled Decks < 500",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 500
+    }
+  },
+  {
+    "id": "num-decks-lt-200",
+    "name": "#Decks < 200",
+    "description": "The Commander must have less than 200 decks on EDHREC.",
+    "artPrompt": "a forgotten MTG commander alone in a dusty museum of cards, cobwebs covering the deck counter at 199",
+    "modifier": "global",
+    "category": "deckCount",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "edhrecDeckCountBelow",
+      "threshold": 200
+    }
+  },
+  {
+    "id": "colour-w",
+    "name": "Colour W",
+    "description": "The commander may only have the colour white.",
+    "artPrompt": "a radiant battlefield bathed in white mana, with angels descending from the sky and soldiers raising glowing shields",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W"
+      ]
+    }
+  },
+  {
+    "id": "colour-u",
+    "name": "Colour U",
+    "description": "The commander may only have the colour blue.",
+    "artPrompt": "a serene library floating above water, filled with magical scrolls and illusions shaped like blue runes and orbs",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "U"
+      ]
+    }
+  },
+  {
+    "id": "colour-b",
+    "name": "Colour B",
+    "description": "The commander may only have the colour black.",
+    "artPrompt": "a dark crypt pulsing with black mana, skeletal hands reaching out from shadows, and a necromancer casting death spells",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "B"
+      ]
+    }
+  },
+  {
+    "id": "colour-r",
+    "name": "Colour R",
+    "description": "The commander may only have the colour red.",
+    "artPrompt": "a fiery battlefield erupting with red mana, with warriors charging through lava and fire elementals leaping from the ground",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "R"
+      ]
+    }
+  },
+  {
+    "id": "colour-g",
+    "name": "Colour G",
+    "description": "The commander may only have the colour green.",
+    "artPrompt": "a lush forest overflowing with green mana, dryads and beasts emerging from trees as vines pulse with life",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-wu",
+    "name": "Colour WU",
+    "description": "The commander may only have the colours white and blue.",
+    "artPrompt": "a magical city blending white marble towers and blue crystal spires, angels and scholars working in harmony",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "U"
+      ]
+    }
+  },
+  {
+    "id": "colour-ub",
+    "name": "Colour UB",
+    "description": "The commander may only have the colours black and blue",
+    "artPrompt": "a dark coastal fortress cloaked in fog, filled with spies, forbidden tomes, and illusionary guardians",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "U",
+        "B"
+      ]
+    }
+  },
+  {
+    "id": "colour-br",
+    "name": "Colour BR",
+    "description": "The commander may only have the colours black and red.",
+    "artPrompt": "a blazing wasteland where necromancers and berserkers fight among bones and fire, surrounded by chaos",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "B",
+        "R"
+      ]
+    }
+  },
+  {
+    "id": "colour-rg",
+    "name": "Colour RG",
+    "description": "The commander may only have the colours red and green.",
+    "artPrompt": "a wild volcanic forest with druids summoning elemental beasts from earth and fire",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "R",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-gw",
+    "name": "Colour GW",
+    "description": "The commander may only have the colours green and white.",
+    "artPrompt": "a vibrant grove where knights and druids gather, bathed in green and white mana light, surrounded by enchanted wildlife",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "G",
+        "W"
+      ]
+    }
+  },
+  {
+    "id": "colour-wb",
+    "name": "Colour WB",
+    "description": "The commander may only have the colours white and black.",
+    "artPrompt": "a grand cathedral with both holy relics and dark altars, where clerics and necromancers debate law and death",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "B"
+      ]
+    }
+  },
+  {
+    "id": "colour-ur",
+    "name": "Colour UR",
+    "description": "The commander may only have the colours blue and red.",
+    "artPrompt": "a chaotic laboratory built into a volcano, lightning and lava clashing as mad wizards experiment with unstable magic",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "U",
+        "R"
+      ]
+    }
+  },
+  {
+    "id": "colour-bg",
+    "name": "Colour BG",
+    "description": "The commander may only have the colours black and green.",
+    "artPrompt": "a corrupted jungle where decay feeds life, with rot shamans summoning skeletal beasts from the soil",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "B",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-rw",
+    "name": "Colour RW",
+    "description": "The commander may only have the colours red and white.",
+    "artPrompt": "a sunlit battlefield where angels and warriors ride flame-forged chariots across golden fields",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "R",
+        "W"
+      ]
+    }
+  },
+  {
+    "id": "colour-gu",
+    "name": "Colour GU",
+    "description": "The commander may only have the colours green and blue.",
+    "artPrompt": "a tranquil glade with flowing streams and sentient vines, where druids and sages weave green and blue mana together",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "G",
+        "U"
+      ]
+    }
+  },
+  {
+    "id": "colour-gwu",
+    "name": "Colour GWU",
+    "description": "The commander may only have the colours green, white and blue.",
+    "artPrompt": "a magical university at the heart of a garden city, where angels, scholars, and nature spirits study together",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "G",
+        "W",
+        "U"
+      ]
+    }
+  },
+  {
+    "id": "colour-wub",
+    "name": "Colour WUB",
+    "description": "The commander may only have the colours white, blue and black.",
+    "artPrompt": "a trio of magical beings each glowing with white, blue, and black mana, performing a synchronized spell in harmony",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "U",
+        "B"
+      ]
+    }
+  },
+  {
+    "id": "colour-ubr",
+    "name": "Colour UBR",
+    "description": "The commander may only have the colours blue, black and red.",
+    "artPrompt": "a grim industrial city where necromancers, mad scientists, and fire-wielders control the streets with dark experiments",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "U",
+        "B",
+        "R"
+      ]
+    }
+  },
+  {
+    "id": "colour-brg",
+    "name": "Colour BRG",
+    "description": "The commander may only have the colours black, red and green.",
+    "artPrompt": "a primal warcamp in a corrupted jungle, with raging shamans, beasts, and undead warriors channeling black, red, and green magic",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "B",
+        "R",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-rgw",
+    "name": "Colour RGW",
+    "description": "The commander may only have the colours red, green and white.",
+    "artPrompt": "a holy warfront in a burning savannah, where druids, knights, and pyromancers charge under radiant banners",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "R",
+        "G",
+        "W"
+      ]
+    }
+  },
+  {
+    "id": "colour-wbg",
+    "name": "Colour WBG",
+    "description": "The commander may only have the colours white, black and green.",
+    "artPrompt": "a sacred jungle temple where life, death, and law converge; angels, dryads, and necromancers gather under green, black, and white mana",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "B",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-urw",
+    "name": "Colour URW",
+    "description": "The commander may only have the colours blue, red and white.",
+    "artPrompt": "a sky citadel powered by lightning and scrolls, where pyromancers, strategists, and angelic enforcers study battle tactics",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "U",
+        "R",
+        "W"
+      ]
+    }
+  },
+  {
+    "id": "colour-bgu",
+    "name": "Colour BGU",
+    "description": "The commander may only have the colours black, green and blue.",
+    "artPrompt": "a dark marshland laboratory where necromancers, tricksters, and swamp druids combine green, blue, and black magic",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "B",
+        "G",
+        "U"
+      ]
+    }
+  },
+  {
+    "id": "colour-rwb",
+    "name": "Colour RWB",
+    "description": "The commander may only have the colours red, white and blue.",
+    "artPrompt": "a sun-scorched holy battlefield where rebels, angels, and vampires fight under a banner of fire, law, and ambition",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "R",
+        "W",
+        "B"
+      ]
+    }
+  },
+  {
+    "id": "colour-gur",
+    "name": "Colour GUR",
+    "description": "The commander may only have the colours green, blue and red.",
+    "artPrompt": "a vibrant rainforest research base where elementalists, sages, and druids blend red, green, and blue mana for chaotic magic",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "G",
+        "U",
+        "R"
+      ]
+    }
+  },
+  {
+    "id": "colour-ubrg",
+    "name": "Colour UBRG",
+    "description": "The commander may only have the colours blue, black, red and green.",
+    "artPrompt": "a chaos-forged city where necromancers, pyromancers, druids, and illusionists battle over raw magical terrain",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "U",
+        "B",
+        "R",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-wrg",
+    "name": "Colour WRG",
+    "description": "The commander may only have the colours white, red and green.",
+    "artPrompt": "a battlefield where angels, warriors, and shamans unite in a holy crusade under white, red, and green mana",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "R",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-wug",
+    "name": "Colour WUG",
+    "description": "The commander may only have the colours white, blue and green.",
+    "artPrompt": "a mystical sky garden tended by dryads, scholars, and angels, where knowledge, growth, and order thrive together",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "U",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "colour-wub-2",
+    "name": "Colour WUB",
+    "description": "The commander may only have the colours white, blue and black.",
+    "artPrompt": "three intertwined mana streams—white, blue, and black—forming the silhouette of a commander rising from the mist",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "U",
+        "B"
+      ]
+    }
+  },
+  {
+    "id": "colour-wur",
+    "name": "Colour WUR",
+    "description": "The commander may only have the colours white, blue and red.",
+    "artPrompt": "a bright magical academy with fire labs, libraries, and shrines to justice, powered by red, blue, and white mana",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "U",
+        "R"
+      ]
+    }
+  },
+  {
+    "id": "colour-wubrg",
+    "name": "Colour WUBRG",
+    "description": "The commander must have all Colours.",
+    "artPrompt": "another steppe with lots of different creatures in all colours and shapes.",
+    "modifier": "personal",
+    "category": "colour",
+    "target": "commander",
+    "difficulty": 1,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "colorIdentityExact",
+      "colors": [
+        "W",
+        "U",
+        "B",
+        "R",
+        "G"
+      ]
+    }
+  },
+  {
+    "id": "mana-value-lt-4",
+    "name": "Mana Value < 4",
+    "description": "The mana value (CMC) of all cards in the deck must be less than 4.",
+    "artPrompt": "a series of creatures stand on a  wooden higher platform in the centre of a market and look very unhappy. the creatures are only wearing rags and are tied up. they are offered as slaves and each creature has a pendant with a 1,2 or 3 on it.",
+    "modifier": "personal",
+    "category": "manaValue",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "mana-value-gt-3",
+    "name": "Mana Value > 3",
+    "description": "The mana value (CMC) of all cards in the deck must be over 3.",
+    "artPrompt": "a giant arcane pillar with mana glyphs from 4 to 10 spiraling upward, glowing with unstable energy",
+    "modifier": "personal",
+    "category": "manaValue",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "mana-value-eq-even",
+    "name": "Mana Value = Even",
+    "description": "The mana value (CMC) of all cards in the deck must be even. Zero is even.",
+    "artPrompt": "a mystical balance scale holding even-numbered mana stones (2, 4, 6), glowing in symmetric harmony",
+    "modifier": "personal",
+    "category": "manaValue",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "mana-value-eq-odd",
+    "name": "Mana Value = Odd",
+    "description": "The mana value (CMC) of all cards in the deck must be odd. Zero is even.",
+    "artPrompt": "creatures stand in a row on a wall and look sad, with every second space in the row empty. the creatures all have a sign around their neck with a 1,3 or 5 on it.",
+    "modifier": "personal",
+    "category": "manaValue",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "salt-score-gt-1",
+    "name": "Salt Score > 1",
+    "description": "Every card in the deck must have a salt score of over 1 on EDHREC.",
+    "artPrompt": "a frustrated player throwing a card onto the table while opponents groan, with a scoreboard reading Salt Level: 1.2",
+    "modifier": "personal",
+    "category": "salt",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "salt-score-lt-1",
+    "name": "Salt Score < 1",
+    "description": "Every card in the deck must have a salt score of under 1 on EDHREC.",
+    "artPrompt": "a peaceful casual game with laughing players and a relaxed table, the scoreboard showing Salt Level: 0.4",
+    "modifier": "personal",
+    "category": "salt",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "salt-score-gt-1-5",
+    "name": "Salt Score > 1.5",
+    "description": "Every card in the deck must have a salt score of over 1.5 on EDHREC.",
+    "artPrompt": "a plate of soup is placed on a table and a huge salt shaker sprinkles far too much salt into the soup so that the salt piles up in the soup and falls off the table.",
+    "modifier": "personal",
+    "category": "salt",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "only-creatures",
+    "name": "Only Creatures",
+    "description": "The deck may only consist of creatures and lands.",
+    "artPrompt": "a battlefield filled entirely with summoned beasts, warriors, and monsters, with no spells or artifacts in sight",
+    "modifier": "personal",
+    "category": "deckComposition",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "must-have-flying",
+    "name": "Must have Flying",
+    "description": "Every creature in the deck must have the Flying attribute.",
+    "artPrompt": "a sky battle of flying creatures like dragons, birds, and angels clashing above clouds, with nothing touching the ground",
+    "modifier": "personal",
+    "category": "untyped",
+    "target": "commander",
+    "difficulty": 5,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "keyword",
+      "keyword": "flying"
+    }
+  },
+  {
+    "id": "tribal-angel",
+    "name": "Tribal Angel",
+    "description": "Every creature in the deck must be of the Angel type.",
+    "artPrompt": "a squadron of radiant angels descending from glowing clouds, each holding a golden weapon and shining with divine light",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-demon",
+    "name": "Tribal Demon",
+    "description": "Every creature in the deck must be of the Demon type.",
+    "artPrompt": "a horde of dark demons emerging from a flaming pit, each with distinct horns, wings, and sinister grins",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-dragon",
+    "name": "Tribal Dragon",
+    "description": "Every creature in the deck must be of the Dragon type.",
+    "artPrompt": "a lineup of massive dragons soaring across a stormy sky, each breathing a different elemental fire",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-elf",
+    "name": "Tribal Elf",
+    "description": "Every creature in the deck must be of the Elf type.",
+    "artPrompt": "a forest scene with elegant elves leaping between trees, casting spells and wielding carved wooden weapons",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-goblin",
+    "name": "Tribal Goblin",
+    "description": "Every creature in the deck must be of the Goblin type.",
+    "artPrompt": "a chaotic horde of goblins pushing and shoving each other, some riding rockets, others juggling bombs in a desert camp",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-merfolk",
+    "name": "Tribal Merfolk",
+    "description": "Every creature in the deck must be of the Merfolk type.",
+    "artPrompt": "a graceful procession of merfolk swimming through glowing coral reefs, casting aquatic magic and singing",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-zombie",
+    "name": "Tribal Zombie",
+    "description": "Every creature in the deck must be of the Zombie type.",
+    "artPrompt": "a swarm of decaying zombies staggering through a haunted graveyard under a blood moon, reaching out with rotting hands",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-vampire",
+    "name": "Tribal Vampire",
+    "description": "Every creature in the deck must be of the Vampire type.",
+    "artPrompt": "a coven of aristocratic vampires in a gothic ballroom, sipping glowing red potions and lurking in shadows",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-human",
+    "name": "Tribal Human",
+    "description": "Every creature in the deck must be of the Human type.",
+    "artPrompt": "a village festival with diverse human adventurers celebrating around bonfires, holding tools, weapons, and instruments",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-soldier",
+    "name": "Tribal Soldier",
+    "description": "Every creature in the deck must be of the Soldier type.",
+    "artPrompt": "a disciplined formation of fantasy soldiers in polished armor, standing at attention on a battlefield at dawn",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-sliver",
+    "name": "Tribal Sliver",
+    "description": "Every creature in the deck must be of the Sliver type.",
+    "artPrompt": "a writhing mass of slivers connecting and morphing with each other, forming a hive-like structure in an alien landscape",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-elemental",
+    "name": "Tribal Elemental",
+    "description": "Every creature in the deck must be of the Elemental type.",
+    "artPrompt": "a gathering of elemental beings made of fire, water, earth, and wind, each glowing with its own raw power",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-spirit",
+    "name": "Tribal Spirit",
+    "description": "Every creature in the deck must be of the Spirit type.",
+    "artPrompt": "a spectral procession of translucent spirits drifting through a moonlit forest, leaving glowing trails behind",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-wizard",
+    "name": "Tribal Wizard",
+    "description": "Every creature in the deck must be of the Wizard type.",
+    "artPrompt": "a council of eccentric wizards casting spells in a magical observatory, surrounded by floating scrolls and arcane orbs",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-rogue",
+    "name": "Tribal Rogue",
+    "description": "Every creature in the deck must be of the Rogue type.",
+    "artPrompt": "a group of sneaky rogues in shadowy cloaks sneaking through an alley, each carrying daggers and stolen scrolls",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-warrior",
+    "name": "Tribal Warrior",
+    "description": "Every creature in the deck must be of the Warrior type.",
+    "artPrompt": "a battlefield scene with muscular warriors clashing swords mid-charge, wearing battle-worn armor and war paint",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-knight",
+    "name": "Tribal Knight",
+    "description": "Every creature in the deck must be of the Knight type.",
+    "artPrompt": "a ceremony with noble knights kneeling before a radiant queen, holding ornate shields and polished swords",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-cleric",
+    "name": "Tribal Cleric",
+    "description": "Every creature in the deck must be of the Cleric type.",
+    "artPrompt": "a peaceful temple with clerics in white robes casting healing magic over the wounded, golden light streaming in",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-druid",
+    "name": "Tribal Druid",
+    "description": "Every creature in the deck must be of the Druid type.",
+    "artPrompt": "a sacred grove with druids summoning nature spirits, trees bending inward and animals gathered in a circle",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-shaman",
+    "name": "Tribal Shaman",
+    "description": "Every creature in the deck must be of the Shaman type.",
+    "artPrompt": "a mystical shaman surrounded by floating totems and swirling elemental magic, performing a ritual under storm clouds",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-beast",
+    "name": "Tribal Beast",
+    "description": "Every creature in the deck must be of the Beast type.",
+    "artPrompt": "a stampede of wild fantasy beasts charging through a dense jungle, each with distinct shapes and elemental traits",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-bird",
+    "name": "Tribal Bird",
+    "description": "Every creature in the deck must be of the Bird type.",
+    "artPrompt": "a flock of Colourful magical birds flying over a floating island, leaving trails of mana light behind them",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-cat",
+    "name": "Tribal Cat",
+    "description": "Every creature in the deck must be of the Cat type.",
+    "artPrompt": "a pride of armored fantasy cats perched on temple ruins, with glowing eyes and enchanted collars",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-dog",
+    "name": "Tribal Dog",
+    "description": "Every creature in the deck must be of the Dog type.",
+    "artPrompt": "a loyal pack of battle hounds guarding a treasure hoard, some armored, some playful, in a fantasy canyon",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-horror",
+    "name": "Tribal Horror",
+    "description": "Every creature in the deck must be of the Horror type.",
+    "artPrompt": "a group of grotesque horror creatures emerging from a shadowy rift, each with twisted limbs and glowing red eyes",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-construct",
+    "name": "Tribal Construct",
+    "description": "Every creature in the deck must be of the Construct type.",
+    "artPrompt": "an assembly line of steampunk constructs being built by glowing robotic arms in a magical forge",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-golem",
+    "name": "Tribal Golem",
+    "description": "Every creature in the deck must be of the Golem type.",
+    "artPrompt": "three towering stone golems standing guard in front of an ancient gate, covered in moss and arcane carvings",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-minotaur",
+    "name": "Tribal Minotaur",
+    "description": "Every creature in the deck must be of the Minotaur type.",
+    "artPrompt": "a raging pack of minotaurs charging through a labyrinth, smashing walls with massive axes",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-mutant",
+    "name": "Tribal Mutant",
+    "description": "Every creature in the deck must be of the Mutant type.",
+    "artPrompt": "a lab scene with bubbling vats and grotesque mutant creatures escaping containment, each with mismatched body parts",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-faerie",
+    "name": "Tribal Faerie",
+    "description": "Every creature in the deck must be of the Faerie type.",
+    "artPrompt": "a swarm of mischievous faeries fluttering through an enchanted forest, leaving trails of sparkling dust and laughter",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-kithkin",
+    "name": "Tribal Kithkin",
+    "description": "Every creature in the deck must be of the Kithkin type.",
+    "artPrompt": "a tight-knit group of kithkin preparing for battle in a humble village square, rallying behind a wooden banner",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-treefolk",
+    "name": "Tribal Treefolk",
+    "description": "Every creature in the deck must be of the Treefolk type.",
+    "artPrompt": "a couple of giant tree creatures stride through a forest.",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-eldrazi",
+    "name": "Tribal Eldrazi",
+    "description": "Every creature in the deck must be of the Eldrazi type.",
+    "artPrompt": "towering eldrazi monsters warping reality around them, with gravity-bending limbs and crackling void energy",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-phyrexian",
+    "name": "Tribal Phyrexian",
+    "description": "Every creature in the deck must be of the Phyrexian type.",
+    "artPrompt": "The scene should depict a corrupted battlefield dominated by biomechanical horrors—Phyrexian creatures fused with metal and flesh, showing various types like Praetors, Horrors, and Constructs. Highlight their unity and shared grotesque aesthetic: sharp metallic limbs, sinewy bodies, glowing oil, and mechanical enhancements. The background should show a twisted, industrial wasteland with dark skies and spiked towers. The composition must convey the essence of Phyrexia—ruthless, invasive, and all-consuming perfection through unnatural evolution",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-orc",
+    "name": "Tribal Orc",
+    "description": "Every creature in the deck must be of the Orc type.",
+    "artPrompt": "a group of brutal orcs clashing axes together around a war camp bonfire, their faces marked with red war paint",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-giant",
+    "name": "Tribal Giant",
+    "description": "Every creature in the deck must be of the Giant type.",
+    "artPrompt": "towering giants stomping through mountain peaks, each carrying massive weapons carved from stone",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-ogre",
+    "name": "Tribal Ogre",
+    "description": "Every creature in the deck must be of the Ogre type.",
+    "artPrompt": "a few ogers with exaggerated facial features—broad noses, sharp teeth or tusks, and heavy brows standing in a destroyed village.  Many wear crude armor, bones, or leather scraps, often adorned with spikes or trophies from past battles. They skin colors are green, red and green. Their expressions are Angry, aggressive, or dull-witted.",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-sphinx",
+    "name": "Tribal Sphinx",
+    "description": "Every creature in the deck must be of the Sphinx type.",
+    "artPrompt": "a council of majestic sphinxes perched atop ancient pyramids, watching with glowing eyes and unreadable expressions",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-devil",
+    "name": "Tribal Devil",
+    "description": "Every creature in the deck must be of the Devil type.",
+    "artPrompt": "a swarm of mischievous devils dancing in a ring of fire, wielding tiny pitchforks and causing magical chaos",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-kraken",
+    "name": "Tribal Kraken",
+    "description": "Every creature in the deck must be of the Kraken type.",
+    "artPrompt": "a massive kraken rising from the ocean, its tentacles wrapping around a shattered ship under stormy skies",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-leviathan",
+    "name": "Tribal Leviathan",
+    "description": "Every creature in the deck must be of the Leviathan type.",
+    "artPrompt": "a colossal sea leviathan gliding beneath glowing waves, its back forming the shape of an island",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-snake",
+    "name": "Tribal Snake",
+    "description": "Every creature in the deck must be of the Snake type.",
+    "artPrompt": "a den of magical snakes slithering through ancient ruins, their scales glowing with arcane runes",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-insect",
+    "name": "Tribal Insect",
+    "description": "Every creature in the deck must be of the Insect type.",
+    "artPrompt": "A swarm of giant insects in a forest. The swam display many many insects of different type (mantis, ants, etc).",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-fungus",
+    "name": "Tribal Fungus",
+    "description": "Every creature in the deck must be of the Fungus type.",
+    "artPrompt": "humanoid fungi plant and water flowers while the air is filled with the spores of the fungi.",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-dinosaur",
+    "name": "Tribal Dinosaur",
+    "description": "Every creature in the deck must be of the Angel type.",
+    "artPrompt": "a herd of massive armored dinosaurs thundering through a primeval jungle, some carrying tribal howdahs",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-god",
+    "name": "Tribal God",
+    "description": "Every creature in the deck must be of the God type.",
+    "artPrompt": "a towering divine figure surrounded by celestial light, standing atop a temple as mortals kneel in awe",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-advisor",
+    "name": "Tribal Advisor",
+    "description": "Every creature in the deck must be of the Advisor type.",
+    "artPrompt": "a group of scholarly advisors in robes debating around a round table covered in scrolls and magical charts",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-samurai",
+    "name": "Tribal Samurai",
+    "description": "Every creature in the deck must be of the Samurai type.",
+    "artPrompt": "a disciplined band of samurai warriors preparing for battle at sunrise, standing in formation with gleaming katanas",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-ninja",
+    "name": "Tribal Ninja",
+    "description": "Every creature in the deck must be of the Ninja type.",
+    "artPrompt": "a team of shadowy ninjas leaping across rooftops under a full moon.",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-moonfolk",
+    "name": "Tribal Moonfolk",
+    "description": "Every creature in the deck must be of the Moonfolk type.",
+    "artPrompt": "a group of moonfolk floating above a glowing lake under moonlight, casting silver spells with flowing robes",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-djinn",
+    "name": "Tribal Djinn",
+    "description": "Every creature in the deck must be of the Djinn type.",
+    "artPrompt": "majestic djinn swirling in the air over a desert temple, made of wind and sand, with eyes glowing with wisdom",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-efreet",
+    "name": "Tribal Efreet",
+    "description": "Every creature in the deck must be of the Efreet type.",
+    "artPrompt": "flaming efreets bursting from molten cracks in a volcanic arena, hurling firebolts with furious expressions",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-frog",
+    "name": "Tribal Frog",
+    "description": "Every creature in the deck must be of the Frog type.",
+    "artPrompt": "a swamp full of fantasy frogs in armor leaping between giant lily pads, some casting spells or holding tiny spears",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-hydra",
+    "name": "Tribal Hydra",
+    "description": "Every creature in the deck must be of the Hydra type.",
+    "artPrompt": "a colossal hydra with 4 heads rearing up in a canyon, each head roaring terrifying.",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-lizard",
+    "name": "Tribal Lizard",
+    "description": "Every creature in the deck must be of the Lizard type.",
+    "artPrompt": "a pack of scaly lizardfolk patrolling a sun-baked canyon, wielding bone spears and wearing tribal armor",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-rat",
+    "name": "Tribal Rat",
+    "description": "Every creature in the deck must be of the Rat type.",
+    "artPrompt": "a swarm of sneaky ratfolk darting through sewer tunnels, clutching stolen trinkets and glowing mushrooms",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "tribal-scarecrow",
+    "name": "Tribal Scarecrow",
+    "description": "Every creature in the deck must be of the Scarecrow type.",
+    "artPrompt": "a line of haunted scarecrows standing in a cursed field, stitched from rags and glowing faintly with eerie light",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-serpent",
+    "name": "Tribal Serpent",
+    "description": "Every creature in the deck must be of the Serpent type.",
+    "artPrompt": "a trio of giant magical serpents coiled around a floating ziggurat, their eyes glowing with hypnotic power",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "tribal-unicorn",
+    "name": "Tribal Unicorn",
+    "description": "Every creature in the deck must be of the Unicorn type.",
+    "artPrompt": "a radiant unicorn herd galloping across a golden meadow, their manes sparkling with stardust",
+    "modifier": "personal",
+    "category": "tribal",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-lifegain",
+    "name": "Theme Lifegain",
+    "description": "The deck must be clearly assigned to the Lifegain theme.",
+    "artPrompt": "a glowing cleric casting a healing spell over their team, with radiant white light and floating heart symbols",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-sacrifice",
+    "name": "Theme Sacrifice",
+    "description": "The deck must be clearly assigned to the Sacrifice theme.",
+    "artPrompt": "a dark altar surrounded by cultists offering creatures to a shadowy force, glowing runes pulsing beneath them",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-tokens",
+    "name": "Theme Tokens",
+    "description": "The deck must be clearly assigned to the Tokens theme.",
+    "artPrompt": "an army of summoned creature tokens charging across a battlefield, each glowing slightly with identical markings",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-voltron",
+    "name": "Theme Voltron",
+    "description": "The deck must be clearly assigned to the Voltron theme.",
+    "artPrompt": "a lone armored warrior surrounded by glowing enchantments and equipment, standing triumphant atop a mountain",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-reanimator",
+    "name": "Theme Reanimator",
+    "description": "The deck must be clearly assigned to the Reanimator theme.",
+    "artPrompt": "a necromancer raising spectral warriors from ancient graves under a stormy sky, with swirling green and black energy",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-stax",
+    "name": "Theme Stax",
+    "description": "The deck must be clearly assigned to the Stax theme.",
+    "artPrompt": "3 people looking frightened in a row. the one on the left is tied up with ropes, the one in the centre has his legs cast in cement and can't move, the one on the right has already sunk into quicksand up to his ears and only the tips of his ears and his hair are sticking out",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-control",
+    "name": "Theme Control",
+    "description": "The deck must be clearly assigned to the Control theme.",
+    "artPrompt": "a series of monsters run through a labyrinth and trigger various traps, while a commander looks down on them from above and laughs manically.",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-aggro",
+    "name": "Theme Aggro",
+    "description": "The deck must be clearly assigned to the Aggro theme.",
+    "artPrompt": "a wild charge of fantasy creatures rushing at full speed across a burning field, swords drawn and spells flying",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-combo",
+    "name": "Theme Combo",
+    "description": "The deck must be clearly assigned to the Combo theme.",
+    "artPrompt": "a commander stands in front of a whiteboard which is completely filled with complicated formulas",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-enchantress",
+    "name": "Theme Enchantress",
+    "description": "The deck must be clearly assigned to the Enchantress theme.",
+    "artPrompt": "a graceful mage surrounded by floating enchantments, each forming glowing patterns around her",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-artifacts",
+    "name": "Theme Artifacts",
+    "description": "The deck must be clearly assigned to the Artifacts theme.",
+    "artPrompt": "a workshop filled with animated magical constructs and spinning relics, with an artificer pulling levers at the center",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-mill",
+    "name": "Theme Mill",
+    "description": "The deck must be clearly assigned to the Mill theme.",
+    "artPrompt": "a water mill which has various playing cards in its millstone",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-landfall",
+    "name": "Theme Landfall",
+    "description": "The deck must be clearly assigned to the Landfall theme.",
+    "artPrompt": "a huge field onto which different types of land (grass, volcano, stream, etc.) fall from the sky.",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-spellslinger",
+    "name": "Theme Spellslinger",
+    "description": "The deck must be clearly assigned to the Spellslinger theme.",
+    "artPrompt": "a wizard who has a machine gun as a magic wand and fires it manically. but no bullets come out of the machine gun, only spells.",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-mutate",
+    "name": "Theme Mutate",
+    "description": "The deck must be clearly assigned to the Mutate theme.",
+    "artPrompt": "a twisted creature mid-transformation, merging with others into a single powerful beast with shifting limbs and faces",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-group-hug",
+    "name": "Theme Group Hug",
+    "description": "The deck must be clearly assigned to the Group Hug theme.",
+    "artPrompt": "a joyful gathering of fantasy creatures sharing cards, mana, and gifts around a glowing campfire in peace",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-steal-and-copy",
+    "name": "Theme Steal & Copy",
+    "description": "The deck must be clearly assigned to the Steal & Copy theme.",
+    "artPrompt": "two monsters facing each other and pointing at each other and looking exactly the same",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-proliferate",
+    "name": "Theme Proliferate",
+    "description": "The deck must be clearly assigned to the Proliferate theme.",
+    "artPrompt": "an elf who hastily and in a gold shiny orbs on different piles and gold shiny orbs puts",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-poison-infect",
+    "name": "Theme Poison/Infect",
+    "description": "The deck must be clearly assigned to the Poison/Infect theme.",
+    "artPrompt": "a sinister assassin infecting a battlefield with green-black venom, opponents turning sickly with glowing wounds",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-superfriends",
+    "name": "Theme Superfriends",
+    "description": "The deck must be clearly assigned to the Superfriends theme.",
+    "artPrompt": "a powerful alliance of planeswalkers casting spells in unison from a circular summit surrounded by mana symbols",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-chaos",
+    "name": "Theme Chaos",
+    "description": "The deck must be clearly assigned to the Chaos theme.",
+    "artPrompt": "a magical battlefield in disarray: spells flying in random directions, creatures teleporting, and portals opening wildly",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-cascade",
+    "name": "Theme Cascade",
+    "description": "The deck must be clearly assigned to the Cascade theme.",
+    "artPrompt": "a magical chain reaction where each cast spell unleashes another, shown as cascading scrolls and glowing effects tumbling forward",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-storm",
+    "name": "Theme Storm",
+    "description": "The deck must be clearly assigned to the Storm theme.",
+    "artPrompt": "a whirlwind of spells being cast in rapid succession, each lighting up the battlefield like fireworks from a single caster",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-blink",
+    "name": "Theme Blink",
+    "description": "The deck must be clearly assigned to the Blink theme.",
+    "artPrompt": "a creature vanishing in a flash of white-blue light and reappearing elsewhere mid-battle, leaving spark trails behind",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-energy",
+    "name": "Theme Energy",
+    "description": "The deck must be clearly assigned to the Energy theme.",
+    "artPrompt": "a mage charging glowing energy nodes that power constructs and spells, with lightning arcing between magical coils",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-shrines",
+    "name": "Theme Shrines",
+    "description": "The deck must be clearly assigned to the Shrines theme.",
+    "artPrompt": "a spiritual mountain landscape with glowing elemental shrines aligned in harmony, each emanating unique magical auras",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-gates",
+    "name": "Theme Gates",
+    "description": "The deck must be clearly assigned to the Gates theme.",
+    "artPrompt": "a sprawling multiColoured city with mystical gates standing tall at each district, each glowing with different mana",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-defenders",
+    "name": "Theme Defenders",
+    "description": "The deck must be clearly assigned to the Defenders theme.",
+    "artPrompt": "a wall of towering fantasy guardians standing firm, shielding a magical city from incoming creatures and spells",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-treasure",
+    "name": "Theme Treasure",
+    "description": "The deck must be clearly assigned to the Treasure theme.",
+    "artPrompt": "a greedy pirate mage conjuring glowing treasure tokens, with gold coins, gems, and magical artifacts piling around",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-clue",
+    "name": "Theme Clue",
+    "description": "The deck must be clearly assigned to the Clue theme.",
+    "artPrompt": "a wizard detective examining a glowing clue token in a dark forest, surrounded by arcane evidence and magical footprints",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-food",
+    "name": "Theme Food",
+    "description": "The deck must be clearly assigned to the Food theme.",
+    "artPrompt": "a magical banquet where enchanted foods float and sparkle, with creatures feasting around a glowing feast table",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-historic-spells",
+    "name": "Theme Historic Spells",
+    "description": "The deck must be clearly assigned to the Historic Spells theme.",
+    "artPrompt": "an ancient mage surrounded by glowing artifacts, legendary creatures, and dusty scrolls as time flows around him",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-dungeon-and-venture",
+    "name": "Theme Dungeon & Venture",
+    "description": "The deck must be clearly assigned to the Dungeon & Venture theme.",
+    "artPrompt": "a group of adventurers entering a glowing dungeon doorway, torches lit, traps triggered, and magical paths unfolding",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-equipment",
+    "name": "Theme Equipment",
+    "description": "The deck must be clearly assigned to the Equipment theme.",
+    "artPrompt": "a warrior standing in a forge chamber as animated gear flies to them — enchanted swords, helmets, and armor snapping into place",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-madness",
+    "name": "Theme Madness",
+    "description": "The deck must be clearly assigned to the Madness theme.",
+    "artPrompt": "a crazed sorcerer casting spells in a chaotic room of torn scrolls and swirling madness energy",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-discard-matters",
+    "name": "Theme Discard Matters",
+    "description": "The deck must be clearly assigned to the Discard theme.",
+    "artPrompt": "a sly mage discarding glowing cards into a void, only for ghostly versions to rise from the discard pile and attack",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-legendary-matters",
+    "name": "Theme Legendary Matters",
+    "description": "The deck must be clearly assigned to the Ledgendary theme.",
+    "artPrompt": "an ancient being carved in stone on a cliff face, surrounded by mythic symbols and swirling winds",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-exile-matters",
+    "name": "Theme Exile Matters",
+    "description": "The deck must be clearly assigned to the Exile theme.",
+    "artPrompt": "a mage casting spells into a shimmering void, where exiled cards orbit in stasis, ready to be reused",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-morph-and-manifest",
+    "name": "Theme Morph & Manifest",
+    "description": "The deck must be clearly assigned to the Morph & Manifest theme.",
+    "artPrompt": "a battlefield of cloaked creatures transforming into powerful monsters, with glowing runes revealing their true forms",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "theme-sneak-attack-and-cheat-costs",
+    "name": "Theme Sneak Attack & Cheat Costs",
+    "description": "The deck must be clearly assigned to the Sneak Attack & Cheat Costs theme.",
+    "artPrompt": "a crate lying on the ground in front of a wall. it is night and the crates and the wall are illuminated by streetlights. the shadow of the crate is the silhouette of a large dragon.",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-damage-doublers",
+    "name": "Theme Damage Doublers",
+    "description": "The deck must be clearly assigned to the Damage Doublers theme.",
+    "artPrompt": "a spellcaster duplicating a fireball midair, the blast reflecting off a glowing mirror and striking twice as hard",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "theme-life-swap-and-exchange",
+    "name": "Theme Life Swap & Exchange",
+    "description": "The deck must be clearly assigned to the Life Swap theme.",
+    "artPrompt": "two players connected by a magical tether, exchanging glowing life essences as numbers flip above their heads",
+    "modifier": "personal",
+    "category": "theme",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-wear-hats",
+    "name": "All creatures wear hats",
+    "description": "All creatures in the deck must wear hats.",
+    "artPrompt": "a battlefield where every fantasy creature, from dragons to goblins, proudly wears a unique hat — some absurd, some majestic",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-wings-in-their-artwork",
+    "name": "All creatures must have wings in their artwork",
+    "description": "All creatures in the deck must have wings in their artwork.",
+    "artPrompt": "a sky full of winged versions of classic fantasy creatures, including flying elephants, goblins, and beasts",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-creatures-with-swords-in-their-artwork",
+    "name": "Only creatures with swords in their artwork",
+    "description": "Only creatures with swords in their artwork are allowed in the deck.",
+    "artPrompt": "a lineup of diverse creatures all brandishing glowing swords, standing ready for combat in a magical arena",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-beards",
+    "name": "All creatures must have beards",
+    "description": "All creatures in the deck must have beards.",
+    "artPrompt": "an army of fantasy creatures, from elves to demons, all sporting epic beards of various styles and Colours",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-cards-must-have-at-least-one-flavor-text",
+    "name": "All cards must have at least one flavor text",
+    "description": "All cards in the deck must have at least one flavor text.",
+    "artPrompt": "a scroll-covered scene where cards float midair, each inscribed with glowing, poetic flavor text being read by a sage",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-be-smiling",
+    "name": "All creatures must be smiling",
+    "description": "All creatures in the deck must be smiling.",
+    "artPrompt": "a cheerful battle scene where every creature, regardless of type, is smiling or grinning with exaggerated joy",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-be-holding-something",
+    "name": "All creatures must be holding something",
+    "description": "All creatures in the deck must be holding something.",
+    "artPrompt": "a group of fantasy creatures each holding something unusual — weapons, books, fruits, or other magical objects",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-be-riding-something",
+    "name": "All creatures must be riding something",
+    "description": "All creatures in the deck must be riding something",
+    "artPrompt": "a fantasy battlefield where all creatures are mounted on various things: beasts, clouds, machines, or flying carpets",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-not-two-eyes",
+    "name": "All creatures must have not two eyes",
+    "description": "All creatures in the deck must have not two eyes.",
+    "artPrompt": "a surreal battlefield filled with one-eyed, three-eyed, or eyeless fantasy creatures staring with unusual intensity",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-be-wearing-armor",
+    "name": "All creatures must be wearing armor",
+    "description": "All creatures in the deck must be wearing armor.",
+    "artPrompt": "a fantasy battlefield where every creature wears ornate or practical armor, some shining, others worn and battle-scarred",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-glowing-eyes",
+    "name": "All creatures must have glowing eyes",
+    "description": "All creatures in the deck must have glowing eyes.",
+    "artPrompt": "a dark arena filled with creatures whose eyes glow intensely — in all Colours — cutting through the shadows",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-a-tail",
+    "name": "All creatures must have a tail",
+    "description": "All creatures in the deck must have a tail.",
+    "artPrompt": "a wild forest where every creature, from angels to elementals, features a tail of some kind — scaly, furry, or magical",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-cards-featuring-books-in-the-artwork",
+    "name": "Only cards featuring books in the artwork",
+    "description": "Only cards featuring books in the artwork are allowed in the deck.",
+    "artPrompt": "a library battlefield where every creature or artifact has at least one magical book in the scene — floating, reading, or bound",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-cards-with-exactly-one-word-in-their-name",
+    "name": "Only cards with exactly one word in their name",
+    "description": "Only cards with exactly one word in their name are allowed in the deck.",
+    "artPrompt": "a card showcase scene with glowing magical cards labeled with only one-word names like Inferno, Dominance, and Unity",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-cards-with-a-skull-in-the-artwork",
+    "name": "Only cards with a skull in the artwork",
+    "description": "Only cards with a skull in the artwork are allowed in the deck.",
+    "artPrompt": "a dark fantasy scene where every card prominently features a skull — on banners, armor, or as ominous symbols",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-cards-where-the-character-is-looking-left",
+    "name": "Only cards where the character is looking left",
+    "description": "Only cards where the character is looking left are allowed in the deck.",
+    "artPrompt": "a goblin looking to the left in the portrait close-up and looking very tense. a bead of sweat runs down his cheek.",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-creatures-with-an-odd-power",
+    "name": "Only creatures with an odd power",
+    "description": "Only creatures with an odd power are allowed in the deck.",
+    "artPrompt": "a battlefield of fantasy creatures each displaying odd-numbered power stats carved or glowing on them: 1, 3, 5",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-creatures-with-an-even-toughness",
+    "name": "Only creatures with an even toughness",
+    "description": "Only creatures with an even toughness are allowed in the deck.",
+    "artPrompt": "a parade of creatures with magical shields showing even-numbered toughness: 2, 4, 6 — glowing visibly on their armor",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-instants-with-a-single-sentence-of-rules-text",
+    "name": "Only instants with a single sentence of rules text",
+    "description": "Only instants with a single sentence of rules text are allowed in the deck.",
+    "artPrompt": "a glowing scroll labeled as an instant spell with exactly one concise sentence, floating above a casting wizard",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-creatures-with-their-mouth-open-in-the-artwork",
+    "name": "Only creatures with their mouth open in the artwork",
+    "description": "Only creatures with their mouth open in the artwork are allowed in the deck.",
+    "artPrompt": "a battle scene where every creature is mid-roar or scream, mouths wide open in action and aggression",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-a-blue-sky-in-the-background",
+    "name": "All creatures must have a blue sky in the background",
+    "description": "All creatures must have a blue sky in the background in the deck.",
+    "artPrompt": "a battlefield under a clear blue sky, where every creature and setting is framed by bright daylight",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-cards-with-bones-in-the-artwork-or-the-word-bones-in-the-text",
+    "name": "Only cards with bones in the artwork or the word bones in the text",
+    "description": "Only cards with bones in the artwork or the word bones in the text are allowed in the deck.",
+    "artPrompt": "a dark setting where every card features bones — skeletal remains, bone armor, or bone-carved weapons — or has bone-themed names",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-be-holding-a-weapon",
+    "name": "All creatures must be holding a weapon",
+    "description": "All creatures must be holding a weapon in the deck.",
+    "artPrompt": "a combat-heavy fantasy scene where every creature grips a weapon — swords, axes, spears, or magical tools",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-a-halo-or-glowing-aura",
+    "name": "All creatures must have a halo or glowing aura",
+    "description": "All creatures must have a halo or glowing aura in the deck.",
+    "artPrompt": "a radiant battlefield where every creature is surrounded by halos or glowing magical auras",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-creatures-with-visible-fangs",
+    "name": "Only creatures with visible fangs",
+    "description": "Only creatures with visible fangs are allowed in the deck.",
+    "artPrompt": "a fearsome group of fantasy creatures all baring sharp fangs, caught mid-snarl or roar",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-artifacts-shaped-like-a-circle",
+    "name": "Only artifacts shaped like a circle",
+    "description": "Only artifacts shaped like a circle are allowed in the deck.",
+    "artPrompt": "a chamber of ancient circular artifacts — rings, orbs, and disks — each floating and glowing with magic",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "all-creatures-must-have-horns",
+    "name": "All creatures must have horns",
+    "description": "All creatures must have horns in the deck.",
+    "artPrompt": "a wild fantasy landscape filled with creatures of all types, each proudly displaying horns — curled, jagged, or glowing",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-cards-featuring-fire-in-the-artwork",
+    "name": "Only cards featuring fire in the artwork",
+    "description": "Only cards featuring fire in the artwork are allowed in the deck.",
+    "artPrompt": "a fiery battlefield where every cards artwork features fire — burning weapons, flames, or magical infernos",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-cards-featuring-a-moon-or-sun-in-the-artwork",
+    "name": "Only cards featuring a moon or sun in the artwork",
+    "description": "Only cards featuring a moon or sun in the artwork are allowed in the deck.",
+    "artPrompt": "a mystic setting where every card prominently features a glowing moon or blazing sun in the background",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "only-creatures-with-exactly-four-legs",
+    "name": "Only creatures with exactly four legs",
+    "description": "Only creatures with exactly four legs are allowed in the deck.",
+    "artPrompt": "a lineup of fantasy creatures, all walking on exactly four legs — centaurs, wolves, quadrupedal beasts — in motion",
+    "modifier": "personal",
+    "category": "deckArt",
+    "target": "deck",
+    "difficulty": 4,
+    "solo": false
+  },
+  {
+    "id": "commander-must-wear-a-hat",
+    "name": "Commander must wear a hat",
+    "description": "The commander must wear a hat.",
+    "artPrompt": "a heroic MTG commander at the center of a battlefield, proudly wearing a large, ornate hat as part of their identity",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-wings-in-the-artwork",
+    "name": "Commander must have wings in the artwork",
+    "description": "The commander must have wings in the artwork.",
+    "artPrompt": "a flying MTG commander with angelic or draconic wings, soaring above the battlefield surrounded by glowing wind trails",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-a-beard",
+    "name": "Commander must have a beard",
+    "description": "The commander must have a beard.",
+    "artPrompt": "a legendary commander with a long, distinguished beard flowing in the wind, standing atop a cliff overlooking battle",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-be-holding-a-weapon",
+    "name": "Commander must be holding a weapon",
+    "description": "The commander must be holding a weapon.",
+    "artPrompt": "a bold commander holding a powerful magical weapon — a glowing sword, staff, or axe — ready to lead their army",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-be-smiling",
+    "name": "Commander must be smiling",
+    "description": "The commander must be smiling.",
+    "artPrompt": "a smiling commander posing confidently on the battlefield, radiating charisma and joy with a glowing aura",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-glowing-eyes",
+    "name": "Commander must have glowing eyes",
+    "description": "The commander must have glowing eyes.",
+    "artPrompt": "a powerful commander with intense glowing eyes — white, red, or blue — casting spells with magical focus",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-be-riding-something",
+    "name": "Commander must be riding something",
+    "description": "The commander must be riding something.",
+    "artPrompt": "a commander riding a fantastical creature such as a griffin, beast, or dragon across a stormy sky or battlefield",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-be-wearing-armor",
+    "name": "Commander must be wearing armor",
+    "description": "The commander must be wearing armor.",
+    "artPrompt": "a commander fully clad in ornate armor, plated with glowing sigils and battle marks from previous victories",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-a-tail",
+    "name": "Commander must have a tail",
+    "description": "The commander must have a tail.",
+    "artPrompt": "a fantasy commander with a long tail — scaled, furred, or magical — prominently shown in the center of the image",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-be-holding-a-book",
+    "name": "Commander must be holding a book",
+    "description": "The commander must be holding a book.",
+    "artPrompt": "a scholarly commander in ornate robes holding an ancient book mid-casting, glowing runes floating from its pages",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-fire-in-the-artwork",
+    "name": "Commander must have fire in the artwork",
+    "description": "The commander must have fire in the artwork.",
+    "artPrompt": "a fiery battlefield with a commander emerging from flames, wielding fire magic or weapons made of flame",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-a-skull-in-the-artwork",
+    "name": "Commander must have a skull in the artwork",
+    "description": "The commander must have a skull in the artwork.",
+    "artPrompt": "a grim commander adorned with bone armor or carrying a skull-topped staff, with skeletal motifs throughout the scene",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-lightning-in-the-background",
+    "name": "Commander must have lightning in the background",
+    "description": "The commander must have lightning in the background.",
+    "artPrompt": "a dramatic scene where a commander stands amidst a storm, lightning bolts illuminating their silhouette from behind",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-blue-sky-in-the-background",
+    "name": "Commander must have blue sky in the background",
+    "description": "The commander must have a blue sky in the background.",
+    "artPrompt": "a radiant commander standing tall under a wide open blue sky, clouds parted by beams of sunlight above",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-a-visible-moon-in-the-artwork",
+    "name": "Commander must have a visible moon in the artwork",
+    "description": "The commander must have a visible moon in the artwork.",
+    "artPrompt": "a mystical commander standing under a night sky with a large full moon prominently glowing in the background",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false
+  },
+  {
+    "id": "commander-must-have-flavor-text",
+    "name": "Commander must have flavor text",
+    "description": "The commander must have flavor text.",
+    "artPrompt": "a magical card floating midair, with glowing flavor text etched into its frame, being read by a wise sage",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "hasFlavorText"
+    }
+  },
+  {
+    "id": "commander-must-have-more-than-one-creature-type",
+    "name": "Commander must have more than one creature type",
+    "description": "The commander must have more than one creature type.",
+    "artPrompt": "a single creature that got a head like a boar, one hand like a human, one hand like a crab and a fur like a bear.",
+    "modifier": "personal",
+    "category": "commanderArt",
+    "target": "commander",
+    "difficulty": 2,
+    "solo": false,
+    "commanderCheck": {
+      "kind": "multipleCreatureTypes"
+    }
+  },
+  {
+    "id": "1-point-for-every-opponent-eliminated",
+    "name": "+1 Point for Every Opponent Eliminated",
+    "description": "You gain 1 point for every opponent eliminated.",
+    "artPrompt": "a victorious commander casting down the last opponent, with banners rising and magical score counters appearing above",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "2-points-for-winning-the-game",
+    "name": "+2 Points for Winning the Game",
+    "description": "You gain 2 points for winning the game.",
+    "artPrompt": "a triumphant commander standing atop a defeated battlefield, arms raised as glowing +2 Points float in the air",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-point-for-casting-your-commander-3-times",
+    "name": "+1 Point for Casting Your Commander 3+ Times",
+    "description": "You gain 1 point for casting your commander three or more times.",
+    "artPrompt": "a spellcaster repeatedly summoning their commander through a glowing portal, magical counters tracking each casting",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-point-for-eliminating-an-opponent-with-commander-damage",
+    "name": "+1 Point for Eliminating an Opponent with Commander Damage",
+    "description": "You gain 1 point for eliminating an opponent with commander damage.",
+    "artPrompt": "a dramatic commander delivering a final blow to an opponent with glowing commander damage counters reaching lethal levels",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-point-for-using-an-alternative-win-condition",
+    "name": "+1 Point for Using an Alternative Win Condition",
+    "description": "You gain 1 point for using an alternative win condition.",
+    "artPrompt": "a player winning the game through a strange magical ritual — not by combat — with glowing text saying You Win!",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-point-for-taking-more-than-5-minutes-for-a-turn",
+    "name": "-1 Point for Taking More Than 5-Minutes for a Turn",
+    "description": "You lose 1 point for taking more than five minutes for a turn.",
+    "artPrompt": "a stressed wizard with scrolls and timers floating around them, as annoyed opponents wait with crossed arms",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-point-for-casting-a-spell-with-mana-value-10-or-greater",
+    "name": "+1 Point for Casting a Spell with Mana Value 10 or Greater",
+    "description": "You gain 1 point for casting a spell with mana value 10 or greater.",
+    "artPrompt": "a line-up of magical orbs, each labeled 10 to 15, radiating mana energy of different intensity",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-point-for-winning-without-dealing-combat-damage",
+    "name": "+1 Point for Winning Without Dealing Combat Damage",
+    "description": "You gain 1 point for winning without dealing combat damage.",
+    "artPrompt": "a peaceful player meditating while their opponents fall one by one, with no battle shown — only spell effects and clever strategy",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-point-for-controlling-a-permanent-from-each-opponent",
+    "name": "+1 Point for Controlling a Permanent from Each Opponent",
+    "description": "You gain 1 point for controlling a permanent from each opponent.",
+    "artPrompt": "a triumphant player controlling a battlefield filled with every card type — creature, enchantment, land, artifact, planeswalker",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "2-point-for-saving-an-opponent-from-elimination",
+    "name": "+2 Point for Saving an Opponent from Elimination",
+    "description": "You gain 2 points for saving an opponent from elimination.",
+    "artPrompt": "a heroic player shielding an opponent with a magical barrier as a deadly spell narrowly misses its target",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-point-for-eliminating-an-opponent-with-a-one-drop",
+    "name": "+1 Point for Eliminating an Opponent with a One-Drop",
+    "description": "You gain 1 point for eliminating an opponent with a one-drop.",
+    "artPrompt": "a very very small monster hit a normal size human in the leg and he screams in pain.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-point-for-countering-a-spell-that-would-have-won-the-game",
+    "name": "+1 Point for Countering a Spell That Would Have Won the Game",
+    "description": "You gain 1 point for countering a spell that would have won the game.",
+    "artPrompt": "a spellcaster intercepting a massive spell midair with a glowing counterspell, saving the game from certain loss",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "2-points-for-eliminating-two-opponents-in-the-same-turn",
+    "name": "+2 Points for Eliminating Two Opponents in the Same Turn",
+    "description": "You gain 2 points for eliminating two opponents in the same turn.",
+    "artPrompt": "a commander casting a powerful combo that knocks out two opponents at once, with both vanishing in glowing flashes",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-points-for-eliminating-the-last-opponent-in-a-noncombat-way",
+    "name": "+1 Points for Eliminating the Last Opponent in a Noncombat Way",
+    "description": "You gain 1 point for eliminating the last opponent in a noncombat way.",
+    "artPrompt": "a victorious player standing alone in a ruined battlefield after defeating the final opponent, fireworks in the sky",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-points-for-dealing-20-damage-in-a-single-combat-phase",
+    "name": "+1 Points for Dealing 20+ Damage in a Single Combat Phase",
+    "description": "You gain 1 point for dealing 20 or more damage in a single combat phase.",
+    "artPrompt": "a blazing battlefield where a player deals over 20 damage in a single explosive action, overwhelming enemies with fire and force",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "2-points-for-winning-with-less-than-5-life-remaining",
+    "name": "+2 Points for Winning With Less Than 5 Life Remaining",
+    "description": "You gain 2 points for winning with less than five life remaining.",
+    "artPrompt": "a man kneels behind the finish line and is extremely exhausted and sweating. Behind him, some people are running towards the finish line.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-points-for-resolving-an-ultimate-ability-from-a-planeswalker",
+    "name": "+1 Points for Resolving an Ultimate Ability from a Planeswalker",
+    "description": "You gain 1 point for resolving an ultimate ability from a planeswalker.",
+    "artPrompt": "a magician with glowing eyes and a powerful aura casts a spell with his mighty wand.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-points-for-ending-the-game-with-100-life",
+    "name": "+1 Points for Ending the Game with 100+ Life",
+    "description": "You gain 1 point for ending the game with 100 or more life.",
+    "artPrompt": "An extremely fat man wearing a white robe that says ‘100+’ and being served by various beautiful women.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-point-for-not-casting-your-commander-in-the-entire-game",
+    "name": "-1 Point for Not Casting Your Commander in the Entire Game",
+    "description": "You lose 1 point for not casting your commander in the entire game.",
+    "artPrompt": "An extremely old wizard sitting on the bench. his eyes have cataracts, he looks tired and he has a very, very long white beard.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-point-for-missing-a-trigger-that-would-have-changed-the-game",
+    "name": "-1 Point for Missing a Trigger That Would Have Changed the Game",
+    "description": "You lose 1 point for missing a trigger that would have changed the game.",
+    "artPrompt": "A magician stands in his library looking completely confused and bored.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-point-for-being-eliminated-first",
+    "name": "-1 Point for Being Eliminated First",
+    "description": "You lose 1 point for being eliminated first.",
+    "artPrompt": "A magician sits on a basketball bench and has \"loser\" written on his robe",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "1-point-for-attacking-the-same-player-three-times-in-a-row",
+    "name": "-1 Point for Attacking the Same Player Three Times in a Row",
+    "description": "You lose 1 point for attacking the same player three times in a row.",
+    "artPrompt": "an aggressive mage standing on the left side of the screen shooting a barrage of fireballs at another fearful looking mage on the right side of the screen. in the background 2 more mages are just watching.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "2-points-for-using-an-infinite-combo-to-win-the-game",
+    "name": "-2 Points for Using an Infinite Combo to Win the Game",
+    "description": "You lose 2 points for using an infinite combo to win the game.",
+    "artPrompt": "a magician who manically casts various spells and has a large infinity sign hovering above his head",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": false
+  },
+  {
+    "id": "2-points-for-eliminating-an-opponent-before-turn-5",
+    "name": "-2 Points for Eliminating an Opponent Before Turn 5",
+    "description": "You lose 2 points for eliminating an opponent before turn five.",
+    "artPrompt": "a villain who stabs a knife into the back of a man dressed only in his underwear while the other man is putting on his armour.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "2-points-for-eliminating-an-opponent-who-had-no-non-land-permanents-on-board",
+    "name": "-2 Points for Eliminating an Opponent Who Had No Non-Land-Permanents on Board",
+    "description": "You lose 2 points for eliminating an opponent who had no nonland permanents on board.",
+    "artPrompt": "a thieving villain stealing a baby's lollipop",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  },
+  {
+    "id": "1-point-for-attacking-without-shouting-the-name-of-the-player-that-gets-attacked",
+    "name": "-1 Point for Attacking Without Shouting the Name of the Player That Gets Attacked",
+    "description": "You lose 1 point for attacking without shouting the name of the player that gets attacked.",
+    "artPrompt": "a warrior running manically towards an enemy army with a speech bubble over his head saying \"THOMAS!!!!\" and shouting this.",
+    "modifier": "score",
+    "category": "untyped",
+    "target": "game",
+    "difficulty": 5,
+    "solo": false,
+    "repeatable": true
+  }
+]

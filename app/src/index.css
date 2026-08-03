@@ -1,0 +1,249 @@
+@import 'tailwindcss';
+
+/*
+ * Brewer Wars design tokens.
+ * Chibi-fantasy / Hearthstone-adjacent theme: parchment + carved wood frames,
+ * magic ink accents, MTG-familiar rarity glows for card difficulty.
+ */
+@theme {
+  --font-display: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Baloo 2', system-ui, sans-serif;
+
+  /* Parchment / wood base palette */
+  --color-parchment-50: #fdf9ee;
+  --color-parchment-100: #f8f0d9;
+  --color-parchment-200: #efe0b8;
+  --color-parchment-300: #e2c98a;
+  --color-parchment-400: #d1ac5c;
+  --color-parchment-500: #c2953f;
+  --color-parchment-600: #a67632;
+  --color-parchment-700: #85592a;
+  --color-parchment-800: #5c3d20;
+  --color-parchment-900: #3a2814;
+
+  --color-wood-50: #efe6da;
+  --color-wood-100: #ddc9ac;
+  --color-wood-200: #c2a279;
+  --color-wood-300: #a17c52;
+  --color-wood-400: #7c5c3a;
+  --color-wood-500: #5e4229;
+  --color-wood-600: #46311e;
+  --color-wood-700: #332314;
+  --color-wood-800: #23170d;
+  --color-wood-900: #150d07;
+
+  /* Arcane ink accents */
+  --color-arcane-50: #eef1ff;
+  --color-arcane-100: #dbe0ff;
+  --color-arcane-200: #b8c2ff;
+  --color-arcane-300: #8d99ff;
+  --color-arcane-400: #6c6bff;
+  --color-arcane-500: #5b4de6;
+  --color-arcane-600: #4936c2;
+  --color-arcane-700: #3a2a97;
+  --color-arcane-800: #2a1e6e;
+  --color-arcane-900: #1b1347;
+
+  --color-ember-50: #fff1eb;
+  --color-ember-100: #ffdccb;
+  --color-ember-200: #ffb595;
+  --color-ember-300: #ff8a5c;
+  --color-ember-400: #f9642f;
+  --color-ember-500: #e6481a;
+  --color-ember-600: #bd3512;
+  --color-ember-700: #8f2810;
+  --color-ember-800: #631c0d;
+  --color-ember-900: #3e1108;
+
+  --color-verdant-50: #eefbf0;
+  --color-verdant-100: #d1f3d8;
+  --color-verdant-200: #a2e5ac;
+  --color-verdant-300: #6ecf7d;
+  --color-verdant-400: #45b358;
+  --color-verdant-500: #2f9642;
+  --color-verdant-600: #237634;
+  --color-verdant-700: #1c5b2a;
+  --color-verdant-800: #16451f;
+  --color-verdant-900: #0e2c14;
+
+  --color-royal-50: #fffbeb;
+  --color-royal-100: #fff0c2;
+  --color-royal-200: #ffe08a;
+  --color-royal-300: #ffcb4d;
+  --color-royal-400: #f7b420;
+  --color-royal-500: #dc9610;
+  --color-royal-600: #b3760c;
+  --color-royal-700: #87590d;
+  --color-royal-800: #5c3d0e;
+  --color-royal-900: #3a260a;
+
+  /* Modifier-category identity colors (used across the app for badges/borders) */
+  --color-modifier-global: var(--color-arcane-500);
+  --color-modifier-personal: var(--color-verdant-500);
+  --color-modifier-score: var(--color-royal-500);
+
+  /* Difficulty / rarity glow ramp (1 common -> 5 mythic-plus) */
+  --color-difficulty-1: #9aa0a8;
+  --color-difficulty-2: #4fb5c9;
+  --color-difficulty-3: #d1a941;
+  --color-difficulty-4: #e0692f;
+  --color-difficulty-5: #b968e0;
+
+  --shadow-card:
+    0 1px 2px rgba(21, 13, 7, 0.4), 0 8px 16px -4px rgba(21, 13, 7, 0.45);
+  --shadow-card-hover:
+    0 2px 4px rgba(21, 13, 7, 0.5), 0 16px 32px -8px rgba(21, 13, 7, 0.55);
+
+  --animate-card-flip: card-flip 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-sparkle: sparkle 1.6s ease-in-out infinite;
+  --animate-shake: shake 0.4s ease-in-out;
+
+  @keyframes card-flip {
+    0% {
+      transform: rotateY(90deg) scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: rotateY(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  @keyframes sparkle {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20%,
+    60% {
+      transform: translateX(-6px);
+    }
+    40%,
+    80% {
+      transform: translateX(6px);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    /* Slightly larger baseline than the browser default (16px) — this is a
+     * card/board game UI meant to be read from arm's length on a shared
+     * device, not a dense document. */
+    font-size: 18px;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: radial-gradient(
+        ellipse at top,
+        var(--color-wood-600) 0%,
+        var(--color-wood-800) 55%,
+        var(--color-wood-900) 100%
+      )
+      fixed;
+    color: var(--color-parchment-100);
+    -webkit-font-smoothing: antialiased;
+    /* This is a game board, not a document: hovering plain UI text
+     * (headings, labels, card text) shouldn't show the text-selection
+     * I-beam cursor everywhere, and accidental drag-selection during
+     * hot-seat pass-arounds is more confusing than useful. Real inputs
+     * explicitly opt back in below. */
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input,
+  textarea,
+  select,
+  [contenteditable='true'] {
+    cursor: text;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  button,
+  a,
+  label,
+  [role='button'],
+  [role='radio'],
+  [role='checkbox'] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    letter-spacing: 0.02em;
+  }
+
+  /* Respect reduced-motion preference globally */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-shadow-title {
+    text-shadow:
+      0 2px 0 rgba(0, 0, 0, 0.5),
+      0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+  .bg-parchment-texture {
+    background-image:
+      radial-gradient(
+        circle at 20% 20%,
+        rgba(255, 255, 255, 0.08),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 60%,
+        rgba(0, 0, 0, 0.08),
+        transparent 45%
+      );
+  }
+}

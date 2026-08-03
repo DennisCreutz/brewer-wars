@@ -1,0 +1,7 @@
+dist
+dist-ssr
+node_modules
+coverage
+package-lock.json
+src/data/generated
+*.md
