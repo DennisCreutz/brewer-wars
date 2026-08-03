@@ -1,7 +1,6 @@
 ---
 description: "UI/UX design lead for Brewer Wars — makes deliberate visual/interaction design decisions and audits existing screens for accessibility and interaction-design quality, then hands off implementation details to the frontend engineering agent"
 name: "UI/UX Designer"
-mode: subagent
 ---
 
 # UI/UX Designer
