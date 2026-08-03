@@ -16,7 +16,7 @@ import {
   getActiveCommanderSelectionPlayer,
   getPlayerName,
 } from '../../domain/war'
-import { splitCommanderModifiers } from '../../domain/commanderCheck'
+import { splitAllModifiersForDisplay } from '../../domain/commanderCheck'
 import {
   applyCommanderSearchFilters,
   sortCommanders,
@@ -370,25 +370,21 @@ function PlayerCommanderPicker({ war, playerId }: { war: War; playerId: PlayerId
   const constraints = useMemo(() => activeCommanderConstraintsFor(war, playerId), [war, playerId])
   const { filtered, scryfallUrl } = useCommanderFilter(constraints)
 
-  // The same two *source* arrays the constraints above were merged from —
-  // recomputed independently here purely so the global/personal panels
-  // below can display them separately. This never changes what counts as
-  // legal; it's presentation-only.
-  const globalCommanderModifiers = useMemo(
-    () => war.activeGlobalModifiers.filter((c) => c.target === 'commander'),
+  // The full set of active modifiers (any target — deck/commander/game),
+  // split for display purposes only: `checkable` mirrors the live
+  // filter/counter (commander-target with a programmatic check),
+  // `uncheckable` is everything else the player still needs to keep in
+  // mind while choosing (deck-target, game-target, and commander-target
+  // cards with no programmatic check) — see domain/commanderCheck.ts's
+  // splitAllModifiersForDisplay docblock for why this is deliberately wider
+  // than the commander-only constraints used to actually filter the pool.
+  const globalSplit = useMemo(
+    () => splitAllModifiersForDisplay(war.activeGlobalModifiers),
     [war.activeGlobalModifiers],
   )
-  const personalCommanderModifiers = useMemo(
-    () => player?.personalModifiers.filter((c) => c.target === 'commander') ?? [],
-    [player],
-  )
-  const globalSplit = useMemo(
-    () => splitCommanderModifiers(globalCommanderModifiers),
-    [globalCommanderModifiers],
-  )
   const personalSplit = useMemo(
-    () => splitCommanderModifiers(personalCommanderModifiers),
-    [personalCommanderModifiers],
+    () => splitAllModifiersForDisplay(player?.personalModifiers ?? []),
+    [player],
   )
 
   // Optional player-driven browsing refinements (name/colour/mana value,

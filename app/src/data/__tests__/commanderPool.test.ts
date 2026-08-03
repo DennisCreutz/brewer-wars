@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { fetchCommanderPool } from '../commanderPool'
 
+vi.mock('../edhrecDeckCounts', () => ({
+  getEdhrecDeckCount: vi.fn(() => 13545),
+  getEdhrecRank: vi.fn(() => 146),
+}))
+
 function scryfallCard(overrides: Record<string, unknown> = {}) {
   return {
     id: 'abc-123',
@@ -11,7 +16,6 @@ function scryfallCard(overrides: Record<string, unknown> = {}) {
     flavor_text: 'A flavorful test.',
     rarity: 'rare',
     cmc: 3,
-    edhrec_rank: 100,
     scryfall_uri: 'https://scryfall.com/card/abc-123',
     image_uris: { art_crop: 'https://img/art.jpg', normal: 'https://img/normal.jpg' },
     ...overrides,
@@ -153,5 +157,25 @@ describe('fetchCommanderPool', () => {
 
     const pool = await fetchCommanderPool()
     expect(pool[0].imageUrl).toBe('https://img/normal.jpg')
+  })
+
+  it("uses EDHREC's own commander-specific rank/deck count, not Scryfall's global edhrec_rank", async () => {
+    // Regression: this dataset's rank (e.g. "Rank 146" on a commander's own
+    // EDHREC page) is what players expect to see — not Scryfall's
+    // `edhrec_rank` field, which ranks every card EDHREC has ever indexed
+    // (tens of thousands of entries) and would show a wildly misleading
+    // number for a genuinely popular commander.
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: [scryfallCard({ name: 'Marchesa, the Black Rose' })],
+        has_more: false,
+        total_cards: 1,
+      }),
+    }) as unknown as typeof fetch
+
+    const pool = await fetchCommanderPool()
+    expect(pool[0].edhrecRank).toBe(146)
+    expect(pool[0].numDecks).toBe(13545)
   })
 })

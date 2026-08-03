@@ -75,4 +75,26 @@ describe('LocalWarRepository', () => {
     const list = await repo.list()
     expect(list).toHaveLength(1)
   })
+
+  it('removeAll wipes every saved war (landing page "Reset Games")', async () => {
+    const repo = new LocalWarRepository()
+    await repo.save(createWar(config(), cards, 1))
+    await repo.save(createWar(config(), cards, 2))
+    await repo.save(createWar(config(), cards, 3))
+    expect(await repo.list()).toHaveLength(3)
+
+    await repo.removeAll()
+    expect(await repo.list()).toEqual([])
+  })
+
+  it('removeAll leaves unrelated localStorage keys untouched', async () => {
+    const repo = new LocalWarRepository()
+    localStorage.setItem('some-other-app-key', 'keep me')
+    await repo.save(createWar(config(), cards, 1))
+
+    await repo.removeAll()
+
+    expect(localStorage.getItem('some-other-app-key')).toBe('keep me')
+    expect(await repo.list()).toEqual([])
+  })
 })

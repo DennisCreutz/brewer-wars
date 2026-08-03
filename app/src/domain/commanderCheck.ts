@@ -86,6 +86,30 @@ export function splitCommanderModifiers(modifiers: readonly ModifierCard[]): {
   return { checkable, uncheckable }
 }
 
+/** Same idea as `splitCommanderModifiers`, but for *display* on the
+ * Commander Selection screen, where a player needs to see every modifier
+ * they've drawn — deck- and game-target cards included — not just the
+ * commander-target subset that actually drives the live filter/counter.
+ * `checkable` is identical to `splitCommanderModifiers`'s (the only cards
+ * that can be programmatically enforced); `uncheckable` is everything else
+ * they still need to keep in mind while picking (deck-target, game-target,
+ * and commander-target cards with no programmatic check). */
+export function splitAllModifiersForDisplay(modifiers: readonly ModifierCard[]): {
+  checkable: { card: ModifierCard; check: CommanderCheck }[]
+  uncheckable: ModifierCard[]
+} {
+  const checkable: { card: ModifierCard; check: CommanderCheck }[] = []
+  const uncheckable: ModifierCard[] = []
+  for (const card of modifiers) {
+    if (card.target === 'commander' && card.commanderCheck) {
+      checkable.push({ card, check: card.commanderCheck })
+    } else {
+      uncheckable.push(card)
+    }
+  }
+  return { checkable, uncheckable }
+}
+
 const COLOUR_ORDER = ['W', 'U', 'B', 'R', 'G']
 
 function sortColours(colours: readonly string[]): string[] {

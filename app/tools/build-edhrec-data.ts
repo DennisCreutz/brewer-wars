@@ -18,13 +18,18 @@
  *
  * EDHREC also serves a dedicated page per commander,
  * `/pages/commanders/<slug>.json`, whose `container.json_dict.card.num_decks`
- * is the *exact* count for that one card — see `edhrecCommanderSlug()` in
- * domain/text.ts for how the slug is derived (front face only for
- * double-faced/split cards; diacritics transliterated to plain ASCII, e.g.
- * "Bartolomé" -> "bartolome", matching EDHREC's own slugs). Querying this
- * once per Scryfall commander gives exact, complete coverage instead of a
- * lossy top-N snapshot, at the cost of ~3,300 requests instead of 32 — run
- * with a small concurrency pool, this still finishes in a few minutes.
+ * is the *exact* count for that one card, and whose `container.json_dict
+ * .card.rank` is EDHREC's own commander-specific popularity rank (distinct
+ * from — and much lower/more meaningful than — Scryfall's own
+ * `edhrec_rank` field, which ranks *all* cards, not just commanders, so a
+ * popular commander can show a rank in the tens of thousands there). See
+ * `edhrecCommanderSlug()` in domain/text.ts for how the slug is derived
+ * (front face only for double-faced/split cards; diacritics transliterated
+ * to plain ASCII, e.g. "Bartolomé" -> "bartolome", matching EDHREC's own
+ * slugs). Querying this once per Scryfall commander gives exact, complete
+ * coverage instead of a lossy top-N snapshot, at the cost of ~3,300
+ * requests instead of 32 — run with a small concurrency pool, this still
+ * finishes in a few minutes.
  *
  * A small number of cards (observed: "Background"-type legendary
  * enchantments, which are commander-legal in Scryfall's sense but aren't
@@ -77,13 +82,13 @@ async function fetchAllCommanderNames(): Promise<string[]> {
 interface EdhrecCommanderPage {
   container?: {
     json_dict?: {
-      card?: { name?: string; num_decks?: number }
+      card?: { name?: string; num_decks?: number; rank?: number }
     }
   }
 }
 
 type LookupOutcome =
-  | { status: 'found'; name: string; numDecks: number }
+  | { status: 'found'; name: string; numDecks: number; rank: number | null }
   | { status: 'not-found'; name: string }
   | { status: 'error'; name: string; error: string }
 
@@ -101,7 +106,8 @@ async function lookupOne(name: string): Promise<LookupOutcome> {
       const page = (await res.json()) as EdhrecCommanderPage
       const numDecks = page.container?.json_dict?.card?.num_decks
       if (typeof numDecks !== 'number') return { status: 'not-found', name }
-      return { status: 'found', name, numDecks }
+      const rank = page.container?.json_dict?.card?.rank
+      return { status: 'found', name, numDecks, rank: typeof rank === 'number' ? rank : null }
     } catch (err) {
       if (attempt === MAX_ATTEMPTS) {
         return { status: 'error', name, error: err instanceof Error ? err.message : String(err) }
@@ -136,7 +142,7 @@ async function main() {
   const names = await fetchAllCommanderNames()
   console.log(`  -> ${names.length} commander-legal cards`)
 
-  const commanders = new Map<string, { name: string; numDecks: number }>()
+  const commanders = new Map<string, { name: string; numDecks: number; rank: number | null }>()
   const notFound: string[] = []
   const errors: { name: string; error: string }[] = []
   let completed = 0
@@ -155,7 +161,11 @@ async function main() {
         // storing the full "A // B" Scryfall name here would silently
         // never match for any double-faced/split/MDFC commander.
         const front = frontFaceName(name)
-        commanders.set(normalizeCardName(front), { name: front, numDecks: result.numDecks })
+        commanders.set(normalizeCardName(front), {
+          name: front,
+          numDecks: result.numDecks,
+          rank: result.rank,
+        })
       } else if (result.status === 'not-found') {
         notFound.push(name)
       } else {
@@ -171,7 +181,8 @@ async function main() {
 
   const output = {
     generatedAt: new Date().toISOString(),
-    source: 'json.edhrec.com per-commander pages (container.json_dict.card.num_decks)',
+    source:
+      'json.edhrec.com per-commander pages (container.json_dict.card.num_decks / .rank)',
     totalCommandersQueried: names.length,
     totalCommandersFound: commanders.size,
     commanders: Object.fromEntries(

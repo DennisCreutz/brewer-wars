@@ -42,6 +42,8 @@
     "createdAt": "Started {{date}}",
     "phaseLabel": "Currently: {{phase}}",
     "deleteConfirm": "Delete this war? This cannot be undone.",
+    "resetAllGames": "Reset Games",
+    "resetAllConfirm": "Delete ALL saved wars? This cannot be undone.",
     "languageSelector": "English"
   },
   "wizard": {
@@ -226,8 +228,10 @@
     "revealTitle": "The Big Reveal",
     "gameWinner": "Who won the game?",
     "winBonusHint": "+{{points}} points",
+    "winBonusExplainer": "This is the fixed win bonus configured when the war began. If a \"+X Points for Winning the Game\" Score Modifier card was also drawn, it stacks on top of this as a separate bonus below — that's not a duplicate.",
     "winnerNone": "No one yet",
     "scoreCards": "Score Modifiers",
+    "scoreCardsHint": "Each card's printed points are its own separate bonus, added on top of the win/vote bonuses above — including a \"Winning the Game\" card, if drawn.",
     "noScoreCards": "No score modifiers this war — none were drawn, or they were disabled.",
     "scoreCardInputLabel": "{{cardName}} — times for {{name}}",
     "bestBrewer": "Best Deck Brewer Vote",
@@ -266,6 +270,6 @@
     "scoreCardBonusLabel": "Score Cards",
     "totalLabel": "Total",
     "newWar": "Start a New War",
-    "backToLanding": "Back to Landing"
+    "backToLanding": "Home"
   }
 }

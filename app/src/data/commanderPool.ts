@@ -7,7 +7,7 @@
  * actual draw/selection, only once up front per war (or on manual refresh).
  */
 import type { CommanderSummary } from '../domain/commanderCheck'
-import { getEdhrecDeckCount } from './edhrecDeckCounts'
+import { getEdhrecDeckCount, getEdhrecRank } from './edhrecDeckCounts'
 
 const SEARCH_URL =
   'https://api.scryfall.com/cards/search?q=is%3Acommander+legal%3Acommander&order=edhrec&unique=cards'
@@ -32,7 +32,6 @@ interface ScryfallCard {
   card_faces?: ScryfallCardFace[]
   rarity: string
   cmc: number
-  edhrec_rank?: number
   scryfall_uri: string
   image_uris?: ScryfallImageUris
 }
@@ -71,7 +70,7 @@ function toSummary(card: ScryfallCard): CommanderSummary {
     hasFlavorText: hasFlavorText(card),
     rarity: card.rarity,
     cmc: card.cmc,
-    edhrecRank: card.edhrec_rank ?? null,
+    edhrecRank: getEdhrecRank(card.name),
     numDecks: getEdhrecDeckCount(card.name),
     scryfallUri: card.scryfall_uri,
     artCropUrl: images?.art_crop ?? null,

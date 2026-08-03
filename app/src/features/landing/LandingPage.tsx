@@ -56,10 +56,15 @@ export function LandingPage() {
   const warList = useWarStore((s) => s.warList)
   const warListLoaded = useWarStore((s) => s.warListLoaded)
   const refreshWarList = useWarStore((s) => s.refreshWarList)
+  const resetAllWars = useWarStore((s) => s.resetAllWars)
 
   useEffect(() => {
     void refreshWarList()
   }, [refreshWarList])
+
+  function handleResetAllWars() {
+    if (window.confirm(t('landing.resetAllConfirm'))) void resetAllWars()
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-10 px-4 py-12">
@@ -76,7 +81,21 @@ export function LandingPage() {
 
       <div className="w-full max-w-xl">
         <Panel>
-          <h2 className="mb-3 font-heading text-xl font-semibold text-wood-800">{t('landing.loadWar')}</h2>
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <h2 className="font-heading text-xl font-semibold text-wood-800">
+              {t('landing.loadWar')}
+            </h2>
+            {warList.length > 0 && (
+              <Button
+                variant="danger"
+                size="md"
+                className="px-3 py-1.5 text-xs"
+                onClick={handleResetAllWars}
+              >
+                🗑️ {t('landing.resetAllGames')}
+              </Button>
+            )}
+          </div>
           {warListLoaded && warList.length === 0 && (
             <p className="text-sm text-wood-600">{t('landing.noWars')}</p>
           )}

@@ -120,7 +120,7 @@ describe('PodiumPage', () => {
     expect(screen.getByText('Final Score')).toBeInTheDocument()
     expect(screen.getAllByText('Alice').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Bob').length).toBeGreaterThan(0)
-    expect(screen.getByRole('button', { name: /back to landing/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /^home$/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /start a new war/i })).toBeInTheDocument()
   })
 
@@ -129,7 +129,7 @@ describe('PodiumPage', () => {
     const user = userEvent.setup()
     renderPodiumPage(war)
 
-    await user.click(screen.getByRole('button', { name: /back to landing/i }))
+    await user.click(screen.getByRole('button', { name: /^home$/i }))
 
     expect(await screen.findByText('landing-page-marker')).toBeInTheDocument()
     expect(useWarStore.getState().war).toBeNull()

@@ -41,6 +41,9 @@ interface WarStoreState {
   loadWar: (id: string) => Promise<War | null>
   dispatch: (action: WarAction) => Promise<War>
   deleteWar: (id: string) => Promise<void>
+  /** Wipes every stored war (landing page's "Reset Games" button) — a
+   * full DB reset, distinct from `deleteWar`'s single-war removal. */
+  resetAllWars: () => Promise<void>
   exitToLanding: () => void
   ensureCommanderPool: (options?: { forceRefresh?: boolean }) => Promise<CommanderSummary[]>
 }
@@ -86,6 +89,11 @@ export const useWarStore = create<WarStoreState>((set, get) => ({
       war: current?.id === id ? null : current,
       warList: get().warList.filter((w) => w.id !== id),
     })
+  },
+
+  resetAllWars: async () => {
+    await repository.removeAll()
+    set({ war: null, warList: [] })
   },
 
   exitToLanding: () => set({ war: null }),

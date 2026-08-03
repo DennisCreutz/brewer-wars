@@ -7,6 +7,7 @@
 import { openDB, type IDBPDatabase } from 'idb'
 import type { CommanderSummary } from '../domain/commanderCheck'
 import { fetchCommanderPool, type FetchProgress } from './commanderPool'
+import { EDHREC_DATASET_META } from './edhrecDeckCounts'
 
 const DB_NAME = 'brewer-wars'
 const DB_VERSION = 1
@@ -23,6 +24,16 @@ export const DEFAULT_MAX_CACHE_AGE_MS = 24 * 60 * 60 * 1000 // 1 day
 interface CachedPool {
   fetchedAt: string
   pool: CommanderSummary[]
+  /** The bundled EDHREC dataset's `generatedAt` at the time this pool was
+   * fetched (see data/edhrecDeckCounts.ts). Every `CommanderSummary` bakes
+   * in a snapshot of `numDecks`/`edhrecRank` from whatever dataset was
+   * bundled into the app at fetch time — so if a *new build* ships an
+   * updated dataset (re-crawled EDHREC ranks/counts), a still-cached pool
+   * from an older build must be treated as stale immediately, regardless
+   * of how young it is by the 1-day age check alone. Without this, a
+   * player who cached the pool before a data fix would keep seeing
+   * outdated ranks/counts for up to a full day after upgrading. */
+  edhrecDatasetGeneratedAt: string
 }
 
 function db(): Promise<IDBPDatabase> {
@@ -43,7 +54,11 @@ export async function readCachedPool(): Promise<CachedPool | null> {
 
 async function writeCachedPool(pool: CommanderSummary[]): Promise<void> {
   const database = await db()
-  const entry: CachedPool = { fetchedAt: new Date().toISOString(), pool }
+  const entry: CachedPool = {
+    fetchedAt: new Date().toISOString(),
+    pool,
+    edhrecDatasetGeneratedAt: EDHREC_DATASET_META.generatedAt,
+  }
   await database.put(STORE_NAME, entry, CACHE_KEY)
 }
 
@@ -71,7 +86,8 @@ export async function getOrFetchCommanderPool(
     const cached = await readCachedPool()
     if (cached) {
       const age = Date.now() - new Date(cached.fetchedAt).getTime()
-      if (age <= maxAgeMs && cached.pool.length > 0) {
+      const datasetMatches = cached.edhrecDatasetGeneratedAt === EDHREC_DATASET_META.generatedAt
+      if (age <= maxAgeMs && datasetMatches && cached.pool.length > 0) {
         onStatus?.({ stage: 'ready' })
         return cached.pool
       }

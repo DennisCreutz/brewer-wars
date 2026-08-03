@@ -76,6 +76,19 @@ describe('useWarStore', () => {
     expect(await useWarStore.getState().loadWar(war.id)).not.toBeNull()
   })
 
+  it('resetAllWars wipes every saved war and the current one, and clears warList', async () => {
+    const warA = await useWarStore.getState().startNewWar(config(), 6)
+    await useWarStore.getState().startNewWar(config(), 7)
+    await useWarStore.getState().refreshWarList()
+    expect(useWarStore.getState().warList.length).toBeGreaterThanOrEqual(2)
+
+    await useWarStore.getState().resetAllWars()
+
+    expect(useWarStore.getState().war).toBeNull()
+    expect(useWarStore.getState().warList).toEqual([])
+    expect(await useWarStore.getState().loadWar(warA.id)).toBeNull()
+  })
+
   it('ensureCommanderPool fetches and stores the pool, updating status along the way', async () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,

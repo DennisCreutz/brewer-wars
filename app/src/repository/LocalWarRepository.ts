@@ -40,4 +40,13 @@ export class LocalWarRepository implements WarRepository {
   async remove(id: string): Promise<void> {
     localStorage.removeItem(KEY_PREFIX + id)
   }
+
+  async removeAll(): Promise<void> {
+    const keysToRemove: string[] = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key?.startsWith(KEY_PREFIX)) keysToRemove.push(key)
+    }
+    for (const key of keysToRemove) localStorage.removeItem(key)
+  }
 }

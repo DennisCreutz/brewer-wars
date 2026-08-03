@@ -1,7 +1,17 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import 'fake-indexeddb/auto'
 import { IDBFactory } from 'fake-indexeddb'
-import { getOrFetchCommanderPool, readCachedPool } from '../commanderPoolCache'
+
+const edhrecMeta = { generatedAt: '2025-01-01T00:00:00.000Z' }
+vi.mock('../edhrecDeckCounts', () => ({
+  get EDHREC_DATASET_META() {
+    return edhrecMeta
+  },
+  getEdhrecDeckCount: () => null,
+  getEdhrecRank: () => null,
+}))
+
+const { getOrFetchCommanderPool, readCachedPool } = await import('../commanderPoolCache')
 
 describe('commanderPoolCache', () => {
   beforeEach(() => {
@@ -73,6 +83,38 @@ describe('commanderPoolCache', () => {
 
     await getOrFetchCommanderPool()
     await getOrFetchCommanderPool(undefined, { forceRefresh: true })
+    expect(globalThis.fetch).toHaveBeenCalledTimes(2)
+  })
+
+  it('refetches immediately (ignoring maxAgeMs) when the bundled EDHREC dataset has changed since the cache was written', async () => {
+    // Regression: a fresh cache used to be trusted purely by age, so
+    // shipping an updated edhrec-deck-counts.json (re-crawled ranks/deck
+    // counts) had no effect on already-cached pools until their 1-day
+    // window happened to expire — players could see stale EDHREC numbers
+    // for up to a full day after an app update fixed them.
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: [{ id: 'x', name: 'Card X', color_identity: [], type_line: 'Creature', keywords: [] }],
+        has_more: false,
+        total_cards: 1,
+      }),
+    }) as unknown as typeof fetch
+
+    edhrecMeta.generatedAt = '2025-01-01T00:00:00.000Z'
+    await getOrFetchCommanderPool()
+    expect(globalThis.fetch).toHaveBeenCalledTimes(1)
+
+    // Cache is still well within any reasonable maxAgeMs, but the bundled
+    // dataset "changed" (simulating a new app build/deploy) — this alone
+    // must force a refetch.
+    edhrecMeta.generatedAt = '2025-06-01T00:00:00.000Z'
+    await getOrFetchCommanderPool()
+    expect(globalThis.fetch).toHaveBeenCalledTimes(2)
+
+    // And once re-cached against the new dataset version, it's trusted
+    // again without a further refetch.
+    await getOrFetchCommanderPool()
     expect(globalThis.fetch).toHaveBeenCalledTimes(2)
   })
 

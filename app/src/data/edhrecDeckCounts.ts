@@ -9,7 +9,7 @@ interface EdhrecDataset {
   generatedAt: string
   totalCommandersQueried: number
   totalCommandersFound: number
-  commanders: Record<string, { name: string; numDecks: number }>
+  commanders: Record<string, { name: string; numDecks: number; rank: number | null }>
 }
 
 const dataset = edhrecData as EdhrecDataset
@@ -30,4 +30,14 @@ export const EDHREC_DATASET_META = {
  * how they were crawled (see tools/build-edhrec-data.ts). */
 export function getEdhrecDeckCount(cardName: string): number | null {
   return dataset.commanders[normalizeCardName(frontFaceName(cardName))]?.numDecks ?? null
+}
+
+/** Returns EDHREC's own commander-specific popularity rank (e.g. "Rank 146"
+ * on a commander's EDHREC page), or `null` if unknown. This is deliberately
+ * *not* Scryfall's `edhrec_rank` field, which ranks every card EDHREC has
+ * ever indexed (tens of thousands of entries), making a top-150 commander
+ * look like a nobody at rank ~20,000+. Older/less-played commanders may
+ * genuinely have no rank on EDHREC even when their deck count is known. */
+export function getEdhrecRank(cardName: string): number | null {
+  return dataset.commanders[normalizeCardName(frontFaceName(cardName))]?.rank ?? null
 }

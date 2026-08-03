@@ -55,10 +55,10 @@ function PlayerRevealCard({ player, playerName }: { player: PlayerWarState; play
             <img
               src={commander.imageUrl}
               alt={commander.name}
-              className="aspect-[5/7] w-full max-w-sm rounded-lg border-2 border-royal-400 object-cover shadow-card-hover"
+              className="aspect-[5/7] w-full max-w-[16.5rem] rounded-lg border-2 border-royal-400 object-cover shadow-card-hover"
             />
           ) : (
-            <div className="flex aspect-[5/7] w-full max-w-sm items-center justify-center rounded-lg border-2 border-royal-400 bg-wood-900 p-4">
+            <div className="flex aspect-[5/7] w-full max-w-[16.5rem] items-center justify-center rounded-lg border-2 border-royal-400 bg-wood-900 p-4">
               <span aria-hidden="true" className="text-5xl">
                 👑
               </span>
@@ -115,9 +115,10 @@ function GameWinnerPanel({ war }: { war: War }) {
   return (
     <Panel>
       <PanelTitle>{t('scoring.gameWinner')}</PanelTitle>
-      <p className="mb-4 text-sm font-semibold text-royal-600">
+      <p className="mb-1 text-sm font-semibold text-royal-600">
         {t('scoring.winBonusHint', { points: war.config.winPoints })}
       </p>
+      <p className="mb-4 text-xs text-wood-600">{t('scoring.winBonusExplainer')}</p>
       <fieldset className="flex flex-wrap items-center gap-3">
         <legend className="sr-only">{t('scoring.gameWinner')}</legend>
         {war.players.map((player) => {
@@ -238,11 +239,14 @@ function ScoreCardsPanel({ war }: { war: War }) {
       {war.activeScoreModifiers.length === 0 ? (
         <p className="text-sm text-wood-600">{t('scoring.noScoreCards')}</p>
       ) : (
-        <div className="flex flex-col gap-4">
-          {war.activeScoreModifiers.map((card) => (
-            <ScoreCardRow key={card.id} war={war} card={card} />
-          ))}
-        </div>
+        <>
+          <p className="mb-3 text-xs text-wood-600">{t('scoring.scoreCardsHint')}</p>
+          <div className="flex flex-col gap-4">
+            {war.activeScoreModifiers.map((card) => (
+              <ScoreCardRow key={card.id} war={war} card={card} />
+            ))}
+          </div>
+        </>
       )}
     </Panel>
   )
@@ -445,6 +449,7 @@ function BestBrewerPanel({ war }: { war: War }) {
 
       {currentVoter ? (
         <HotSeatGate
+          variant="panel"
           playerId={currentVoter.playerId}
           playerName={getPlayerName(war.config.players, currentVoter.playerId)}
         >

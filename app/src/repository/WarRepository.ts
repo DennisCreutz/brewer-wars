@@ -20,6 +20,9 @@ export interface WarRepository {
   load(id: string): Promise<War | null>
   save(war: War): Promise<void>
   remove(id: string): Promise<void>
+  /** Deletes every stored war. Used by the landing page's "Reset Games"
+   * button — a full wipe, not a per-war delete. */
+  removeAll(): Promise<void>
 }
 
 export function toSummary(war: War): WarSummary {
