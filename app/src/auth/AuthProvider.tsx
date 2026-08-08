@@ -46,7 +46,14 @@ export function BrewerWarsAuthProvider({
     automaticSilentRenew: true,
     onSigninCallback: (user: User | void) => {
       const state = user?.state as { returnTo?: string } | undefined
+      // history.replaceState alone only changes the URL bar — react-router
+      // keeps its own notion of the current location and only updates it
+      // on a 'popstate' event (or via its own navigate()), which this
+      // callback has no access to since it fires outside the React tree.
+      // Without the manual dispatch below, the app would stay stuck
+      // rendering AuthCallbackPage forever despite the URL bar moving.
       window.history.replaceState({}, document.title, state?.returnTo ?? '/')
+      window.dispatchEvent(new PopStateEvent('popstate'))
     },
   }
 

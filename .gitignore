@@ -538,3 +538,6 @@ terraform.rc
 
 ### Backend Lambda build output ###
 backend/dist/
+
+### Playwright MCP debug artifacts ###
+.playwright-mcp/
