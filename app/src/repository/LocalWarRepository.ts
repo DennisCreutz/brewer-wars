@@ -33,6 +33,10 @@ export class LocalWarRepository implements WarRepository {
     return JSON.parse(raw) as War
   }
 
+  async create(war: War): Promise<void> {
+    localStorage.setItem(KEY_PREFIX + war.id, JSON.stringify(war))
+  }
+
   async save(war: War): Promise<void> {
     localStorage.setItem(KEY_PREFIX + war.id, JSON.stringify(war))
   }

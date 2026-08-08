@@ -37,10 +37,16 @@ export function useLoadedWar(expectedPhase?: Phase): UseLoadedWarResult {
     }
     let cancelled = false
     setStatus('loading')
-    loadWar(warId).then((loaded) => {
-      if (cancelled) return
-      setStatus(loaded ? 'ready' : 'not-found')
-    })
+    loadWar(warId)
+      .then((loaded) => {
+        if (cancelled) return
+        setStatus(loaded ? 'ready' : 'not-found')
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return
+        console.error(`Failed to load war "${warId}"`, err)
+        setStatus('not-found')
+      })
     return () => {
       cancelled = true
     }
@@ -54,6 +60,11 @@ export function useLoadedWar(expectedPhase?: Phase): UseLoadedWarResult {
       navigate(warPhasePath(current.id, current.phase), { replace: true })
     }
   }, [current, expectedPhase, navigate])
+
+  useEffect(() => {
+    if (status !== 'not-found') return
+    navigate('/', { replace: true })
+  }, [status, navigate])
 
   return { war: current, status }
 }

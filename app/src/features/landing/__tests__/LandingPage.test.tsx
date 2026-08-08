@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom'
 import '../../../i18n'
 import { LandingPage } from '../LandingPage'
 import { useWarStore } from '../../../store/warStore'
+import { FakeAuthProvider } from '../../../test/FakeAuthProvider'
 import {
   DEFAULT_CUSTOM_OPTIONS,
   DEFAULT_VOTE_POINTS,
@@ -32,7 +33,9 @@ function config(): WarConfig {
 function renderLandingPage() {
   return render(
     <MemoryRouter>
-      <LandingPage />
+      <FakeAuthProvider>
+        <LandingPage />
+      </FakeAuthProvider>
     </MemoryRouter>,
   )
 }

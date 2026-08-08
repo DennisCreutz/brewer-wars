@@ -8,6 +8,7 @@ import { Button } from '../../ui/Button'
 import { ModifierCardView } from '../../ui/ModifierCardView'
 import { PlayerBadge } from '../../ui/PlayerBadge'
 import { HotSeatGate } from '../../ui/HotSeatGate'
+import { useDebouncedCallback } from '../../ui/useDebouncedCallback'
 import { useLoadedWar } from '../../router/useLoadedWar'
 import { paths } from '../../router/paths'
 import { useWarStore } from '../../store/warStore'
@@ -163,9 +164,56 @@ function GameWinnerPanel({ war }: { war: War }) {
   )
 }
 
+/** Local, uncontrolled-from-`times` input: the debounced dispatch means
+ * `times` in the store lags what the user is actively typing by up to
+ * 400ms, so mirroring it back into a controlled `value` would fight the
+ * user's keystrokes and steal focus on every store update. Local state is
+ * seeded once from `times` and only re-synced if the card/player identity
+ * changes (a fresh row), not on every store tick. */
+function ScoreCardNumberInput({
+  cardId,
+  playerId,
+  times,
+  label,
+  onCommit,
+}: {
+  cardId: string
+  playerId: PlayerId
+  times: number
+  label: string
+  onCommit: (cardId: string, playerId: PlayerId, times: number) => void
+}) {
+  const [localValue, setLocalValue] = useState(times)
+  const debounced = useDebouncedCallback(onCommit, 400)
+
+  return (
+    <input
+      type="number"
+      inputMode="numeric"
+      min={0}
+      max={10}
+      step={1}
+      value={localValue}
+      aria-label={label}
+      onChange={(e) => {
+        const raw = e.target.valueAsNumber
+        const next = Number.isNaN(raw) ? 0 : Math.min(10, Math.max(0, Math.round(raw)))
+        setLocalValue(next)
+        debounced.call(cardId, playerId, next)
+      }}
+      onBlur={debounced.flush}
+      className={`w-16 text-center ${INPUT_CLASSES}`}
+    />
+  )
+}
+
 function ScoreCardRow({ war, card }: { war: War; card: ModifierCard }) {
   const { t } = useTranslation()
   const dispatch = useWarStore((s) => s.dispatch)
+
+  function commitTally(cardId: string, playerId: PlayerId, times: number) {
+    void dispatch({ type: 'SET_SCORE_CARD_TALLY', cardId, playerId, times })
+  }
 
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-wood-300/40 bg-parchment-50/40 p-4 sm:flex-row">
@@ -187,25 +235,12 @@ function ScoreCardRow({ war, card }: { war: War; card: ModifierCard }) {
                 commanderImageUrl={player.commander?.imageUrl}
               />
               {card.repeatable ? (
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  min={0}
-                  max={10}
-                  step={1}
-                  value={times}
-                  aria-label={label}
-                  onChange={(e) => {
-                    const raw = e.target.valueAsNumber
-                    const next = Number.isNaN(raw) ? 0 : Math.min(10, Math.max(0, Math.round(raw)))
-                    void dispatch({
-                      type: 'SET_SCORE_CARD_TALLY',
-                      cardId: card.id,
-                      playerId: player.playerId,
-                      times: next,
-                    })
-                  }}
-                  className={`w-16 text-center ${INPUT_CLASSES}`}
+                <ScoreCardNumberInput
+                  cardId={card.id}
+                  playerId={player.playerId}
+                  times={times}
+                  label={label}
+                  onCommit={commitTally}
                 />
               ) : (
                 <input

@@ -2,6 +2,7 @@
   "common": {
     "appName": "Brewer Wars",
     "tagline": "Draw your fate. Build your deck. Claim your glory.",
+    "configError": "Failed to load configuration",
     "phases": {
       "preparation": "Preparation",
       "personal-draw": "Personal Draw",
@@ -21,7 +22,8 @@
       "conclude": "Conclude",
       "openInScryfall": "Open in Scryfall",
       "delete": "Delete",
-      "retry": "Retry"
+      "retry": "Retry",
+      "signOut": "Sign out"
     },
     "language": "Language",
     "loading": "Loading…",
@@ -271,5 +273,10 @@
     "totalLabel": "Total",
     "newWar": "Start a New War",
     "backToLanding": "Home"
+  },
+  "auth": {
+    "redirecting": "Redirecting to sign in…",
+    "completingSignIn": "Completing sign-in…",
+    "error": "Sign-in failed"
   }
 }

@@ -1,6 +1,8 @@
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { LoadingScreen } from '../ui/LoadingScreen'
+import { RequireAuth } from '../auth/RequireAuth'
+import { AuthCallbackPage } from '../auth/AuthCallbackPage'
 
 const LandingPage = lazy(() => import('../features/landing/LandingPage').then((m) => ({ default: m.LandingPage })))
 const WizardPage = lazy(() => import('../features/wizard/WizardPage').then((m) => ({ default: m.WizardPage })))
@@ -24,15 +26,25 @@ export function AppRouter() {
     <BrowserRouter>
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/new" element={<WizardPage />} />
-          <Route path="/war/:warId/preparation" element={<PreparationPage />} />
-          <Route path="/war/:warId/personal-draw" element={<PersonalDrawPage />} />
-          <Route path="/war/:warId/commander-selection" element={<CommanderSelectionPage />} />
-          <Route path="/war/:warId/overview" element={<OverviewPage />} />
-          <Route path="/war/:warId/scoring" element={<ScoringPage />} />
-          <Route path="/war/:warId/podium" element={<PodiumPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/auth/callback" element={<AuthCallbackPage />} />
+          <Route
+            path="/*"
+            element={
+              <RequireAuth>
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/new" element={<WizardPage />} />
+                  <Route path="/war/:warId/preparation" element={<PreparationPage />} />
+                  <Route path="/war/:warId/personal-draw" element={<PersonalDrawPage />} />
+                  <Route path="/war/:warId/commander-selection" element={<CommanderSelectionPage />} />
+                  <Route path="/war/:warId/overview" element={<OverviewPage />} />
+                  <Route path="/war/:warId/scoring" element={<ScoringPage />} />
+                  <Route path="/war/:warId/podium" element={<PodiumPage />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </RequireAuth>
+            }
+          />
         </Routes>
       </Suspense>
     </BrowserRouter>

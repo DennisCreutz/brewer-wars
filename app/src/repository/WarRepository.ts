@@ -18,6 +18,10 @@ export interface WarSummary {
 export interface WarRepository {
   list(): Promise<WarSummary[]>
   load(id: string): Promise<War | null>
+  /** Creates a brand-new war. Distinct from `save` because the API adapter
+   * maps this to an admin-gated POST, while `save` maps to a PUT any
+   * signed-in player may call while progressing an existing war. */
+  create(war: War): Promise<void>
   save(war: War): Promise<void>
   remove(id: string): Promise<void>
   /** Deletes every stored war. Used by the landing page's "Reset Games"
