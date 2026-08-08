@@ -7,13 +7,13 @@ import type { ReactNode } from 'react'
 import { AuthContext, type AuthContextProps } from 'react-oidc-context'
 import type { User } from 'oidc-client-ts'
 
-export function fakeAuthUser(groups: string[] = ['admins']): User {
+export function fakeAuthUser(groups: string[] = ['admins'], sub = 'test-user-sub'): User {
   return {
     access_token: 'test-access-token',
     id_token: 'test-id-token',
     token_type: 'Bearer',
     profile: {
-      sub: 'test-user-sub',
+      sub,
       email: 'test-user@example.com',
       'cognito:groups': groups,
     },
@@ -21,20 +21,21 @@ export function fakeAuthUser(groups: string[] = ['admins']): User {
     scopes: ['openid', 'email', 'profile'],
     toStorageString: () => '{}',
   } as unknown as User
-
 }
 
 export function FakeAuthProvider({
   children,
   groups = ['admins'],
+  sub = 'test-user-sub',
 }: {
   children: ReactNode
   groups?: string[]
+  sub?: string
 }) {
   const value: AuthContextProps = {
     isLoading: false,
     isAuthenticated: true,
-    user: fakeAuthUser(groups),
+    user: fakeAuthUser(groups, sub),
     error: undefined,
     settings: {} as AuthContextProps['settings'],
     events: {} as AuthContextProps['events'],

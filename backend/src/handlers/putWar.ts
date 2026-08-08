@@ -5,7 +5,7 @@ import { getAuthContext } from '../lib/auth.js'
 import { extractSummaryFields, assertWithinSizeLimit } from '../lib/warSummary.js'
 
 export const handler = withErrorHandling(async (event) => {
-  getAuthContext(event) // any signed-in user may update a war
+  const auth = getAuthContext(event)
 
   const warId = event.pathParameters?.warId
   if (!warId) {
@@ -17,6 +17,13 @@ export const handler = withErrorHandling(async (event) => {
   const existing = await ddb.send(new GetCommand({ TableName: TABLE_NAME, Key: key }))
   if (!existing.Item) {
     throw new HttpError(404, 'War not found')
+  }
+
+  const memberUserIds: string[] = Array.isArray(existing.Item.memberUserIds)
+    ? existing.Item.memberUserIds.map(String)
+    : [String(existing.Item.ownerSub)]
+  if (!memberUserIds.includes(auth.sub) && !auth.isAdmin) {
+    throw new HttpError(403, 'You are not a member of this war')
   }
 
   const ifMatch = event.headers?.['if-match'] ?? event.headers?.['If-Match']

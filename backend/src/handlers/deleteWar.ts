@@ -22,13 +22,18 @@ export const handler = withErrorHandling(async (event) => {
   }
 
   const sk = listIndexSk(String(existing.Item.createdAt), warId)
+  const memberUserIds: string[] = Array.isArray(existing.Item.memberUserIds)
+    ? existing.Item.memberUserIds.map(String)
+    : [String(existing.Item.ownerSub)]
 
   await ddb.send(
     new TransactWriteCommand({
       TransactItems: [
         { Delete: { TableName: TABLE_NAME, Key: key } },
         { Delete: { TableName: TABLE_NAME, Key: { PK: LIST_ALL_PK, SK: sk } } },
-        { Delete: { TableName: TABLE_NAME, Key: { PK: userPk(String(existing.Item.ownerSub)), SK: sk } } },
+        ...memberUserIds.map((memberSub) => ({
+          Delete: { TableName: TABLE_NAME, Key: { PK: userPk(memberSub), SK: sk } },
+        })),
       ],
     }),
   )

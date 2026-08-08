@@ -18,8 +18,8 @@ import type { ModifierCard } from '../../../domain/cardTypes'
 function config(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 1,
@@ -77,6 +77,7 @@ function buildWar(overrides: Partial<War> = {}): War {
     seed: 1,
     createdAt: now,
     updatedAt: now,
+    hostUserId: 'user-alice',
     phase: 'overview',
     config: config(),
     globalDeck: { modifier: 'global', drawPile: [], drawnCards: [] },

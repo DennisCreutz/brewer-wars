@@ -16,8 +16,8 @@ import {
 function config(): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 1,
@@ -57,8 +57,8 @@ describe('LandingPage', () => {
   })
 
   it('shows "Reset Games" once wars exist, and wipes them all after confirming', async () => {
-    await useWarStore.getState().startNewWar(config(), 1)
-    await useWarStore.getState().startNewWar(config(), 2)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 1)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 2)
 
     const user = userEvent.setup()
     vi.spyOn(window, 'confirm').mockReturnValue(true)
@@ -72,7 +72,7 @@ describe('LandingPage', () => {
   })
 
   it('does nothing if the confirm dialog is dismissed', async () => {
-    await useWarStore.getState().startNewWar(config(), 3)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 3)
     await useWarStore.getState().refreshWarList()
 
     const user = userEvent.setup()

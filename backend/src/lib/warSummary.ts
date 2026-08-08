@@ -8,6 +8,7 @@ export interface WarSummaryFields {
   createdAt: string
   updatedAt: string
   playerNames: string[]
+  memberUserIds: string[]
 }
 
 interface RawWarShape {
@@ -15,8 +16,9 @@ interface RawWarShape {
   phase?: unknown
   createdAt?: unknown
   updatedAt?: unknown
+  hostUserId?: unknown
   config?: {
-    players?: Array<{ name?: unknown }>
+    players?: Array<{ name?: unknown; userId?: unknown }>
   }
 }
 
@@ -27,17 +29,28 @@ export function extractSummaryFields(war: unknown): WarSummaryFields {
     typeof raw?.phase !== 'string' ||
     typeof raw?.createdAt !== 'string' ||
     typeof raw?.updatedAt !== 'string' ||
+    typeof raw?.hostUserId !== 'string' ||
     !Array.isArray(raw?.config?.players)
   ) {
-    throw new HttpError(400, 'War document is missing required fields (id, phase, createdAt, updatedAt, config.players)')
+    throw new HttpError(
+      400,
+      'War document is missing required fields (id, phase, createdAt, updatedAt, hostUserId, config.players)',
+    )
   }
   const playerNames = raw.config!.players!.map((p) => (typeof p.name === 'string' ? p.name : ''))
+  const memberUserIds = Array.from(
+    new Set([
+      raw.hostUserId,
+      ...raw.config!.players!.map((p) => (typeof p.userId === 'string' ? p.userId : '')).filter(Boolean),
+    ]),
+  )
   return {
     id: raw.id,
     phase: raw.phase,
     createdAt: raw.createdAt,
     updatedAt: raw.updatedAt,
     playerNames,
+    memberUserIds,
   }
 }
 

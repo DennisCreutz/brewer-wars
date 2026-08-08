@@ -32,7 +32,14 @@ locals {
     resetWars = {
       method  = "DELETE"
       path    = "/wars"
-      actions = ["dynamodb:Query", "dynamodb:BatchWriteItem"]
+      actions = ["dynamodb:Query", "dynamodb:BatchGetItem", "dynamodb:BatchWriteItem"]
+    }
+    listUsers = {
+      method  = "GET"
+      path    = "/users"
+      # No DynamoDB access needed at all — this reads directly from
+      # Cognito (see the separate cognito-idp IAM policy below).
+      actions = []
     }
   }
 }
@@ -68,7 +75,10 @@ resource "aws_iam_role" "handler" {
 }
 
 resource "aws_iam_role_policy" "handler_dynamodb" {
-  for_each = local.functions
+  # listUsers needs no DynamoDB access at all (see cognito policy below) —
+  # an IAM policy statement can't have an empty Action list, so it's
+  # excluded from this for_each entirely rather than given a dummy action.
+  for_each = { for k, v in local.functions : k => v if length(v.actions) > 0 }
 
   name = "dynamodb-access"
   role = aws_iam_role.handler[each.key].id
@@ -79,6 +89,20 @@ resource "aws_iam_role_policy" "handler_dynamodb" {
       Effect   = "Allow"
       Action   = each.value.actions
       Resource = [var.table_arn]
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "list_users_cognito" {
+  name = "cognito-list-users"
+  role = aws_iam_role.handler["listUsers"].id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["cognito-idp:ListUsers"]
+      Resource = [aws_cognito_user_pool.this.arn]
     }]
   })
 }
@@ -107,6 +131,7 @@ resource "aws_lambda_function" "handler" {
   environment {
     variables = {
       TABLE_NAME      = var.table_name
+      USER_POOL_ID    = aws_cognito_user_pool.this.id
       ALLOWED_ORIGIN  = "https://${var.domain_name}"
     }
   }
@@ -114,6 +139,7 @@ resource "aws_lambda_function" "handler" {
   depends_on = [
     aws_cloudwatch_log_group.handler,
     aws_iam_role_policy.handler_dynamodb,
+    aws_iam_role_policy.list_users_cognito,
     aws_iam_role_policy_attachment.handler_logs,
   ]
 }

@@ -6,6 +6,7 @@ import { IDBFactory } from 'fake-indexeddb'
 import '../../../i18n'
 import { PreparationPage } from '../PreparationPage'
 import { useWarStore } from '../../../store/warStore'
+import { FakeAuthProvider } from '../../../test/FakeAuthProvider'
 import {
   DEFAULT_CUSTOM_OPTIONS,
   DEFAULT_VOTE_POINTS,
@@ -17,8 +18,8 @@ import type { War } from '../../../domain/warTypes'
 function config(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 2,
@@ -39,14 +40,16 @@ function emptyPoolFetchMock() {
   }) as unknown as typeof fetch
 }
 
-function renderAtWar(war: War) {
+function renderAtWar(war: War, sub = 'test-host') {
   return render(
-    <MemoryRouter initialEntries={[`/war/${war.id}/preparation`]}>
-      <Routes>
-        <Route path="/war/:warId/preparation" element={<PreparationPage />} />
-        <Route path="/war/:warId/personal-draw" element={<div>personal draw screen</div>} />
-      </Routes>
-    </MemoryRouter>,
+    <FakeAuthProvider sub={sub}>
+      <MemoryRouter initialEntries={[`/war/${war.id}/preparation`]}>
+        <Routes>
+          <Route path="/war/:warId/preparation" element={<PreparationPage />} />
+          <Route path="/war/:warId/personal-draw" element={<div>personal draw screen</div>} />
+        </Routes>
+      </MemoryRouter>
+    </FakeAuthProvider>,
   )
 }
 
@@ -76,7 +79,7 @@ describe('PreparationPage', () => {
     )
     globalThis.fetch = fetchMock as unknown as typeof fetch
 
-    const war = await useWarStore.getState().startNewWar(config(), 1)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 1)
     renderAtWar(war)
 
     expect(await screen.findByText(/summoning the commander archive/i)).toBeInTheDocument()
@@ -93,16 +96,25 @@ describe('PreparationPage', () => {
   })
 
   it('shows the intro and Start War button once the commander pool is ready', async () => {
-    const war = await useWarStore.getState().startNewWar(config(), 1)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 1)
     renderAtWar(war)
 
     expect(await screen.findByRole('button', { name: /start war/i })).toBeInTheDocument()
     expect(screen.getByText(/global and score modifiers are drawn/i)).toBeInTheDocument()
   })
 
+  it('shows a host-only hint instead of the Start War button for a non-host member', async () => {
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 1)
+    renderAtWar(war, 'user-alice')
+
+    await screen.findByText(/global and score modifiers are drawn/i)
+    expect(screen.queryByRole('button', { name: /start war/i })).not.toBeInTheDocument()
+    expect(screen.getByText(/only the war's host can run this step/i)).toBeInTheDocument()
+  })
+
   it('runs the preparation draw and reveals the drawn cards plus a commander counter', async () => {
     const user = userEvent.setup()
-    const war = await useWarStore.getState().startNewWar(config(), 1)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 1)
     renderAtWar(war)
 
     await user.click(await screen.findByRole('button', { name: /start war/i }))
@@ -118,7 +130,7 @@ describe('PreparationPage', () => {
 
   it('renders a face-down deck stack beside each reveal (the "drawn from a deck" animation)', async () => {
     const user = userEvent.setup()
-    const war = await useWarStore.getState().startNewWar(config(), 1)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 1)
     renderAtWar(war)
 
     await user.click(await screen.findByRole('button', { name: /start war/i }))
@@ -132,7 +144,7 @@ describe('PreparationPage', () => {
   })
 
   it('shows "none drawn" for an empty modifier deck', async () => {
-    await useWarStore.getState().startNewWar(config({ scoreCount: 0 }), 1)
+    await useWarStore.getState().startNewWar(config({ scoreCount: 0 }), 'test-host', 1)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     renderAtWar(useWarStore.getState().war!)
 
@@ -143,7 +155,7 @@ describe('PreparationPage', () => {
 
   it('continuing advances the phase and navigates to the personal draw screen', async () => {
     const user = userEvent.setup()
-    await useWarStore.getState().startNewWar(config(), 1)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 1)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     renderAtWar(useWarStore.getState().war!)
 

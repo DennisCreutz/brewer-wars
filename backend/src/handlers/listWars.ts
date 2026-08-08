@@ -1,16 +1,19 @@
 import { QueryCommand, BatchGetCommand } from '@aws-sdk/lib-dynamodb'
-import { ddb, TABLE_NAME, LIST_ALL_PK } from '../lib/dynamo.js'
+import { ddb, TABLE_NAME, userPk } from '../lib/dynamo.js'
 import { withErrorHandling, json } from '../lib/http.js'
 import { getAuthContext } from '../lib/auth.js'
 
 export const handler = withErrorHandling(async (event) => {
-  getAuthContext(event) // any signed-in user may list wars
+  const auth = getAuthContext(event)
 
+  // Members only see wars they actually belong to (host or assigned
+  // player) — the per-user index item written at war creation for every
+  // member (see createWar.ts) is what makes this query possible.
   const indexResult = await ddb.send(
     new QueryCommand({
       TableName: TABLE_NAME,
       KeyConditionExpression: 'PK = :pk',
-      ExpressionAttributeValues: { ':pk': LIST_ALL_PK },
+      ExpressionAttributeValues: { ':pk': userPk(auth.sub) },
       ScanIndexForward: false,
     }),
   )

@@ -15,13 +15,7 @@
  */
 import type { ModifierCard } from './cardTypes'
 import type { Deck, DrawLogEntry, DrawRejectionReason } from './draw'
-import type {
-  ChosenCommander,
-  PersonalDecks,
-  PlayerId,
-  PlayerWarState,
-  War,
-} from './warTypes'
+import type { ChosenCommander, PersonalDecks, PlayerId, PlayerWarState, War } from './warTypes'
 
 export class WarCodecError extends Error {}
 
@@ -56,7 +50,12 @@ interface DehydratedPlayerWarState {
  * embedded `ModifierCard` is replaced by its `id`. */
 export type DehydratedWar = Omit<
   War,
-  'globalDeck' | 'scoreDeck' | 'personalDecks' | 'activeGlobalModifiers' | 'activeScoreModifiers' | 'players'
+  | 'globalDeck'
+  | 'scoreDeck'
+  | 'personalDecks'
+  | 'activeGlobalModifiers'
+  | 'activeScoreModifiers'
+  | 'players'
 > & {
   globalDeck: DehydratedDeck
   scoreDeck: DehydratedDeck
@@ -162,7 +161,10 @@ function rehydratePersonalDecks(decks: DehydratedPersonalDecks, lookup: CardLook
   return {
     mode: 'non-shared',
     decks: Object.fromEntries(
-      Object.entries(decks.decks).map(([playerId, deck]) => [playerId, rehydrateDeck(deck, lookup)]),
+      Object.entries(decks.decks).map(([playerId, deck]) => [
+        playerId,
+        rehydrateDeck(deck, lookup),
+      ]),
     ),
   }
 }

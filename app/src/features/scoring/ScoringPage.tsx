@@ -7,13 +7,14 @@ import { Panel, PanelTitle } from '../../ui/Panel'
 import { Button } from '../../ui/Button'
 import { ModifierCardView } from '../../ui/ModifierCardView'
 import { PlayerBadge } from '../../ui/PlayerBadge'
-import { HotSeatGate } from '../../ui/HotSeatGate'
+import { WaitingPanel } from '../../ui/WaitingPanel'
 import { useDebouncedCallback } from '../../ui/useDebouncedCallback'
 import { useLoadedWar } from '../../router/useLoadedWar'
 import { paths } from '../../router/paths'
 import { useWarStore } from '../../store/warStore'
+import { useCurrentUserId } from '../../auth/useIsAdmin'
 import { computeScoring } from '../../domain/scoring'
-import { getPlayerName } from '../../domain/war'
+import { getMyPlayerId, getPlayerName } from '../../domain/war'
 import type { ModifierCard } from '../../domain/cardTypes'
 import type { PlayerId, PlayerWarState, War } from '../../domain/warTypes'
 
@@ -108,8 +109,12 @@ function RevealPanel({ war }: { war: War }) {
 }
 
 /** "Who won the game?" — a fieldset of radio pills (one per player), plus
- * an explicit "no one yet" clear option so the field can validly be unset. */
-function GameWinnerPanel({ war }: { war: War }) {
+ * an explicit "no one yet" clear option so the field can validly be unset.
+ * `readOnly` when the signed-in account isn't the war's host — see
+ * domain/warTypes.ts's `hostUserId` doc comment for why this and the
+ * score-card tally are host-only while the best-brewer vote stays
+ * per-player. */
+function GameWinnerPanel({ war, readOnly }: { war: War; readOnly: boolean }) {
   const { t } = useTranslation()
   const dispatch = useWarStore((s) => s.dispatch)
 
@@ -120,7 +125,8 @@ function GameWinnerPanel({ war }: { war: War }) {
         {t('scoring.winBonusHint', { points: war.config.winPoints })}
       </p>
       <p className="mb-4 text-xs text-wood-600">{t('scoring.winBonusExplainer')}</p>
-      <fieldset className="flex flex-wrap items-center gap-3">
+      {readOnly && <p className="mb-3 text-xs italic text-wood-500">{t('scoring.hostOnlyHint')}</p>}
+      <fieldset disabled={readOnly} className="flex flex-wrap items-center gap-3">
         <legend className="sr-only">{t('scoring.gameWinner')}</legend>
         {war.players.map((player) => {
           const name = getPlayerName(war.config.players, player.playerId)
@@ -128,7 +134,9 @@ function GameWinnerPanel({ war }: { war: War }) {
           return (
             <label
               key={player.playerId}
-              className={`flex cursor-pointer items-center gap-2 rounded-xl border-2 px-3 py-2 transition ${
+              className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 transition ${
+                readOnly ? 'cursor-not-allowed' : 'cursor-pointer'
+              } ${
                 checked
                   ? 'border-royal-400 bg-royal-400/20 shadow-card'
                   : 'border-wood-300/50 bg-parchment-50/50 hover:bg-parchment-50'
@@ -139,6 +147,7 @@ function GameWinnerPanel({ war }: { war: War }) {
                 name="game-winner"
                 className="h-4 w-4 accent-royal-500"
                 checked={checked}
+                disabled={readOnly}
                 onChange={() =>
                   void dispatch({ type: 'SET_GAME_WINNER', playerId: player.playerId })
                 }
@@ -154,8 +163,9 @@ function GameWinnerPanel({ war }: { war: War }) {
         })}
         <button
           type="button"
+          disabled={readOnly}
           onClick={() => void dispatch({ type: 'SET_GAME_WINNER', playerId: null })}
-          className="rounded-xl border-2 border-transparent px-3 py-2 text-xs font-semibold text-wood-500 hover:underline"
+          className="rounded-xl border-2 border-transparent px-3 py-2 text-xs font-semibold text-wood-500 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
         >
           {t('scoring.winnerNone')}
         </button>
@@ -175,12 +185,14 @@ function ScoreCardNumberInput({
   playerId,
   times,
   label,
+  readOnly,
   onCommit,
 }: {
   cardId: string
   playerId: PlayerId
   times: number
   label: string
+  readOnly: boolean
   onCommit: (cardId: string, playerId: PlayerId, times: number) => void
 }) {
   const [localValue, setLocalValue] = useState(times)
@@ -195,6 +207,7 @@ function ScoreCardNumberInput({
       step={1}
       value={localValue}
       aria-label={label}
+      disabled={readOnly}
       onChange={(e) => {
         const raw = e.target.valueAsNumber
         const next = Number.isNaN(raw) ? 0 : Math.min(10, Math.max(0, Math.round(raw)))
@@ -202,12 +215,20 @@ function ScoreCardNumberInput({
         debounced.call(cardId, playerId, next)
       }}
       onBlur={debounced.flush}
-      className={`w-16 text-center ${INPUT_CLASSES}`}
+      className={`w-16 text-center ${INPUT_CLASSES} disabled:cursor-not-allowed disabled:opacity-50`}
     />
   )
 }
 
-function ScoreCardRow({ war, card }: { war: War; card: ModifierCard }) {
+function ScoreCardRow({
+  war,
+  card,
+  readOnly,
+}: {
+  war: War
+  card: ModifierCard
+  readOnly: boolean
+}) {
   const { t } = useTranslation()
   const dispatch = useWarStore((s) => s.dispatch)
 
@@ -240,6 +261,7 @@ function ScoreCardRow({ war, card }: { war: War; card: ModifierCard }) {
                   playerId={player.playerId}
                   times={times}
                   label={label}
+                  readOnly={readOnly}
                   onCommit={commitTally}
                 />
               ) : (
@@ -247,6 +269,7 @@ function ScoreCardRow({ war, card }: { war: War; card: ModifierCard }) {
                   type="checkbox"
                   checked={times > 0}
                   aria-label={label}
+                  disabled={readOnly}
                   onChange={(e) =>
                     void dispatch({
                       type: 'SET_SCORE_CARD_TALLY',
@@ -255,7 +278,7 @@ function ScoreCardRow({ war, card }: { war: War; card: ModifierCard }) {
                       times: e.target.checked ? 1 : 0,
                     })
                   }
-                  className="h-4 w-4 accent-royal-500"
+                  className="h-4 w-4 accent-royal-500 disabled:cursor-not-allowed disabled:opacity-50"
                 />
               )}
             </div>
@@ -266,7 +289,7 @@ function ScoreCardRow({ war, card }: { war: War; card: ModifierCard }) {
   )
 }
 
-function ScoreCardsPanel({ war }: { war: War }) {
+function ScoreCardsPanel({ war, readOnly }: { war: War; readOnly: boolean }) {
   const { t } = useTranslation()
   return (
     <Panel>
@@ -276,9 +299,12 @@ function ScoreCardsPanel({ war }: { war: War }) {
       ) : (
         <>
           <p className="mb-3 text-xs text-wood-600">{t('scoring.scoreCardsHint')}</p>
+          {readOnly && (
+            <p className="mb-3 text-xs italic text-wood-500">{t('scoring.hostOnlyHint')}</p>
+          )}
           <div className="flex flex-col gap-4">
             {war.activeScoreModifiers.map((card) => (
-              <ScoreCardRow key={card.id} war={war} card={card} />
+              <ScoreCardRow key={card.id} war={war} card={card} readOnly={readOnly} />
             ))}
           </div>
         </>
@@ -287,11 +313,10 @@ function ScoreCardsPanel({ war }: { war: War }) {
   )
 }
 
-/** One player's private hot-seat turn: pick exactly one *other* player as
- * best deck brewer, then confirm. Rendered inside `HotSeatGate`, and keyed
- * by `voter.playerId` from the parent so `selectedId` resets fresh every
- * time the curtain flips to a new voter (same recipe as
- * `PlayerCommanderPicker` in CommanderSelectionPage.tsx). */
+/** One player's turn to pick exactly one *other* player as best deck
+ * brewer, then confirm. Keyed by `voter.playerId` from the parent so
+ * `selectedId` resets fresh every time this mounts for a different voter
+ * (same recipe as `PlayerCommanderPicker` in CommanderSelectionPage.tsx). */
 function BestBrewerVoteBooth({ war, voter }: { war: War; voter: PlayerWarState }) {
   const { t } = useTranslation()
   const dispatch = useWarStore((s) => s.dispatch)
@@ -459,18 +484,23 @@ function BestBrewerResults({ war }: { war: War }) {
   )
 }
 
-/** Best Deck Brewer vote: a hot-seat mini-game in the same panel/position
- * this vote has always lived in. One player at a time — whoever hasn't
- * voted yet — gets a private `HotSeatGate` turn to pick their champ;
- * that's derived straight from existing state (`bestBrewerVoteFor !==
- * null` means "has voted"), no new domain state needed, exactly like
- * `getActivePersonalDrawPlayer`/`getActiveCommanderSelectionPlayer` pick
- * the active hot-seat turn elsewhere (domain/war.ts) — just computed
- * inline here since this progress is presentation-only. Once everyone's
- * voted, `BestBrewerResults` reveals the tally in this same panel. */
-function BestBrewerPanel({ war }: { war: War }) {
+/** Best Deck Brewer vote: every member votes independently and
+ * concurrently (nothing serializes turns once each member has their own
+ * device — see ui/TurnGate.tsx); whoever hasn't voted yet
+ * (`bestBrewerVoteFor === null`) sees their own vote booth, everyone else
+ * sees a waiting summary. Once everyone's voted, `BestBrewerResults`
+ * reveals the tally in this same panel, for everyone. */
+function BestBrewerPanel({ war, myUserId }: { war: War; myUserId: string | null }) {
   const { t } = useTranslation()
-  const currentVoter = war.players.find((p) => p.bestBrewerVoteFor === null) ?? null
+  const allVoted = war.players.every((p) => p.bestBrewerVoteFor !== null)
+
+  const pendingVoters = war.players
+    .filter((p) => p.bestBrewerVoteFor === null)
+    .map((p) => ({ id: p.playerId, name: getPlayerName(war.config.players, p.playerId) }))
+
+  const myPlayerId = getMyPlayerId(war.config.players, myUserId)
+  const myPlayer = myPlayerId ? war.players.find((p) => p.playerId === myPlayerId) : undefined
+  const isMyTurn = !!myPlayer && myPlayer.bestBrewerVoteFor === null
 
   return (
     <Panel>
@@ -482,16 +512,16 @@ function BestBrewerPanel({ war }: { war: War }) {
         </span>
       </p>
 
-      {currentVoter ? (
-        <HotSeatGate
-          variant="panel"
-          playerId={currentVoter.playerId}
-          playerName={getPlayerName(war.config.players, currentVoter.playerId)}
-        >
-          <BestBrewerVoteBooth key={currentVoter.playerId} war={war} voter={currentVoter} />
-        </HotSeatGate>
-      ) : (
+      {allVoted ? (
         <BestBrewerResults war={war} />
+      ) : isMyTurn ? (
+        <BestBrewerVoteBooth key={myPlayer.playerId} war={war} voter={myPlayer} />
+      ) : (
+        <WaitingPanel
+          variant="panel"
+          heading={myPlayer ? t('scoring.voteWaitingForOthers') : t('scoring.voteNotAPlayer')}
+          pendingPlayers={pendingVoters}
+        />
       )}
     </Panel>
   )
@@ -560,13 +590,14 @@ function LiveTotalPanel({ war }: { war: War }) {
 /** Gated on a declared game winner: a war that concludes with no winner
  * would score its win bonus to nobody everywhere, which is a legal but
  * odd result to lock in by accident, so this is a UX nudge rather than a
- * hard domain rule (the reducer itself has no such requirement). */
-function ConcludeSection({ war }: { war: War }) {
+ * hard domain rule (the reducer itself has no such requirement).
+ * Host-only, same as the other shared scoring inputs. */
+function ConcludeSection({ war, readOnly }: { war: War; readOnly: boolean }) {
   const { t } = useTranslation()
   const dispatch = useWarStore((s) => s.dispatch)
   const navigate = useNavigate()
   const [isConcluding, setIsConcluding] = useState(false)
-  const canConclude = war.scoring.gameWinnerId !== null
+  const canConclude = war.scoring.gameWinnerId !== null && !readOnly
 
   async function handleConclude() {
     setIsConcluding(true)
@@ -580,7 +611,11 @@ function ConcludeSection({ war }: { war: War }) {
 
   return (
     <div className="flex flex-col items-end gap-2 pb-4">
-      {!canConclude && <p className="text-xs text-wood-400">{t('scoring.concludeHint')}</p>}
+      {readOnly ? (
+        <p className="text-xs italic text-wood-400">{t('scoring.hostOnlyHint')}</p>
+      ) : (
+        !canConclude && <p className="text-xs text-wood-400">{t('scoring.concludeHint')}</p>
+      )}
       <Button
         type="button"
         variant="primary"
@@ -601,16 +636,19 @@ function ConcludeSection({ war }: { war: War }) {
 export function ScoringPage() {
   const { t } = useTranslation()
   const { war, status } = useLoadedWar('scoring')
+  const myUserId = useCurrentUserId()
   if (status === 'loading' || !war) return <LoadingScreen />
+
+  const isHost = myUserId !== null && myUserId === war.hostUserId
 
   return (
     <PageShell title={t('scoring.title')}>
       <RevealPanel war={war} />
-      <GameWinnerPanel war={war} />
-      <ScoreCardsPanel war={war} />
-      <BestBrewerPanel war={war} />
+      <GameWinnerPanel war={war} readOnly={!isHost} />
+      <ScoreCardsPanel war={war} readOnly={!isHost} />
+      <BestBrewerPanel war={war} myUserId={myUserId} />
       <LiveTotalPanel war={war} />
-      <ConcludeSection war={war} />
+      <ConcludeSection war={war} readOnly={!isHost} />
     </PageShell>
   )
 }

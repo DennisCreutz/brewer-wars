@@ -4,7 +4,7 @@ import { withErrorHandling, json, HttpError } from '../lib/http.js'
 import { getAuthContext } from '../lib/auth.js'
 
 export const handler = withErrorHandling(async (event) => {
-  getAuthContext(event) // any signed-in user may load a war
+  const auth = getAuthContext(event)
 
   const warId = event.pathParameters?.warId
   if (!warId) {
@@ -20,6 +20,13 @@ export const handler = withErrorHandling(async (event) => {
 
   if (!result.Item) {
     throw new HttpError(404, 'War not found')
+  }
+
+  const memberUserIds: string[] = Array.isArray(result.Item.memberUserIds)
+    ? result.Item.memberUserIds.map(String)
+    : [String(result.Item.ownerSub)]
+  if (!memberUserIds.includes(auth.sub) && !auth.isAdmin) {
+    throw new HttpError(403, 'You are not a member of this war')
   }
 
   const war: unknown = JSON.parse(result.Item.doc as string)

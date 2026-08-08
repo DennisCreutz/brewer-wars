@@ -13,8 +13,8 @@ import type { CommanderSummary } from '../../../domain/commanderCheck'
 function config(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 0,
@@ -64,7 +64,7 @@ describe('usePersonalDrawEngine', () => {
     useWarStore.setState({
       commanderPool: [commander('1', ['W']), commander('2', ['U'])],
     })
-    await useWarStore.getState().startNewWar(config(), 1)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 1)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
 
@@ -88,7 +88,7 @@ describe('usePersonalDrawEngine', () => {
       personalCount: 1,
       disabledCardIds: [], // keep full personal pool; we instead pin the deck via a helper below
     })
-    await useWarStore.getState().startNewWar(onlyColourU, 1)
+    await useWarStore.getState().startNewWar(onlyColourU, 'test-host', 1)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
 
@@ -129,7 +129,11 @@ describe('usePersonalDrawEngine', () => {
     useWarStore.setState({ commanderPool: [] })
     await useWarStore
       .getState()
-      .startNewWar(config({ gameMode: 'custom', customOptions: { ...DEFAULT_CUSTOM_OPTIONS, draft: true } }), 2)
+      .startNewWar(
+        config({ gameMode: 'custom', customOptions: { ...DEFAULT_CUSTOM_OPTIONS, draft: true } }),
+        'test-host',
+        2,
+      )
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
 
@@ -144,7 +148,7 @@ describe('usePersonalDrawEngine', () => {
 
   it('isProcessing reflects the async operation state', async () => {
     useWarStore.setState({ commanderPool: [] })
-    await useWarStore.getState().startNewWar(config(), 3)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 3)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
 

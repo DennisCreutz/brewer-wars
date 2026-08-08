@@ -15,3 +15,12 @@ export function useAccessToken(): string | null {
   const auth = useAuth()
   return auth.user?.access_token ?? null
 }
+
+/** The signed-in account's Cognito `sub` — the identity a `Player.userId`
+ * is compared against everywhere turn-gating happens (see ui/TurnGate.tsx).
+ * Returns null before the session finishes loading. */
+export function useCurrentUserId(): string | null {
+  const auth = useAuth()
+  const sub = auth.user?.profile?.sub
+  return typeof sub === 'string' ? sub : null
+}

@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import '../../../i18n'
 import { PersonalDrawPage } from '../PersonalDrawPage'
 import { useWarStore } from '../../../store/warStore'
+import { FakeAuthProvider } from '../../../test/FakeAuthProvider'
 import {
   DEFAULT_CUSTOM_OPTIONS,
   DEFAULT_VOTE_POINTS,
@@ -21,8 +22,8 @@ const ALL_CARDS = cardsData as ModifierCard[]
 function config(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 0,
@@ -97,17 +98,23 @@ function generousCommanderPool(): CommanderSummary[] {
   return pool
 }
 
-function renderAtWar(war: War) {
+/** Renders as whichever account `sub` belongs to (defaults to alice's) —
+ * every player is now bound to a real account, so which player's action
+ * screen shows up depends entirely on who's signed in (see ui/TurnGate.tsx
+ * having been replaced by this per-user model). */
+function renderAtWar(war: War, sub = 'user-alice') {
   return render(
-    <MemoryRouter initialEntries={[`/war/${war.id}/personal-draw`]}>
-      <Routes>
-        <Route path="/war/:warId/personal-draw" element={<PersonalDrawPage />} />
-        <Route
-          path="/war/:warId/commander-selection"
-          element={<div>commander selection screen</div>}
-        />
-      </Routes>
-    </MemoryRouter>,
+    <FakeAuthProvider sub={sub}>
+      <MemoryRouter initialEntries={[`/war/${war.id}/personal-draw`]}>
+        <Routes>
+          <Route path="/war/:warId/personal-draw" element={<PersonalDrawPage />} />
+          <Route
+            path="/war/:warId/commander-selection"
+            element={<div>commander selection screen</div>}
+          />
+        </Routes>
+      </MemoryRouter>
+    </FakeAuthProvider>,
   )
 }
 
@@ -123,20 +130,22 @@ describe('PersonalDrawPage', () => {
     })
   })
 
-  it('shows the hot-seat curtain for the active player before revealing their turn', async () => {
+  it('shows a waiting screen for a member whose turn it is not', async () => {
     useWarStore.setState({ commanderPool: generousCommanderPool() })
-    await useWarStore.getState().startNewWar(config(), 10)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 10)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
-    renderAtWar(useWarStore.getState().war!)
+    // Signed in as neither alice nor bob (e.g. a host who isn't playing) —
+    // both players are still concurrently mid-draw.
+    renderAtWar(useWarStore.getState().war!, 'user-spectator')
 
-    expect(screen.getByText(/pass the device to alice/i)).toBeInTheDocument()
+    expect(screen.getByText(/waiting on the players below/i)).toBeInTheDocument()
     expect(screen.queryByText('Your Modifiers')).not.toBeInTheDocument()
   })
 
   it(
-    'draws a card, plays back an auto-redraw story, and gates the next ' +
-      "player's curtain behind a finish confirmation",
+    'draws a card and plays back an auto-redraw story, then shows a waiting ' +
+      'screen once the drawing player is done',
     async () => {
       const user = userEvent.setup()
       // Only a single white commander exists — forces whichever card lands
@@ -145,7 +154,7 @@ describe('PersonalDrawPage', () => {
       // (same recipe as usePersonalDrawEngine.test.ts).
       useWarStore.setState({ commanderPool: [commander('1', ['W'])] })
 
-      await useWarStore.getState().startNewWar(config(), 1)
+      await useWarStore.getState().startNewWar(config(), 'test-host', 1)
       await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
       await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
 
@@ -162,9 +171,8 @@ describe('PersonalDrawPage', () => {
         })
       }
 
-      renderAtWar(useWarStore.getState().war!)
+      renderAtWar(useWarStore.getState().war!, 'user-alice')
 
-      await user.click(screen.getByRole('button', { name: /continue/i }))
       await user.click(screen.getByRole('button', { name: /draw personal modifier/i }))
 
       await waitFor(() => {
@@ -184,25 +192,12 @@ describe('PersonalDrawPage', () => {
       expect(screen.getByText(/only 1 commander would satisfy/i)).toBeInTheDocument()
       await user.click(screen.getByRole('button', { name: /keep these/i }))
 
-      expect(screen.getByText(/alice is done drawing/i)).toBeInTheDocument()
+      expect(screen.getByText(/you're all set/i)).toBeInTheDocument()
 
       const alice = useWarStore.getState().war!.players.find((p) => p.playerId === 'alice')!
       expect(alice.personalModifiers).toHaveLength(1)
       expect(alice.personalModifiers[0].id).not.toBe('colour-u')
       expect(alice.personalDrawComplete).toBe(true)
-
-      // The curtain must NOT have flipped to Bob yet — only an explicit tap
-      // from the just-finished player does that.
-      expect(screen.queryByText(/pass the device to bob/i)).not.toBeInTheDocument()
-
-      // Give Bob's upcoming single draw a generous pool so it resolves in
-      // one shot regardless of which card the shuffle hands him.
-      useWarStore.setState({ commanderPool: generousCommanderPool() })
-
-      await user.click(screen.getByRole('button', { name: /pass the device to the next player/i }))
-      await waitFor(() => {
-        expect(screen.getByText(/pass the device to bob/i)).toBeInTheDocument()
-      })
     },
   )
 
@@ -213,12 +208,11 @@ describe('PersonalDrawPage', () => {
       gameMode: 'custom',
       customOptions: { ...DEFAULT_CUSTOM_OPTIONS, draft: true },
     })
-    await useWarStore.getState().startNewWar(cfg, 2)
+    await useWarStore.getState().startNewWar(cfg, 'test-host', 2)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
-    renderAtWar(useWarStore.getState().war!)
+    renderAtWar(useWarStore.getState().war!, 'user-alice')
 
-    await user.click(screen.getByRole('button', { name: /continue/i }))
     await user.click(screen.getByRole('button', { name: /draw 3 candidates/i }))
 
     const candidateButtons = await screen.findAllByRole('button', { name: /^choose /i })
@@ -233,13 +227,13 @@ describe('PersonalDrawPage', () => {
       const alice = useWarStore.getState().war!.players.find((p) => p.playerId === 'alice')!
       expect(alice.personalModifiers).toHaveLength(1)
     })
-    expect(screen.getByText(/alice is done drawing/i)).toBeInTheDocument()
+    expect(screen.getByText(/you're all set/i)).toBeInTheDocument()
   })
 
   it('shows the all-done summary and advances to commander selection once everyone has finished', async () => {
     const user = userEvent.setup()
     useWarStore.setState({ commanderPool: [] })
-    await useWarStore.getState().startNewWar(config(), 3)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 3)
     await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
 
@@ -263,19 +257,9 @@ describe('PersonalDrawPage', () => {
   })
 
   describe('low commander count prompt', () => {
-    /**
-     * Starts a war and advances it to personal-draw, leaving alice as the
-     * still-active (not yet complete) pinned player. Callers finish her
-     * hand afterwards, via `finishAliceWith` below, mirroring how the page
-     * actually behaves in play: the pin locks onto whoever is active at
-     * mount and stays put through their own completion (see the big
-     * comment on `pinnedPlayerId` in PersonalDrawPage.tsx) — marking her
-     * complete *before* the first render would instead make the pin skip
-     * straight to bob, since alice wouldn't be the active player anymore.
-     */
-    async function startWarPinnedOnAlice(pool: CommanderSummary[] | null) {
+    async function startWar(pool: CommanderSummary[] | null) {
       useWarStore.setState({ commanderPool: pool })
-      await useWarStore.getState().startNewWar(config(), 5)
+      await useWarStore.getState().startNewWar(config(), 'test-host', 5)
       await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
       await useWarStore.getState().dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
       return useWarStore.getState().war!
@@ -287,7 +271,7 @@ describe('PersonalDrawPage', () => {
      * gating logic against a known `commanderCount`, not the draw engine
      * itself (see the auto-redraw test above, and
      * usePersonalDrawEngine.test.ts, for that). Combined with whatever
-     * `commanderPool` the test set up via `startWarPinnedOnAlice`,
+     * `commanderPool` the test set up via `startWar`,
      * `countPotentialCommanders` will resolve to however many of its
      * entries match Colour U's `colorIdentityExact` check.
      */
@@ -315,14 +299,12 @@ describe('PersonalDrawPage', () => {
     }
 
     it('appears when the finished hand leaves a low (1-4) live commander count', async () => {
-      const user = userEvent.setup()
-      const war = await startWarPinnedOnAlice([
+      const war = await startWar([
         commander('u1', ['U']),
         commander('u2', ['U']),
         commander('w1', ['W']),
       ])
-      renderAtWar(war)
-      await user.click(screen.getByRole('button', { name: /continue/i }))
+      renderAtWar(war, 'user-alice')
       finishAliceWithColourU()
 
       await waitFor(() => {
@@ -330,55 +312,48 @@ describe('PersonalDrawPage', () => {
       })
       expect(screen.getByText(/only 2 commanders would satisfy/i)).toBeInTheDocument()
       // The usual "you're done" confirmation must NOT show yet.
-      expect(screen.queryByText(/alice is done drawing/i)).not.toBeInTheDocument()
+      expect(screen.queryByText(/you're all set/i)).not.toBeInTheDocument()
     })
 
     it('does not appear once the live count is at/above the threshold', async () => {
-      const user = userEvent.setup()
       const pool = Array.from({ length: 5 }, (_, i) => commander(`u${i}`, ['U']))
-      const war = await startWarPinnedOnAlice(pool)
-      renderAtWar(war)
-      await user.click(screen.getByRole('button', { name: /continue/i }))
+      const war = await startWar(pool)
+      renderAtWar(war, 'user-alice')
       finishAliceWithColourU()
 
       await waitFor(() => {
-        expect(screen.getByText(/alice is done drawing/i)).toBeInTheDocument()
+        expect(screen.getByText(/you're all set/i)).toBeInTheDocument()
       })
       expect(screen.queryByText(/too few commanders/i)).not.toBeInTheDocument()
     })
 
     it('does not appear while the commander pool has not loaded yet (count null)', async () => {
-      const user = userEvent.setup()
-      const war = await startWarPinnedOnAlice(null)
-      renderAtWar(war)
-      await user.click(screen.getByRole('button', { name: /continue/i }))
+      const war = await startWar(null)
+      renderAtWar(war, 'user-alice')
       finishAliceWithColourU()
 
       await waitFor(() => {
-        expect(screen.getByText(/alice is done drawing/i)).toBeInTheDocument()
+        expect(screen.getByText(/you're all set/i)).toBeInTheDocument()
       })
       expect(screen.queryByText(/too few commanders/i)).not.toBeInTheDocument()
     })
 
     it('does not appear when the live count is exactly 0 (defensive fallback)', async () => {
-      const user = userEvent.setup()
       // No commander in the pool matches Colour U at all.
-      const war = await startWarPinnedOnAlice([commander('w1', ['W']), commander('b1', ['B'])])
-      renderAtWar(war)
-      await user.click(screen.getByRole('button', { name: /continue/i }))
+      const war = await startWar([commander('w1', ['W']), commander('b1', ['B'])])
+      renderAtWar(war, 'user-alice')
       finishAliceWithColourU()
 
       await waitFor(() => {
-        expect(screen.getByText(/alice is done drawing/i)).toBeInTheDocument()
+        expect(screen.getByText(/you're all set/i)).toBeInTheDocument()
       })
       expect(screen.queryByText(/too few commanders/i)).not.toBeInTheDocument()
     })
 
     it('"Redraw All" calls the engine, clearing the hand and returning to the normal draw controls', async () => {
       const user = userEvent.setup()
-      const war = await startWarPinnedOnAlice([commander('u1', ['U']), commander('w1', ['W'])])
-      renderAtWar(war)
-      await user.click(screen.getByRole('button', { name: /continue/i }))
+      const war = await startWar([commander('u1', ['U']), commander('w1', ['W'])])
+      renderAtWar(war, 'user-alice')
       finishAliceWithColourU()
 
       await waitFor(() => {
@@ -399,9 +374,8 @@ describe('PersonalDrawPage', () => {
 
     it('"Keep These" declines the redraw and proceeds to the normal finish confirmation', async () => {
       const user = userEvent.setup()
-      const war = await startWarPinnedOnAlice([commander('u1', ['U']), commander('w1', ['W'])])
-      renderAtWar(war)
-      await user.click(screen.getByRole('button', { name: /continue/i }))
+      const war = await startWar([commander('u1', ['U']), commander('w1', ['W'])])
+      renderAtWar(war, 'user-alice')
       finishAliceWithColourU()
 
       await waitFor(() => {
@@ -409,7 +383,7 @@ describe('PersonalDrawPage', () => {
       })
       await user.click(screen.getByRole('button', { name: /keep these/i }))
 
-      expect(screen.getByText(/alice is done drawing/i)).toBeInTheDocument()
+      expect(screen.getByText(/you're all set/i)).toBeInTheDocument()
       expect(screen.queryByText(/too few commanders/i)).not.toBeInTheDocument()
       // Declining leaves the hand untouched.
       const alice = useWarStore.getState().war!.players.find((p) => p.playerId === 'alice')!
@@ -418,9 +392,8 @@ describe('PersonalDrawPage', () => {
 
     it('reappears if a redraw still results in another low-count hand', async () => {
       const user = userEvent.setup()
-      const war = await startWarPinnedOnAlice([commander('u1', ['U'])])
-      renderAtWar(war)
-      await user.click(screen.getByRole('button', { name: /continue/i }))
+      const war = await startWar([commander('u1', ['U'])])
+      renderAtWar(war, 'user-alice')
       finishAliceWithColourU()
 
       await waitFor(() => {

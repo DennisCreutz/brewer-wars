@@ -5,6 +5,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import '../../../i18n'
 import { ScoringPage } from '../ScoringPage'
 import { useWarStore } from '../../../store/warStore'
+import { FakeAuthProvider } from '../../../test/FakeAuthProvider'
 import { warPhasePath } from '../../../router/paths'
 import {
   DEFAULT_CUSTOM_OPTIONS,
@@ -19,9 +20,9 @@ const PLAYER_IDS = ['alice', 'bob', 'carol']
 function config(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
-      { id: 'carol', name: 'Carol' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
+      { id: 'carol', name: 'Carol', userId: 'user-carol' },
     ],
     disabledCardIds: [],
     globalCount: 1,
@@ -40,7 +41,7 @@ function config(overrides: Partial<WarConfig> = {}): WarConfig {
 // of the bare reducer, since the pages under test read from the store.
 async function playThroughToScoring(overrides: Partial<WarConfig> = {}, seed = 9): Promise<War> {
   const { startNewWar, dispatch } = useWarStore.getState()
-  let war = await startNewWar(config(overrides), seed)
+  let war = await startNewWar(config(overrides), 'test-host', seed)
   war = await dispatch({ type: 'RUN_PREPARATION_DRAW' })
   war = await dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
   for (const playerId of PLAYER_IDS) {
@@ -59,14 +60,16 @@ async function playThroughToScoring(overrides: Partial<WarConfig> = {}, seed = 9
   return war
 }
 
-function renderScoringPage(war: War) {
+function renderScoringPage(war: War, sub = 'test-host') {
   return render(
-    <MemoryRouter initialEntries={[warPhasePath(war.id, 'scoring')]}>
-      <Routes>
-        <Route path="/war/:warId/scoring" element={<ScoringPage />} />
-        <Route path="/war/:warId/podium" element={<div>podium-page-marker</div>} />
-      </Routes>
-    </MemoryRouter>,
+    <FakeAuthProvider sub={sub}>
+      <MemoryRouter initialEntries={[warPhasePath(war.id, 'scoring')]}>
+        <Routes>
+          <Route path="/war/:warId/scoring" element={<ScoringPage />} />
+          <Route path="/war/:warId/podium" element={<div>podium-page-marker</div>} />
+        </Routes>
+      </MemoryRouter>
+    </FakeAuthProvider>,
   )
 }
 
@@ -124,24 +127,36 @@ describe('ScoringPage', () => {
     expect(concludeButton).not.toBeDisabled()
   })
 
-  it('shows a private hot-seat curtain for the first player who has not voted yet', async () => {
+  it('shows a waiting screen for the first player who has not voted yet, from their own device', async () => {
     const war = await playThroughToScoring()
-    renderScoringPage(war)
+    renderScoringPage(war, 'user-alice')
 
-    // Alice hasn't voted yet, so she's up first, behind her own curtain —
-    // nobody else's voting choices are visible/interactive until she
-    // dismisses it herself.
-    expect(screen.getByText(/pass the device to alice/i)).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /vote for bob/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /vote for carol/i })).not.toBeInTheDocument()
+    // Alice hasn't voted yet, so her own screen shows her vote booth —
+    // nobody else's voting choices are visible on it (each member only
+    // ever sees their own turn now, see ui/TurnGate.tsx).
+    expect(screen.getByRole('button', { name: /vote for bob/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /vote for carol/i })).toBeInTheDocument()
+  })
+
+  it('shows a waiting summary for a member who already voted', async () => {
+    const war = await playThroughToScoring()
+    const user = userEvent.setup()
+    renderScoringPage(war, 'user-alice')
+
+    await user.click(screen.getByRole('button', { name: /vote for bob/i }))
+    await user.click(screen.getByRole('button', { name: /confirm vote/i }))
+
+    await waitFor(() => {
+      expect(
+        useWarStore.getState().war?.players.find((p) => p.playerId === 'alice')?.bestBrewerVoteFor,
+      ).toBe('bob')
+    })
+    expect(screen.getByText(/vote cast! waiting for the others/i)).toBeInTheDocument()
   })
 
   it('excludes the current voter from their own best-brewer vote choices (still cannot vote for yourself)', async () => {
     const war = await playThroughToScoring()
-    const user = userEvent.setup()
-    renderScoringPage(war)
-
-    await user.click(screen.getByRole('button', { name: /continue/i })) // dismiss Alice's curtain
+    renderScoringPage(war, 'user-alice')
 
     expect(screen.getByRole('button', { name: /vote for bob/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /vote for carol/i })).toBeInTheDocument()
@@ -151,9 +166,8 @@ describe('ScoringPage', () => {
   it('disables the confirm button until a candidate is picked', async () => {
     const war = await playThroughToScoring()
     const user = userEvent.setup()
-    renderScoringPage(war)
+    renderScoringPage(war, 'user-alice')
 
-    await user.click(screen.getByRole('button', { name: /continue/i }))
     expect(screen.getByRole('button', { name: /confirm vote/i })).toBeDisabled()
 
     await user.click(screen.getByRole('button', { name: /vote for bob/i }))
@@ -161,14 +175,13 @@ describe('ScoringPage', () => {
   })
 
   it(
-    'casts a hot-seat best-brewer vote (dispatching the same SET_BEST_BREWER_VOTE shape as before) ' +
-      "and automatically advances the curtain to the next player who hasn't voted",
+    'casts a best-brewer vote (dispatching the same SET_BEST_BREWER_VOTE shape as before), each ' +
+      "from the voting member's own device",
     async () => {
       const war = await playThroughToScoring()
       const user = userEvent.setup()
-      renderScoringPage(war)
+      renderScoringPage(war, 'user-alice')
 
-      await user.click(screen.getByRole('button', { name: /continue/i })) // Alice's curtain
       await user.click(screen.getByRole('button', { name: /vote for bob/i }))
       await user.click(screen.getByRole('button', { name: /confirm vote/i }))
 
@@ -176,39 +189,42 @@ describe('ScoringPage', () => {
         const alice = useWarStore.getState().war?.players.find((p) => p.playerId === 'alice')
         expect(alice?.bestBrewerVoteFor).toBe('bob')
       })
-
-      // Bob hasn't voted yet, so the curtain now flips to him automatically
-      // — no extra "pass the device" step needed beyond the vote itself.
-      expect(await screen.findByText(/pass the device to bob/i)).toBeInTheDocument()
     },
   )
 
   it('reveals a tally and per-player vote bonus once every player has voted', async () => {
     const war = await playThroughToScoring()
     const user = userEvent.setup()
-    renderScoringPage(war)
 
-    // Alice votes for Bob.
-    await user.click(screen.getByRole('button', { name: /continue/i }))
+    // Each member votes from their own render (their own device) — no
+    // shared curtain state carries between them any more.
+    const { unmount: unmountAlice } = renderScoringPage(war, 'user-alice')
     await user.click(screen.getByRole('button', { name: /vote for bob/i }))
     await user.click(screen.getByRole('button', { name: /confirm vote/i }))
+    await waitFor(() => {
+      expect(
+        useWarStore.getState().war?.players.find((p) => p.playerId === 'alice')?.bestBrewerVoteFor,
+      ).toBe('bob')
+    })
+    unmountAlice()
 
-    // Bob votes for Carol.
-    await screen.findByText(/pass the device to bob/i)
-    await user.click(screen.getByRole('button', { name: /continue/i }))
+    const { unmount: unmountBob } = renderScoringPage(useWarStore.getState().war!, 'user-bob')
     await user.click(screen.getByRole('button', { name: /vote for carol/i }))
     await user.click(screen.getByRole('button', { name: /confirm vote/i }))
+    await waitFor(() => {
+      expect(
+        useWarStore.getState().war?.players.find((p) => p.playerId === 'bob')?.bestBrewerVoteFor,
+      ).toBe('carol')
+    })
+    unmountBob()
 
-    // Carol votes for Bob.
-    await screen.findByText(/pass the device to carol/i)
-    await user.click(screen.getByRole('button', { name: /continue/i }))
+    renderScoringPage(useWarStore.getState().war!, 'user-carol')
     await user.click(screen.getByRole('button', { name: /vote for bob/i }))
     await user.click(screen.getByRole('button', { name: /confirm vote/i }))
 
-    // The curtain is gone; a completion summary with a per-player tally
-    // (Bob: 2 votes, Carol: 1, Alice: 0) takes its place in the same panel.
+    // A completion summary with a per-player tally (Bob: 2 votes, Carol: 1,
+    // Alice: 0) takes the place of any voting UI once everyone's voted.
     expect(await screen.findByText(/everyone has voted/i)).toBeInTheDocument()
-    expect(screen.queryByText(/pass the device to/i)).not.toBeInTheDocument()
     expect(screen.getByText('2 votes')).toBeInTheDocument()
     expect(screen.getByText('1 vote')).toBeInTheDocument()
 

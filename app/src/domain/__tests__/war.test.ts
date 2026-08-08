@@ -25,9 +25,9 @@ const cards = cardsData as ModifierCard[]
 function baseConfig(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
-      { id: 'carol', name: 'Carol' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
+      { id: 'carol', name: 'Carol', userId: 'user-carol' },
     ],
     disabledCardIds: [],
     globalCount: 2,
@@ -47,7 +47,7 @@ function dispatch(war: War, action: WarAction): War {
 
 describe('createWar', () => {
   it('starts in the preparation phase with untouched decks', () => {
-    const war = createWar(baseConfig(), cards, 1)
+    const war = createWar(baseConfig(), cards, 'test-host', 1)
     expect(war.phase).toBe('preparation')
     expect(war.preparationDrawComplete).toBe(false)
     expect(war.activeGlobalModifiers).toEqual([])
@@ -56,22 +56,33 @@ describe('createWar', () => {
   })
 
   it('is fully deterministic for a given seed', () => {
-    const warA = createWar(baseConfig(), cards, 42)
-    const warB = createWar(baseConfig(), cards, 42)
+    const warA = createWar(baseConfig(), cards, 'test-host', 42)
+    const warB = createWar(baseConfig(), cards, 'test-host', 42)
     const drawnA = dispatch(warA, { type: 'RUN_PREPARATION_DRAW' })
     const drawnB = dispatch(warB, { type: 'RUN_PREPARATION_DRAW' })
-    expect(drawnA.activeGlobalModifiers.map((c) => c.id)).toEqual(drawnB.activeGlobalModifiers.map((c) => c.id))
-    expect(drawnA.activeScoreModifiers.map((c) => c.id)).toEqual(drawnB.activeScoreModifiers.map((c) => c.id))
+    expect(drawnA.activeGlobalModifiers.map((c) => c.id)).toEqual(
+      drawnB.activeGlobalModifiers.map((c) => c.id),
+    )
+    expect(drawnA.activeScoreModifiers.map((c) => c.id)).toEqual(
+      drawnB.activeScoreModifiers.map((c) => c.id),
+    )
   })
 
   it('excludes cards on the disabled list from every deck', () => {
-    const war = createWar(baseConfig({ disabledCardIds: ['rarity-common'], globalCount: 19 }), cards, 1)
-    const allGlobalCardIds = [...war.globalDeck.drawPile, ...war.globalDeck.drawnCards].map((c) => c.id)
+    const war = createWar(
+      baseConfig({ disabledCardIds: ['rarity-common'], globalCount: 19 }),
+      cards,
+      'test-host',
+      1,
+    )
+    const allGlobalCardIds = [...war.globalDeck.drawPile, ...war.globalDeck.drawnCards].map(
+      (c) => c.id,
+    )
     expect(allGlobalCardIds).not.toContain('rarity-common')
   })
 
   it('creates one shared personal deck by default', () => {
-    const war = createWar(baseConfig(), cards, 1)
+    const war = createWar(baseConfig(), cards, 'test-host', 1)
     expect(war.personalDecks.mode).toBe('shared')
   })
 
@@ -80,14 +91,18 @@ describe('createWar', () => {
     // configuration. Without this, personalDrawComplete only ever flips via
     // a draw action, which never happens for a 0-count player, permanently
     // soft-locking the personal-draw phase.
-    const war = createWar(baseConfig({ personalCount: 0 }), cards, 1)
+    const war = createWar(baseConfig({ personalCount: 0 }), cards, 'test-host', 1)
     expect(war.players.every((p) => p.personalDrawComplete)).toBe(true)
   })
 
   it('creates independent personal decks when nonSharedPersonalDecks is set', () => {
     const war = createWar(
-      baseConfig({ gameMode: 'custom', customOptions: { ...DEFAULT_CUSTOM_OPTIONS, nonSharedPersonalDecks: true } }),
+      baseConfig({
+        gameMode: 'custom',
+        customOptions: { ...DEFAULT_CUSTOM_OPTIONS, nonSharedPersonalDecks: true },
+      }),
       cards,
+      'test-host',
       1,
     )
     expect(war.personalDecks.mode).toBe('non-shared')
@@ -99,7 +114,7 @@ describe('createWar', () => {
 
 describe('preparation phase', () => {
   it('draws the configured number of global and score cards', () => {
-    let war = createWar(baseConfig({ globalCount: 2, scoreCount: 3 }), cards, 7)
+    let war = createWar(baseConfig({ globalCount: 2, scoreCount: 3 }), cards, 'test-host', 7)
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     expect(war.activeGlobalModifiers).toHaveLength(2)
     expect(war.activeScoreModifiers).toHaveLength(3)
@@ -114,6 +129,7 @@ describe('preparation phase', () => {
         customOptions: { ...DEFAULT_CUSTOM_OPTIONS, disableScoreModifiers: true },
       }),
       cards,
+      'test-host',
       1,
     )
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
@@ -121,13 +137,13 @@ describe('preparation phase', () => {
   })
 
   it('cannot run the preparation draw twice', () => {
-    let war = createWar(baseConfig(), cards, 1)
+    let war = createWar(baseConfig(), cards, 'test-host', 1)
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     expect(() => dispatch(war, { type: 'RUN_PREPARATION_DRAW' })).toThrow(WarStateError)
   })
 
   it('cannot advance to personal draw before the preparation draw runs', () => {
-    const war = createWar(baseConfig(), cards, 1)
+    const war = createWar(baseConfig(), cards, 'test-host', 1)
     expect(() => dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })).toThrow(WarStateError)
   })
 })
@@ -135,15 +151,15 @@ describe('preparation phase', () => {
 describe('personal draw phase (hot seat)', () => {
   let war: War
   beforeEach(() => {
-    war = createWar(baseConfig({ personalCount: 2 }), cards, 3)
+    war = createWar(baseConfig({ personalCount: 2 }), cards, 'test-host', 3)
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     war = dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
   })
 
   it('tracks the active hot-seat player in player order', () => {
     expect(getActivePersonalDrawPlayer(war)?.playerId).toBe('alice')
-    war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' });
-    war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' });
+    war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
+    war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
     expect(getActivePersonalDrawPlayer(war)?.playerId).toBe('bob')
   })
 
@@ -171,7 +187,9 @@ describe('personal draw phase (hot seat)', () => {
   it('rejects drawing for a player who already finished', () => {
     war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
     war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
-    expect(() => dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })).toThrow(WarStateError)
+    expect(() => dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })).toThrow(
+      WarStateError,
+    )
   })
 
   it('cannot advance to commander selection until every player is done', () => {
@@ -191,12 +209,15 @@ describe('personal draw phase (hot seat)', () => {
     // instead directly stress-test via many seeds that no player ever ends up
     // with a same-category conflict internally.
     for (let seed = 0; seed < 25; seed++) {
-      let w = createWar(baseConfig({ personalCount: 6 }), cards, seed)
+      let w = createWar(baseConfig({ personalCount: 6 }), cards, 'test-host', seed)
       w = dispatch(w, { type: 'RUN_PREPARATION_DRAW' })
       w = dispatch(w, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
-      for (let i = 0; i < 6; i++) w = dispatch(w, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
+      for (let i = 0; i < 6; i++)
+        w = dispatch(w, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
       const alice = w.players.find((p) => p.playerId === 'alice')!
-      const categories = alice.personalModifiers.filter((c) => c.category !== 'untyped').map((c) => c.category)
+      const categories = alice.personalModifiers
+        .filter((c) => c.category !== 'untyped')
+        .map((c) => c.category)
       expect(new Set(categories).size).toBe(categories.length)
     }
   })
@@ -205,7 +226,7 @@ describe('personal draw phase (hot seat)', () => {
 describe('REDRAW_ZERO_COMMANDER_MODIFIER (orchestration-driven auto-redraw)', () => {
   let war: War
   beforeEach(() => {
-    war = createWar(baseConfig({ personalCount: 3 }), cards, 3)
+    war = createWar(baseConfig({ personalCount: 3 }), cards, 'test-host', 3)
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     war = dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
   })
@@ -215,7 +236,11 @@ describe('REDRAW_ZERO_COMMANDER_MODIFIER (orchestration-driven auto-redraw)', ()
     const alice = war.players.find((p) => p.playerId === 'alice')!
     const offendingCard = alice.personalModifiers[0]
 
-    war = dispatch(war, { type: 'REDRAW_ZERO_COMMANDER_MODIFIER', playerId: 'alice', cardId: offendingCard.id })
+    war = dispatch(war, {
+      type: 'REDRAW_ZERO_COMMANDER_MODIFIER',
+      playerId: 'alice',
+      cardId: offendingCard.id,
+    })
     const aliceAfter = war.players.find((p) => p.playerId === 'alice')!
 
     // Still exactly 1 modifier (the offending one was replaced, not just removed).
@@ -241,19 +266,27 @@ describe('REDRAW_ZERO_COMMANDER_MODIFIER (orchestration-driven auto-redraw)', ()
   it('throws if the given cardId is not the players most recent draw', () => {
     war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
     expect(() =>
-      dispatch(war, { type: 'REDRAW_ZERO_COMMANDER_MODIFIER', playerId: 'alice', cardId: 'not-the-last-card' }),
+      dispatch(war, {
+        type: 'REDRAW_ZERO_COMMANDER_MODIFIER',
+        playerId: 'alice',
+        cardId: 'not-the-last-card',
+      }),
     ).toThrow(WarStateError)
   })
 
   it('re-evaluates personalDrawComplete after the replacement (works even on the final card)', () => {
-    war = createWar(baseConfig({ personalCount: 1 }), cards, 3)
+    war = createWar(baseConfig({ personalCount: 1 }), cards, 'test-host', 3)
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     war = dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
     war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
     let alice = war.players.find((p) => p.playerId === 'alice')!
     expect(alice.personalDrawComplete).toBe(true)
 
-    war = dispatch(war, { type: 'REDRAW_ZERO_COMMANDER_MODIFIER', playerId: 'alice', cardId: alice.personalModifiers[0].id })
+    war = dispatch(war, {
+      type: 'REDRAW_ZERO_COMMANDER_MODIFIER',
+      playerId: 'alice',
+      cardId: alice.personalModifiers[0].id,
+    })
     alice = war.players.find((p) => p.playerId === 'alice')!
     expect(alice.personalDrawComplete).toBe(true)
     expect(alice.personalModifiers).toHaveLength(1)
@@ -267,16 +300,25 @@ describe('REDRAW_ZERO_COMMANDER_MODIFIER (orchestration-driven auto-redraw)', ()
         customOptions: { ...DEFAULT_CUSTOM_OPTIONS, draft: true },
       }),
       cards,
+      'test-host',
       11,
     )
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     war = dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
     war = dispatch(war, { type: 'START_DRAFT_ROUND', playerId: 'alice' })
     const alice = war.players.find((p) => p.playerId === 'alice')!
-    war = dispatch(war, { type: 'PICK_DRAFT_CARD', playerId: 'alice', cardId: alice.pendingDraft![0].id })
+    war = dispatch(war, {
+      type: 'PICK_DRAFT_CARD',
+      playerId: 'alice',
+      cardId: alice.pendingDraft![0].id,
+    })
     const chosenId = alice.pendingDraft![0].id
 
-    war = dispatch(war, { type: 'REDRAW_ZERO_COMMANDER_MODIFIER', playerId: 'alice', cardId: chosenId })
+    war = dispatch(war, {
+      type: 'REDRAW_ZERO_COMMANDER_MODIFIER',
+      playerId: 'alice',
+      cardId: chosenId,
+    })
     const aliceAfter = war.players.find((p) => p.playerId === 'alice')!
     expect(aliceAfter.personalModifiers).toHaveLength(1)
     expect(aliceAfter.personalModifiers[0].id).not.toBe(chosenId)
@@ -286,7 +328,7 @@ describe('REDRAW_ZERO_COMMANDER_MODIFIER (orchestration-driven auto-redraw)', ()
 describe('RESET_PERSONAL_MODIFIERS (player-chosen full redraw)', () => {
   let war: War
   beforeEach(() => {
-    war = createWar(baseConfig({ personalCount: 2 }), cards, 3)
+    war = createWar(baseConfig({ personalCount: 2 }), cards, 'test-host', 3)
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     war = dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
     war = dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })
@@ -332,21 +374,25 @@ describe('RESET_PERSONAL_MODIFIERS (player-chosen full redraw)', () => {
   })
 
   it('throws if the player has not finished their draw yet', () => {
-    let w = createWar(baseConfig({ personalCount: 2 }), cards, 3)
+    let w = createWar(baseConfig({ personalCount: 2 }), cards, 'test-host', 3)
     w = dispatch(w, { type: 'RUN_PREPARATION_DRAW' })
     w = dispatch(w, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
     w = dispatch(w, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' }) // only 1 of 2, not complete
-    expect(() => dispatch(w, { type: 'RESET_PERSONAL_MODIFIERS', playerId: 'alice' })).toThrow(WarStateError)
+    expect(() => dispatch(w, { type: 'RESET_PERSONAL_MODIFIERS', playerId: 'alice' })).toThrow(
+      WarStateError,
+    )
   })
 
   it('throws if there is nothing to reset', () => {
-    let w = createWar(baseConfig({ personalCount: 0 }), cards, 3)
+    let w = createWar(baseConfig({ personalCount: 0 }), cards, 'test-host', 3)
     w = dispatch(w, { type: 'RUN_PREPARATION_DRAW' })
     w = dispatch(w, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
     // personalCount 0 means alice is immediately "complete" with an empty hand.
     const alice = w.players.find((p) => p.playerId === 'alice')!
     expect(alice.personalDrawComplete).toBe(true)
-    expect(() => dispatch(w, { type: 'RESET_PERSONAL_MODIFIERS', playerId: 'alice' })).toThrow(WarStateError)
+    expect(() => dispatch(w, { type: 'RESET_PERSONAL_MODIFIERS', playerId: 'alice' })).toThrow(
+      WarStateError,
+    )
   })
 })
 
@@ -360,6 +406,7 @@ describe('draft mode', () => {
         customOptions: { ...DEFAULT_CUSTOM_OPTIONS, draft: true },
       }),
       cards,
+      'test-host',
       11,
     )
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
@@ -376,7 +423,11 @@ describe('draft mode', () => {
     const alice = war.players.find((p) => p.playerId === 'alice')!
     expect(alice.pendingDraft).toHaveLength(3)
 
-    war = dispatch(war, { type: 'PICK_DRAFT_CARD', playerId: 'alice', cardId: alice.pendingDraft![0].id })
+    war = dispatch(war, {
+      type: 'PICK_DRAFT_CARD',
+      playerId: 'alice',
+      cardId: alice.pendingDraft![0].id,
+    })
     const aliceAfter = war.players.find((p) => p.playerId === 'alice')!
     expect(aliceAfter.pendingDraft).toBeNull()
     expect(aliceAfter.personalModifiers).toHaveLength(1)
@@ -390,21 +441,23 @@ describe('draft mode', () => {
 
   it('cannot draw normally while a draft is pending', () => {
     war = dispatch(war, { type: 'START_DRAFT_ROUND', playerId: 'alice' })
-    expect(() => dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })).toThrow(WarStateError)
+    expect(() => dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })).toThrow(
+      WarStateError,
+    )
   })
 
   it('rejects picking a card that was not offered', () => {
     war = dispatch(war, { type: 'START_DRAFT_ROUND', playerId: 'alice' })
-    expect(() => dispatch(war, { type: 'PICK_DRAFT_CARD', playerId: 'alice', cardId: 'not-a-real-id' })).toThrow(
-      WarStateError,
-    )
+    expect(() =>
+      dispatch(war, { type: 'PICK_DRAFT_CARD', playerId: 'alice', cardId: 'not-a-real-id' }),
+    ).toThrow(WarStateError)
   })
 })
 
 describe('commander selection phase', () => {
   let war: War
   beforeEach(() => {
-    war = createWar(baseConfig({ personalCount: 1 }), cards, 5)
+    war = createWar(baseConfig({ personalCount: 1 }), cards, 'test-host', 5)
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     war = dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
     for (const playerId of ['alice', 'bob', 'carol']) {
@@ -460,7 +513,12 @@ describe('commander selection phase', () => {
 
 describe('scoring phase and full lifecycle', () => {
   function playThroughToScoring(): War {
-    let war = createWar(baseConfig({ personalCount: 1, globalCount: 1, scoreCount: 2 }), cards, 9)
+    let war = createWar(
+      baseConfig({ personalCount: 1, globalCount: 1, scoreCount: 2 }),
+      cards,
+      'test-host',
+      9,
+    )
     war = dispatch(war, { type: 'RUN_PREPARATION_DRAW' })
     war = dispatch(war, { type: 'ADVANCE_TO_PERSONAL_DRAW' })
     for (const playerId of ['alice', 'bob', 'carol']) {
@@ -468,7 +526,11 @@ describe('scoring phase and full lifecycle', () => {
     }
     war = dispatch(war, { type: 'ADVANCE_TO_COMMANDER_SELECTION' })
     for (const playerId of ['alice', 'bob', 'carol']) {
-      war = dispatch(war, { type: 'SELECT_COMMANDER', playerId, commander: { scryfallId: playerId, name: playerId } })
+      war = dispatch(war, {
+        type: 'SELECT_COMMANDER',
+        playerId,
+        commander: { scryfallId: playerId, name: playerId },
+      })
     }
     war = dispatch(war, { type: 'ADVANCE_TO_OVERVIEW' })
     war = dispatch(war, { type: 'ADVANCE_TO_SCORING' })
@@ -487,7 +549,12 @@ describe('scoring phase and full lifecycle', () => {
     expect(war.scoring.gameWinnerId).toBe('bob')
 
     const card = war.activeScoreModifiers[0]
-    war = dispatch(war, { type: 'SET_SCORE_CARD_TALLY', cardId: card.id, playerId: 'alice', times: 2 })
+    war = dispatch(war, {
+      type: 'SET_SCORE_CARD_TALLY',
+      cardId: card.id,
+      playerId: 'alice',
+      times: 2,
+    })
     expect(war.scoring.scoreCardTally[card.id].alice).toBe(2)
 
     war = dispatch(war, { type: 'SET_BEST_BREWER_VOTE', voterId: 'alice', votedForId: 'carol' })
@@ -496,9 +563,9 @@ describe('scoring phase and full lifecycle', () => {
 
   it('rejects a player voting for themselves', () => {
     const war = playThroughToScoring()
-    expect(() => dispatch(war, { type: 'SET_BEST_BREWER_VOTE', voterId: 'alice', votedForId: 'alice' })).toThrow(
-      WarStateError,
-    )
+    expect(() =>
+      dispatch(war, { type: 'SET_BEST_BREWER_VOTE', voterId: 'alice', votedForId: 'alice' }),
+    ).toThrow(WarStateError)
   })
 
   it('concludes the war, moving to the final phase', () => {
@@ -524,6 +591,8 @@ describe('scoring phase and full lifecycle', () => {
 
   it('rejects out-of-phase actions (e.g. drawing personal modifiers after scoring starts)', () => {
     const war = playThroughToScoring()
-    expect(() => dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })).toThrow(WarStateError)
+    expect(() => dispatch(war, { type: 'DRAW_PERSONAL_MODIFIER', playerId: 'alice' })).toThrow(
+      WarStateError,
+    )
   })
 })

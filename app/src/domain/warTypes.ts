@@ -12,6 +12,11 @@ export type PlayerId = string
 export interface Player {
   id: PlayerId
   name: string
+  /** Cognito `sub` of the account this player slot is bound to. Every
+   * player is now a real signed-in account chosen from the hero-select
+   * grid in the wizard (see features/wizard/steps/PlayersStep.tsx) —
+   * there is no more free-text/anonymous player name entry. */
+  userId: string
 }
 
 export const MIN_PLAYERS = 2
@@ -24,12 +29,7 @@ export const DEFAULT_PLAYER_COUNT = 4
  * produces the first real record, landing in `'preparation'`.
  */
 export type Phase =
-  | 'preparation'
-  | 'personal-draw'
-  | 'commander-selection'
-  | 'overview'
-  | 'scoring'
-  | 'concluded'
+  'preparation' | 'personal-draw' | 'commander-selection' | 'overview' | 'scoring' | 'concluded'
 
 export type GameMode = 'normal' | 'custom'
 
@@ -98,7 +98,10 @@ export interface PlayerWarState {
  * actual draw action, and 0 means no draw action is ever dispatched for
  * them. Without this, such a player would permanently show as "still
  * needs their turn" and the phase could never advance. */
-export function createPlayerWarState(playerId: PlayerId, initiallyComplete = false): PlayerWarState {
+export function createPlayerWarState(
+  playerId: PlayerId,
+  initiallyComplete = false,
+): PlayerWarState {
   return {
     playerId,
     personalModifiers: [],
@@ -112,8 +115,7 @@ export function createPlayerWarState(playerId: PlayerId, initiallyComplete = fal
 }
 
 export type PersonalDecks =
-  | { mode: 'shared'; deck: Deck }
-  | { mode: 'non-shared'; decks: Record<PlayerId, Deck> }
+  { mode: 'shared'; deck: Deck } | { mode: 'non-shared'; decks: Record<PlayerId, Deck> }
 
 export interface ScoringState {
   gameWinnerId: PlayerId | null
@@ -125,6 +127,11 @@ export interface War {
   seed: number
   createdAt: string
   updatedAt: string
+  /** Cognito `sub` of the war's creator/host. The host is the only member
+   * allowed to trigger the shared preparation draw and edit scoring's
+   * shared inputs (game winner, score-card tally) — everyone else sees
+   * those as read-only "waiting on host" panels. */
+  hostUserId: string
   phase: Phase
   config: WarConfig
   globalDeck: Deck

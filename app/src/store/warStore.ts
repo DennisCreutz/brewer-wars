@@ -22,10 +22,7 @@ import { createWar, warReducer, type WarAction } from '../domain/war'
 import type { War, WarConfig } from '../domain/warTypes'
 import { LocalWarRepository } from '../repository/LocalWarRepository'
 import type { WarRepository, WarSummary } from '../repository/WarRepository'
-import {
-  getOrFetchCommanderPool,
-  type CommanderPoolLoadStatus,
-} from '../data/commanderPoolCache'
+import { getOrFetchCommanderPool, type CommanderPoolLoadStatus } from '../data/commanderPoolCache'
 import type { CommanderSummary } from '../domain/commanderCheck'
 import { ALL_CARDS } from '../data/allCards'
 
@@ -56,7 +53,7 @@ interface WarStoreState {
   commanderPoolStatus: CommanderPoolLoadStatus
 
   refreshWarList: () => Promise<void>
-  startNewWar: (config: WarConfig, seed?: number) => Promise<War>
+  startNewWar: (config: WarConfig, hostUserId: string, seed?: number) => Promise<War>
   loadWar: (id: string) => Promise<War | null>
   dispatch: (action: WarAction) => Promise<War>
   clearSaveError: () => void
@@ -90,8 +87,8 @@ export const useWarStore = create<WarStoreState>((set, get) => ({
     }
   },
 
-  startNewWar: async (config, seed) => {
-    const war = createWar(config, ALL_CARDS, seed)
+  startNewWar: async (config, hostUserId, seed) => {
+    const war = createWar(config, ALL_CARDS, hostUserId, seed)
     await repository.create(war)
     set({ war })
     return war
@@ -136,10 +133,9 @@ export const useWarStore = create<WarStoreState>((set, get) => ({
   exitToLanding: () => set({ war: null }),
 
   ensureCommanderPool: async (options) => {
-    const pool = await getOrFetchCommanderPool(
-      (status) => set({ commanderPoolStatus: status }),
-      { forceRefresh: options?.forceRefresh },
-    )
+    const pool = await getOrFetchCommanderPool((status) => set({ commanderPoolStatus: status }), {
+      forceRefresh: options?.forceRefresh,
+    })
     set({ commanderPool: pool })
     return pool
   },

@@ -32,6 +32,7 @@ export const handler = withErrorHandling(async (event) => {
                 createdAt: summary.createdAt,
                 updatedAt: summary.updatedAt,
                 ownerSub: auth.sub,
+                memberUserIds: summary.memberUserIds,
                 version: 1,
                 schemaVersion: 1,
                 doc: docString,
@@ -45,12 +46,12 @@ export const handler = withErrorHandling(async (event) => {
               Item: { PK: LIST_ALL_PK, SK: sk },
             },
           },
-          {
+          ...summary.memberUserIds.map((memberSub) => ({
             Put: {
               TableName: TABLE_NAME,
-              Item: { PK: userPk(auth.sub), SK: sk },
+              Item: { PK: userPk(memberSub), SK: sk },
             },
-          },
+          })),
         ],
       }),
     )
