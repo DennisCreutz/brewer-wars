@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MAX_PLAYERS, MIN_PLAYERS, type Player } from '../../../domain/warTypes'
-import { fetchAllUsers, type UserSummary } from '../../../data/usersApi'
-import { PlayerAvatar } from '../../../ui/PlayerAvatar'
+import { fetchAllUsers, displayNameFor, type UserSummary } from '../../../data/usersApi'
+import { PlayerAvatar, assignAvatars } from '../../../ui/PlayerAvatar'
 
 interface PlayersStepProps {
   players: Player[]
@@ -38,6 +38,10 @@ export function PlayersStep({ players, onChange }: PlayersStepProps) {
   }, [])
 
   const selectedUserIds = new Set(players.map((p) => p.userId))
+  // Computed once per fetched list, not per tile — assignAvatars needs the
+  // whole picker's accounts at once to guarantee no two of them share a
+  // picture (see ui/PlayerAvatar.tsx).
+  const avatarBySub = useMemo(() => assignAvatars(users ?? []), [users])
 
   function toggleUser(user: UserSummary) {
     if (selectedUserIds.has(user.sub)) {
@@ -45,7 +49,7 @@ export function PlayersStep({ players, onChange }: PlayersStepProps) {
       return
     }
     if (players.length >= MAX_PLAYERS) return
-    onChange([...players, { id: crypto.randomUUID(), name: user.email, userId: user.sub }])
+    onChange([...players, { id: crypto.randomUUID(), name: displayNameFor(user), userId: user.sub }])
   }
 
   return (
@@ -98,9 +102,14 @@ export function PlayersStep({ players, onChange }: PlayersStepProps) {
                       {index + 1}
                     </span>
                   )}
-                  <PlayerAvatar sub={user.sub} email={user.email} size={56} className="rounded-lg" />
+                  <PlayerAvatar
+                    src={avatarBySub.get(user.sub)!}
+                    sub={user.sub}
+                    size={56}
+                    className="rounded-lg"
+                  />
                   <span className="w-full truncate text-xs font-semibold text-wood-800">
-                    {user.email}
+                    {displayNameFor(user)}
                   </span>
                 </button>
               </li>

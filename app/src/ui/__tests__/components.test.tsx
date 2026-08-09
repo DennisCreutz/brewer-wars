@@ -5,7 +5,7 @@ import { PlayerBadge } from '../PlayerBadge'
 import { ModifierCardView } from '../ModifierCardView'
 import { CommanderCounter } from '../CommanderCounter'
 import { PlaceholderArt } from '../PlaceholderArt'
-import { PlayerAvatar, isThomas, avatarPathFor } from '../PlayerAvatar'
+import { PlayerAvatar, isThomas, assignAvatars } from '../PlayerAvatar'
 import { getCardIcon } from '../cardIcons'
 import { useWarStore } from '../../store/warStore'
 import cardsData from '../../data/generated/cards.json'
@@ -83,48 +83,66 @@ describe('PlaceholderArt', () => {
 })
 
 describe('isThomas', () => {
-  it('matches an exact email local-part of "thomas", case-insensitively', () => {
-    expect(isThomas('thomas@example.com')).toBe(true)
-    expect(isThomas('Thomas@EXAMPLE.COM')).toBe(true)
+  it('matches a username containing "thomas", case-insensitively', () => {
+    expect(isThomas('Thomas')).toBe(true)
+    expect(isThomas('ThomasK')).toBe(true)
+    expect(isThomas('THOMASINA')).toBe(true) // substring match — deliberate, not a bug
   })
 
-  it('does not match a local-part that merely contains "thomas"', () => {
-    expect(isThomas('thomasmiller@example.com')).toBe(false)
-    expect(isThomas('not-thomas@example.com')).toBe(false)
+  it('does not match a non-matching or missing username', () => {
+    expect(isThomas('alice')).toBe(false)
+    expect(isThomas(undefined)).toBe(false)
   })
 })
 
-describe('avatarPathFor', () => {
-  it("always returns the exclusive path for Thomas's account, regardless of sub", () => {
-    expect(avatarPathFor('sub-1', 'thomas@example.com')).toBe('/avatars/avatar-thomas.webp')
-    expect(avatarPathFor('sub-2', 'Thomas@example.com')).toBe('/avatars/avatar-thomas.webp')
+describe('assignAvatars', () => {
+  it('gives every Thomas-matching account the exclusive path, and everyone else a unique pooled path', () => {
+    const accounts = [
+      { sub: 'sub-1', username: 'Alice' },
+      { sub: 'sub-2', username: 'Bob' },
+      { sub: 'sub-3', username: 'thomasK' },
+      { sub: 'sub-4', username: 'Carol' },
+    ]
+    const assignment = assignAvatars(accounts)
+    expect(assignment.get('sub-3')).toBe('/avatars/avatar-thomas.webp')
+
+    const nonThomasPaths = ['sub-1', 'sub-2', 'sub-4'].map((sub) => assignment.get(sub))
+    expect(new Set(nonThomasPaths).size).toBe(nonThomasPaths.length) // no duplicates
+    expect(nonThomasPaths.every((p) => p !== '/avatars/avatar-thomas.webp')).toBe(true)
+    expect(nonThomasPaths.every((p) => /^\/avatars\/avatar-\d+\.webp$/.test(p!))).toBe(true)
   })
 
-  it('is deterministic for a non-Thomas account and never resolves to the Thomas path', () => {
-    const first = avatarPathFor('sub-alice', 'alice@example.com')
-    const second = avatarPathFor('sub-alice', 'alice@example.com')
-    expect(first).toBe(second)
-    expect(first).not.toBe('/avatars/avatar-thomas.webp')
-    expect(first).toMatch(/^\/avatars\/avatar-\d+\.webp$/)
+  it('is stable across calls regardless of input order', () => {
+    const accounts = [
+      { sub: 'sub-1', username: 'Alice' },
+      { sub: 'sub-2', username: 'Bob' },
+      { sub: 'sub-3', username: 'Carol' },
+    ]
+    const first = assignAvatars(accounts)
+    const second = assignAvatars([...accounts].reverse())
+    for (const { sub } of accounts) {
+      expect(first.get(sub)).toBe(second.get(sub))
+    }
+  })
+
+  it('gives every matching account the exclusive path when more than one username contains "thomas"', () => {
+    const assignment = assignAvatars([
+      { sub: 'sub-1', username: 'Thomas' },
+      { sub: 'sub-2', username: 'ThomasTwo' },
+    ])
+    expect(assignment.get('sub-1')).toBe('/avatars/avatar-thomas.webp')
+    expect(assignment.get('sub-2')).toBe('/avatars/avatar-thomas.webp')
   })
 })
 
 describe('PlayerAvatar', () => {
-  it('attempts to load the pooled avatar for a non-Thomas account', () => {
-    const { container } = render(<PlayerAvatar sub="sub-alice" email="alice@example.com" />)
-    expect(container.querySelector('img')).toHaveAttribute(
-      'src',
-      avatarPathFor('sub-alice', 'alice@example.com'),
-    )
-  })
-
-  it("attempts to load the exclusive avatar for Thomas's account", () => {
-    const { container } = render(<PlayerAvatar sub="sub-thomas" email="thomas@example.com" />)
-    expect(container.querySelector('img')).toHaveAttribute('src', '/avatars/avatar-thomas.webp')
+  it('renders the given src', () => {
+    const { container } = render(<PlayerAvatar sub="sub-alice" src="/avatars/avatar-3.webp" />)
+    expect(container.querySelector('img')).toHaveAttribute('src', '/avatars/avatar-3.webp')
   })
 
   it('unmounts the image and leaves the Identicon fallback visible when it fails to load', () => {
-    const { container } = render(<PlayerAvatar sub="sub-alice" email="alice@example.com" />)
+    const { container } = render(<PlayerAvatar sub="sub-alice" src="/avatars/avatar-3.webp" />)
     fireEvent.error(container.querySelector('img')!)
     expect(container.querySelector('img')).not.toBeInTheDocument()
     expect(container.querySelector('svg')).toBeInTheDocument()

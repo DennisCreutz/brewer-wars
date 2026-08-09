@@ -11,6 +11,20 @@ import { getCachedRuntimeConfigOrThrow } from '../config/runtimeConfig'
 export interface UserSummary {
   sub: string
   email: string
+  /** The account's Cognito `preferred_username`, if an admin has set one.
+   * Absent for accounts that haven't been given one yet — use
+   * `displayNameFor` rather than reading this directly, so every caller
+   * falls back to email the same way. */
+  username?: string
+}
+
+/** Single source of truth for "what do we call this account" — every place
+ * that used to show/store `user.email` directly (the wizard's hero-select
+ * grid, `Player.name` at war-creation time) should go through this instead,
+ * so a future admin setting/clearing someone's username changes it
+ * everywhere at once. */
+export function displayNameFor(user: UserSummary): string {
+  return user.username?.trim() || user.email
 }
 
 export async function fetchAllUsers(): Promise<UserSummary[]> {

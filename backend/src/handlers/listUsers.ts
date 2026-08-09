@@ -12,6 +12,11 @@ if (!USER_POOL_ID) {
 export interface UserSummary {
   sub: string
   email: string
+  /** The account's `preferred_username` attribute, if an admin has set one
+   * (see AGENTS.md-adjacent runbook: `aws cognito-idp
+   * admin-update-user-attributes ... Name=preferred_username`). Absent for
+   * accounts that haven't been given one yet — callers fall back to email. */
+  username?: string
 }
 
 function attr(user: { Attributes?: { Name?: string; Value?: string }[] }, name: string): string | undefined {
@@ -40,12 +45,13 @@ export const handler = withErrorHandling(async (event) => {
     for (const user of result.Users ?? []) {
       const sub = attr(user, 'sub')
       const email = attr(user, 'email')
-      if (sub && email) users.push({ sub, email })
+      const username = attr(user, 'preferred_username')
+      if (sub && email) users.push({ sub, email, ...(username ? { username } : {}) })
     }
     paginationToken = result.PaginationToken
   } while (paginationToken)
 
-  users.sort((a, b) => a.email.localeCompare(b.email))
+  users.sort((a, b) => (a.username ?? a.email).localeCompare(b.username ?? b.email))
 
   return json(200, { users })
 })
