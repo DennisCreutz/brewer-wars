@@ -1,9 +1,10 @@
 /**
- * Generates MTG-style card art for the 233 modifier cards via Amazon
- * Bedrock's Stable Image Ultra (`stability.stable-image-ultra-v1:1`,
- * region `us-west-2` — the only region with this model on this account,
- * verified 2026-08-09), then downsizes/recompresses to WebP with `sharp`
- * before writing into `public/art/<id>.webp`.
+ * Generates card art (default style: playful chibi fantasy — see
+ * STYLE_SUFFIX below) for the 233 modifier cards via Amazon Bedrock's
+ * Stable Image Ultra (`stability.stable-image-ultra-v1:1`, region
+ * `us-west-2` — the only region with this model on this account, verified
+ * 2026-08-09), then downsizes/recompresses to WebP with `sharp` before
+ * writing into `public/art/<id>.webp`.
  *
  * This is a one-off, PAID, external batch job — not part of any build
  * step. Three npm scripts drive it (see package.json):
@@ -56,17 +57,17 @@
  *   --style-suffix <t>  override STYLE_SUFFIX for this run only, in both
  *                        catalog mode and ad-hoc mode (ignored under
  *                        --raw). Use this to trial a different overall
- *                        look — e.g. a playful chibi style instead of the
- *                        default painterly-fantasy one — without editing
- *                        the script.
- *   --style-first        put the style ahead of the subject instead of
- *                        after it (ignored under --raw). Diffusion models
- *                        weight earlier tokens more heavily, so a style
- *                        tag trailing a long, vivid base description can
- *                        get outweighed by it — this is the lever for
- *                        that failure mode, seen in practice with a
- *                        --style-suffix chibi request on a card whose own
- *                        artPrompt already read as strongly "epic".
+ *                        look without editing the script.
+ *   --style-last         put the style after the subject instead of ahead
+ *                        of it — the old (pre-2026-08-09) default,
+ *                        available as an escape hatch/comparison
+ *                        (ignored under --raw). Style-first is now the
+ *                        default: diffusion models weight earlier tokens
+ *                        more heavily, so a style tag trailing a long,
+ *                        vivid base description can get outweighed by
+ *                        it — seen in practice with a chibi request on a
+ *                        card whose own artPrompt already read as
+ *                        strongly "epic".
  *
  * --- Determinism ---
  * The seed passed to the model is derived from `hashSeed(card.id)` (see
@@ -114,7 +115,7 @@ const DEFAULT_REGION = 'us-west-2'
 const ASPECT_RATIO = '16:9'
 
 const STYLE_SUFFIX =
-  ', fantasy oil painting, Magic: The Gathering card art style, dramatic lighting, painterly, single focal subject'
+  ', chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border'
 const NEGATIVE_PROMPT =
   'text, words, letters, caption, border, frame, watermark, signature, card frame, UI elements, blurry, low quality, collage, grid, multiple panels'
 
@@ -161,7 +162,7 @@ function parseArgs(argv: string[]): Args {
     maxWidth: 960,
     quality: 82,
     raw: false,
-    styleFirst: false,
+    styleFirst: true,
   }
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
@@ -214,8 +215,8 @@ function parseArgs(argv: string[]): Args {
       case '--style-suffix':
         args.styleSuffix = argv[++i]
         break
-      case '--style-first':
-        args.styleFirst = true
+      case '--style-last':
+        args.styleFirst = false
         break
       default:
         throw new Error(`Unknown argument: "${arg}"`)
@@ -233,9 +234,9 @@ function slugify(text: string): string {
 
 /** Diffusion models generally weight earlier tokens more heavily, so a
  * style tag trailing a long, vivid base description (e.g. a card whose
- * artPrompt already reads as "epic"/painterly) can get outweighed by it.
- * `--style-first` moves the style ahead of the subject instead of after
- * it, as a lever for exactly that failure mode. */
+ * artPrompt already reads as "epic") can get outweighed by it — style
+ * leads by default for exactly that reason; `--style-last` opts back
+ * into the old trailing order for comparison. */
 function composePrompt(base: string, styleSuffix: string, styleFirst: boolean): string {
   if (!styleFirst) return `${base}${styleSuffix}`
   const styleText = styleSuffix.replace(/^,\s*/, '')
