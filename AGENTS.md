@@ -11,11 +11,19 @@ brewers-wars/
   original/brewers-wars/   Source of truth for game content: Rules.html and Cards.html are
                             Google-Sheets HTML exports (single-line, must be parsed, not read
                             directly — see tools/import-cards.ts in app/).
-  app/                      The actual application. Everything below is rooted here.
+  app/                      The frontend SPA. Everything in "Commands"/"Architecture" below is
+                            rooted here unless stated otherwise.
+  backend/                  Lambda handlers (API Gateway backend). `npm run build` (esbuild via
+                            build.mjs) / `npm run typecheck` (tsc --noEmit), run from backend/.
+  infrastructure/           Terraform modules + Terragrunt live config (eu-central-1/prod) and
+                            the frontend deploy script. Applied with `terragrunt apply` from each
+                            `infrastructure/live/eu-central-1/prod/<module>/` directory, in
+                            dependency order (dns → database → backend → frontend → monitoring).
 ```
 
-**Always `cd app` (or pass `workdir: app` to the bash tool) before running any command below** —
-there is no build tooling at the repo root.
+**Always `cd app` (or pass `workdir: app` to the bash tool) before running any app command below**
+— there is no build tooling at the repo root. `backend/` and `infrastructure/` are separate npm/
+Terragrunt projects with their own working directories.
 
 ## Commands (run from `app/`)
 
@@ -24,23 +32,33 @@ npm run dev              # vite dev server
 npm run build            # tsc -b && vite build — the authoritative "does it compile" check
 npm test                 # vitest run (alias: npx vitest run)
 npm run test:watch
+npm run test:ui
 npx tsc -b               # typecheck only, faster than a full build
-npx oxlint                # linter (one pre-existing accepted warning in src/ui/PlayerBadge.tsx
-                          # about a non-component export — not a bug, don't "fix" it)
+npm run lint              # oxlint (alias: npx oxlint) — 4 pre-existing accepted warnings, all
+                          # react(only-export-components) on files that intentionally export a
+                          # helper alongside a component (src/ui/PlayerBadge.tsx,
+                          # src/ui/PlayerAvatar.tsx x2, src/test/FakeAuthProvider.tsx) — not bugs,
+                          # don't "fix" them by splitting files just to silence the linter
 npm run format            # prettier --write .
+npm run format:check
 npm run tools:import-cards        # regenerate src/data/generated/cards.json from
                                     # ../original/brewers-wars/Cards.html
 npm run tools:build-edhrec-data    # re-crawl EDHREC -> src/data/generated/edhrec-deck-counts.json
+npm run tools:generate-card-art    # AI-generate placeholder card art (--test/--random/--count
+                                    # flags — see tools/generate-card-art.ts)
 ```
 
-**Verification order for any change:** `npx tsc -b` → `npx oxlint` → `npx vitest run` → `npm run
+**Verification order for any change:** `npx tsc -b` → `npm run lint` → `npx vitest run` → `npm run
 build`. All four must be clean before considering a change done. The project currently sits at
-167 passing tests across 20 files; if your change legitimately adds/removes tests, expect that
+244 passing tests across 24 files; if your change legitimately adds/removes tests, expect that
 number to move, but no existing test should start failing.
 
 There is no E2E test suite configured (no Playwright/Cypress in the project). Manual end-to-end
 verification during development used a throwaway Playwright script run against `npm run dev`
-outside the repo (in `/tmp`) — not part of the codebase or CI.
+outside the repo (in `/tmp`) — not part of the codebase or CI. Note that every route except
+`/auth/callback` is gated behind Cognito sign-in (`src/auth/RequireAuth.tsx`), so a manual E2E
+script needs either real credentials against a deployed user pool or to drive the app at a layer
+below `RequireAuth`.
 
 ## Architecture
 
@@ -52,23 +70,32 @@ Strict layering, each layer only depends on the ones above it in this list:
    (`scoring.ts`), and commander-eligibility predicates (`commanderCheck.ts`). This layer is
    exhaustively unit tested and is the thing to read first to understand game rules — it's more
    authoritative than any prose description, including this file.
-2. **`src/data/`** — the only layer allowed to touch the network/IndexedDB. Scryfall commander
-   pool fetch + cache (`commanderPool.ts`, `commanderPoolCache.ts`), bundled EDHREC deck-count
-   lookups (`edhrecDeckCounts.ts`).
-3. **`src/store/`** — one Zustand store (`warStore.ts`) wiring domain + repository + data
-   together for the UI. `ALL_CARDS` (the full 233-card catalog) is exported from here.
-4. **`src/repository/`** — `WarRepository` port + `LocalWarRepository` (localStorage). Designed
-   so a future AWS backend (API Gateway + Lambda + DynamoDB) is a new adapter satisfying the same
-   interface, not a rewrite of anything above it.
-5. **`src/router/`** — react-router-dom routes, one per war phase
+2. **`src/data/`** — the only layer allowed to touch third-party APIs directly. Scryfall
+   commander pool fetch + cache (`commanderPool.ts`, `commanderPoolCache.ts`), bundled EDHREC
+   deck-count lookups (`edhrecDeckCounts.ts`).
+3. **`src/auth/`** — Cognito/OIDC session via `react-oidc-context` (`AuthProvider.tsx`), the
+   `RequireAuth` route guard (gates every route except `/auth/callback`), `AuthCallbackPage.tsx`,
+   and claim-reading hooks (`useIsAdmin`, `useCurrentUserId`, `useAccessToken`).
+4. **`src/store/`** — one Zustand store (`warStore.ts`) wiring domain + repository + data
+   together for the UI. `ALL_CARDS` (the full 233-card catalog) is exported from here. `dispatch`
+   applies the reducer optimistically and persists in the background; a failed save rolls the
+   store back to the pre-dispatch war and sets `saveError` rather than blocking the UI on every
+   click.
+5. **`src/repository/`** — `WarRepository` port, `LocalWarRepository` (localStorage — used before
+   auth boot completes and in tests), and `ApiWarRepository`, the real adapter (API Gateway +
+   Lambda + DynamoDB, see `backend/` and `infrastructure/` at the repo root). `AuthProvider.tsx`
+   swaps the store's repository to `ApiWarRepository` once runtime config and a token provider are
+   both available — it can't happen at module-eval time.
+6. **`src/router/`** — react-router-dom routes, one per war phase
    (`preparation → personal-draw → commander-selection → overview → scoring → concluded`), plus
-   `useLoadedWar(expectedPhase?)`, the hook every phase page uses to load-from-URL and
-   auto-redirect if the war's actual phase disagrees with the route.
-6. **`src/ui/`** — shared design-system primitives (`Button`, `Panel`, `ModifierCardView`,
-   `CommanderCounter`, `HotSeatGate`, `PlaceholderArt`, ...). Reuse these; don't create competing
-   one-offs inside a feature folder.
-7. **`src/features/<phase>/`** — one folder per screen, composed from everything above.
-8. **`src/i18n/`** — react-i18next. English only (`locales/en.json`); UI chrome is fully wired
+   `useLoadedWar(expectedPhase?)`, the hook every phase page uses to load-from-URL, auto-redirect
+   if the war's actual phase disagrees with the route, and short-poll (every 4s) while mounted so
+   a waiting screen notices it's become its viewer's turn without a manual refresh.
+7. **`src/ui/`** — shared design-system primitives (`Button`, `Panel`, `ModifierCardView`,
+   `CommanderCounter`, `TurnGate`, `WaitingPanel`, `PlaceholderArt`, ...). Reuse these; don't
+   create competing one-offs inside a feature folder.
+8. **`src/features/<phase>/`** — one folder per screen, composed from everything above.
+9. **`src/i18n/`** — react-i18next. English only (`locales/en.json`); UI chrome is fully wired
    through translation keys, card *text* is not (see "Known limitations" in `app/README.md`).
 
 `tools/` holds re-runnable Node scripts (via `tsx`, not compiled) that regenerate the two bundled
@@ -99,12 +126,16 @@ scripts that read `original/brewers-wars/`.
   dedicated `REDRAW_ZERO_COMMANDER_MODIFIER` action. UI code must go through this hook (or the
   equivalent draft-mode path) for personal draws — never dispatch `DRAW_PERSONAL_MODIFIER`/
   `PICK_DRAFT_CARD` directly from a component, or the safety net is silently skipped.
-- **Commander selection has a real race condition to be aware of**: `REDRAW_ZERO_COMMANDER_MODIFIER`
-  transiently flips a player's `personalDrawComplete` `true → false → true` while it corrects a
-  card mid-draw. `PersonalDrawPage.tsx` "pins" the on-screen player in local state rather than
-  reactively following `getActivePersonalDrawPlayer(war)` on every render, specifically to avoid
-  the curtain flashing to the next player mid-turn. Follow that pattern for any similar hot-seat
-  UI, don't revert to naive reactive selection.
+- **There is no more single-device "pass the phone" hot seat.** Every `Player` carries a real
+  `userId` bound to a signed-in Cognito account (`domain/war.ts`'s `getMyPlayerId` maps the
+  signed-in `sub` to a `PlayerId`), everyone has their own device, and nothing in the domain
+  reducer enforces a fixed turn order. `ui/TurnGate.tsx` replaced the old `HotSeatGate`: it just
+  picks which of two subtrees to render for the current viewer (their action screen vs. a
+  `WaitingPanel` summarizing who's still pending) — several members can genuinely be mid-turn at
+  once. `REDRAW_ZERO_COMMANDER_MODIFIER` still transiently flips a player's
+  `personalDrawComplete` `true → false → true` while correcting a card mid-draw, but since each
+  player only ever renders their own screen there's no cross-player "curtain" to keep pinned
+  against that blip.
 - **`CONCLUDE_WAR` freezes `war.finalScore`** by calling `computeScoring` once, inside the
   reducer. The Podium page reads `war.finalScore` directly and must never recompute it — that
   guarantees historical results don't silently change if the scoring engine evolves later. The
@@ -120,6 +151,28 @@ scripts that read `original/brewers-wars/`.
   TTL) via `getOrFetchCommanderPool`. It is never re-filtered server-side; all filtering
   (`domain/commanderCheck.ts`'s `filterCommanders`) runs client-side against the cached array.
   Don't add per-keystroke network calls to the commander search/filter UI.
+- **A hydrated `War` can exceed DynamoDB's 400 KB item limit** — an 8-player non-shared-deck war
+  embeds the full 233-card catalog once per player and serializes to ~550 KB. `ApiWarRepository`
+  always goes through `domain/warCodec.ts`'s `dehydrateWar`/`rehydrateWar` (swap every embedded
+  `ModifierCard` for its id, look ids back up against `ALL_CARDS` on load) to bring that down to
+  ~8 KB. Any new place in `War` that starts embedding `ModifierCard` objects directly must update
+  `warCodec.ts` too, or persistence will silently drop/corrupt that field.
+- **Writes are optimistic-concurrency-checked, not last-write-wins.** `backend/src/handlers/
+  putWar.ts` requires an `If-Match` version and returns 412 on a stale write; `ApiWarRepository`
+  surfaces that as `WarConflictError`, which `warStore.ts`'s `dispatch` turns into a rolled-back
+  `war` plus a `saveError` for the UI to show, rather than silently overwriting a concurrent
+  edit from another device.
+- **Admin gating is enforced twice, and only one enforcement counts.** `useIsAdmin()`
+  (`src/auth/useIsAdmin.ts`, reading the `cognito:groups` ID-token claim) only drives UI
+  affordances like hiding the "New War" button — `backend/src/lib/auth.ts`'s `requireAdmin` on
+  the actual Lambda handlers (create/reset war, list users) is the real enforcement point. Don't
+  treat a client-side admin check as sufficient authorization for a new privileged action; wire
+  the server check first.
+- **The frontend reads Cognito pool/API URLs from `/config.json` at runtime**, not from Vite
+  build-time env vars (`src/config/runtimeConfig.ts`) — those values are only known after a
+  Terraform apply, and baking them in would force a rebuild per environment/deploy. The checked-in
+  `app/public/config.json` has placeholder values; `infrastructure/scripts/deploy-frontend.sh`
+  overwrites it with real Terraform outputs as part of every deploy.
 - **Only Commander-target modifiers get real-time programmatic checking.** Deck-target and
   Game-target modifiers (rarity, price, salt, themes, most artwork rules) are descriptive-only —
   players self-enforce them while building the other 99 cards of their physical deck. This is a
@@ -137,7 +190,11 @@ scripts that read `original/brewers-wars/`.
 
 ## What's genuinely missing (don't assume these exist)
 
-- No backend (`ApiWarRepository`/AWS) — local-only, `LocalWarRepository` is the only adapter.
+- No production frontend hosting yet — dns/database/backend are live and smoke-tested, but the
+  S3 + CloudFront frontend module is blocked on a pending AWS CloudFront account-verification
+  support case (see `infrastructure/live/eu-central-1/prod/backend/terragrunt.hcl`'s
+  `use_custom_auth_domain` comment).
+- No self-serve signup — Cognito accounts are admin-created, there's no in-app registration flow.
 - No export/import of a war as JSON.
 - No card-text localization (only UI chrome is translated).
 - No dedicated accessibility audit tool was run (a reasonable baseline of aria-labels/roles/

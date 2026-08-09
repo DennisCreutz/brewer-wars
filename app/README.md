@@ -10,9 +10,14 @@ table can spend its time playing Magic, not bookkeeping.
 
 ## Status
 
-Local-only v1: everything (game state, Scryfall commander cache) lives in the browser
-(`localStorage` + IndexedDB). No backend yet — see [Architecture](#architecture) for the planned
-AWS migration path this was built to support.
+Deployed to AWS: wars persist to DynamoDB via an API-Gateway/Lambda backend, and every screen is
+gated behind Cognito sign-in (no self-serve signup — accounts are admin-created). Only creating
+or resetting wars requires the `admins` Cognito group; everyone else can play. The Scryfall
+commander pool is still fetched and cached client-side (IndexedDB), since it's public data that
+doesn't need to round-trip the backend. The production frontend (S3 + CloudFront) is currently
+blocked on a pending AWS CloudFront account-verification support case — see
+`infrastructure/live/eu-central-1/prod/backend/terragrunt.hcl` for the temporary fallback this
+forced (Cognito's hosted auth domain instead of the custom one).
 
 ## Quick start
 
@@ -36,14 +41,15 @@ npm run format    # prettier --write
    values.
 2. **Preparation** — the Global and Score modifier decks are drawn for the whole table. A live
    "potential commanders" counter appears here and stays visible through commander selection.
-3. **Personal Draw** (hot seat) — each player draws their personal modifiers in turn, with a
-   privacy curtain between turns. Drawing a card that would conflict with one you already hold —
-   or that would zero out your live commander count — is automatically discarded and replaced;
-   you see the whole "what just happened" sequence, not just the final result.
-4. **Commander Selection** (hot seat, always hidden) — an EDHREC-style browsable, searchable grid
-   of every commander that satisfies your active modifiers, backed by the real Scryfall pool
-   cached in IndexedDB. Rules Scryfall can't check (artwork/flavor conditions) are listed as an
-   honour-system checklist instead.
+3. **Personal Draw** — every player draws their own personal modifiers on their own device,
+   concurrently; there's no passing a shared device or waiting for a fixed turn order. Whoever
+   isn't due to act sees a waiting screen instead. Drawing a card that would conflict with one you
+   already hold — or that would zero out your live commander count — is automatically discarded
+   and replaced; you see the whole "what just happened" sequence, not just the final result.
+4. **Commander Selection** (always hidden from other players) — an EDHREC-style browsable,
+   searchable grid of every commander that satisfies your active modifiers, backed by the real
+   Scryfall pool cached in IndexedDB. Rules Scryfall can't check (artwork/flavor conditions) are
+   listed as an honour-system checklist instead.
 5. **Overview** — a read-only battle-reference screen before the physical game begins.
 6. **Scoring & Voting** — after the game, everything hidden earlier is revealed, points are
    assigned per the drawn Score modifiers plus the win bonus and best-brewer vote, with a live
@@ -56,30 +62,49 @@ npm run format    # prettier --write
 ```
 src/
   domain/     Pure TypeScript — zero React, zero fetch. Card data, the seeded-RNG draw engine
-              (exclusion rules, solo cards, draft mode), the war state machine/reducer, and the
-              scoring engine. Fully unit tested (vitest) independent of the UI.
+              (exclusion rules, solo cards, draft mode), the war state machine/reducer, the
+              scoring engine, and warCodec.ts (dehydrates a War to card ids for persistence —
+              see "Persistence" below). Fully unit tested (vitest) independent of the UI.
   data/       Scryfall commander pool fetch + IndexedDB cache, and the bundled EDHREC deck-count
-              dataset. The only layer that talks to the network.
-  store/      Zustand store wiring domain + repository + data layer together for the UI.
-  repository/ WarRepository port + a localStorage implementation. Designed so the planned AWS
-              version (API Gateway + Lambda + DynamoDB) is a new adapter behind the same
-              interface, not a rewrite.
-  router/     react-router-dom routes, one per war phase, plus the shared "load the war named in
-              the URL and redirect if the phase doesn't match" hook.
+              dataset. The only layer that talks to third-party APIs directly.
+  auth/       Cognito/OIDC session (react-oidc-context), the RequireAuth route guard, the
+              /auth/callback landing page, and admin/current-user claim helpers.
+  store/      Zustand store wiring domain + repository + data layer together for the UI, with
+              optimistic dispatch (UI updates immediately; a failed save rolls back and surfaces
+              `saveError` instead of blocking on every click).
+  repository/ WarRepository port, a localStorage implementation (used pre-auth-boot and in
+              tests), and ApiWarRepository — the real adapter, backed by API Gateway + Lambda +
+              DynamoDB (see backend/ and infrastructure/ at the repo root).
+  router/     react-router-dom routes, one per war phase, plus the shared hook that loads the war
+              named in the URL, redirects if the phase doesn't match, and short-polls it while
+              mounted so a waiting screen notices it's become its viewer's turn without a manual
+              refresh.
   ui/         Shared design-system primitives (Button, Panel, ModifierCardView, CommanderCounter,
-              HotSeatGate, ...).
+              TurnGate, ...).
   features/   One folder per screen, composed from the above.
   i18n/       react-i18next setup. English only today; see src/i18n/index.ts for how to add a
               language (card *text* is not yet translatable — see "Known limitations" below).
 tools/        Re-runnable Node scripts (via tsx) that regenerate the bundled data:
                 npm run tools:import-cards        # original/brewers-wars/Cards.html -> cards.json
                 npm run tools:build-edhrec-data    # crawls EDHREC -> edhrec-deck-counts.json
+                npm run tools:generate-card-art    # AI-generates placeholder card art
 ```
 
 **Why a seeded RNG everywhere?** Every war stores a numeric seed, and the entire draw sequence
 (global, score, and every player's personal draws) is a pure function of `(seed, config,
-actions)`. That makes the draw engine deterministic and testable, and means a future backend
-could re-simulate/verify a client's draw without trusting the client.
+actions)`. That makes the draw engine deterministic and testable, and means the backend could
+re-simulate/verify a client's draw without trusting the client (not currently done, but the
+property is preserved end to end).
+
+**Persistence.** Every `Player` is bound to a real signed-in Cognito account (`Player.userId`), so
+several members can genuinely be mid-turn at once, each only ever seeing their own action screen —
+`ui/TurnGate.tsx` picks which subtree to render per viewer instead of enforcing a fixed pass-the-
+device order. A hydrated 8-player war with non-shared decks embeds the full 233-card catalog once
+per player and can serialize to ~550 KB, over DynamoDB's 400 KB item limit; `domain/warCodec.ts`
+swaps every embedded `ModifierCard` for its id before a save and looks ids back up against the
+bundled catalog on load, bringing a typical war down to ~8 KB. Writes carry an optimistic-
+concurrency version (`ApiWarRepository` + `backend/src/handlers/putWar.ts`); a conflicting
+concurrent write surfaces as a 412 the caller can reload-and-retry from.
 
 ## Card data notes
 
@@ -100,9 +125,12 @@ knowing:
 
 ## Known limitations / next steps
 
-- **No backend yet.** `src/repository/LocalWarRepository.ts` is the only `WarRepository`
-  implementation. Swapping in an API-Gateway/Lambda/DynamoDB-backed one is the intended next
-  step and shouldn't require touching anything above the repository layer.
+- **Frontend hosting is pending AWS CloudFront account verification.** dns, database, and backend
+  are live and smoke-tested (auth, CRUD, optimistic concurrency); the S3 + CloudFront frontend
+  module is blocked on a support case, so `brewer-wars.com` isn't serving the SPA yet.
+- **No self-serve signup.** Accounts are admin-created in the Cognito user pool
+  (`aws cognito-idp admin-create-user` / `admin-update-user-attributes` for `preferred_username`);
+  there's no in-app registration flow.
 - **Card text is English-only.** UI chrome is fully wired through i18next; translating the 233
   cards themselves would mean adding a parallel `cards.<lang>.json` keyed by card id.
 - **EDHREC data is a snapshot**, not live — re-run `npm run tools:build-edhrec-data` periodically
