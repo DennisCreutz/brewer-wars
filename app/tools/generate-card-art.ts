@@ -42,13 +42,23 @@
  *                        override to the sd3.5 Large model id for a
  *                        side-by-side bake-off without a second script)
  *   --region <region>   Bedrock region (default: us-west-2)
+ *   --aspect-ratio <r>  Bedrock aspect_ratio enum value (default: 16:9,
+ *                        matching ModifierCardView.tsx's landscape art
+ *                        window — override to 1:1 for square use cases
+ *                        like profile pictures)
  *   --max-width <px>    sharp resize target, long edge (default: 960)
  *   --quality <0-100>   sharp WebP quality (default: 82)
  *   --prompt <text>     ad-hoc mode: ignore the card catalog entirely and
  *                        generate exactly one image from this prompt,
  *                        written to the test folder (or --out) as
- *                        <slugified-prompt>-<timestamp>.webp. Not recorded
- *                        in the manifest — there's no card id to key it by.
+ *                        <slugified-prompt>-<timestamp>.webp, or as
+ *                        --filename if given. Not recorded in the
+ *                        manifest — there's no card id to key it by.
+ *   --filename <name>   ad-hoc mode only: write to exactly <outDir>/<name>
+ *                        instead of the auto-generated slug+timestamp
+ *                        name — for producing permanent, named assets
+ *                        (e.g. a fixed set of profile pictures) rather
+ *                        than scratch output.
  *   --raw               ad-hoc mode only: send --prompt verbatim, skipping
  *                        the style suffix and negative_prompt entirely
  *   --seed <n>          ad-hoc mode only: fix the seed for a reproducible
@@ -111,8 +121,9 @@ const DEFAULT_REGION = 'us-west-2'
 
 // Closest enum value to ModifierCardView.tsx's actual art window: the
 // sm/md/lg art heights against their card widths work out to roughly a
-// 1.7-1.9:1 landscape ratio.
-const ASPECT_RATIO = '16:9'
+// 1.7-1.9:1 landscape ratio. Overridable via --aspect-ratio for other use
+// cases (e.g. 1:1 for square profile pictures).
+const DEFAULT_ASPECT_RATIO = '16:9'
 
 const STYLE_SUFFIX =
   ', chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border'
@@ -140,9 +151,11 @@ interface Args {
   dryRun: boolean
   model: string
   region: string
+  aspectRatio: string
   maxWidth: number
   quality: number
   prompt?: string
+  filename?: string
   raw: boolean
   seed?: number
   styleSuffix?: string
@@ -159,6 +172,7 @@ function parseArgs(argv: string[]): Args {
     dryRun: false,
     model: DEFAULT_MODEL,
     region: DEFAULT_REGION,
+    aspectRatio: DEFAULT_ASPECT_RATIO,
     maxWidth: 960,
     quality: 82,
     raw: false,
@@ -197,6 +211,9 @@ function parseArgs(argv: string[]): Args {
       case '--region':
         args.region = argv[++i]
         break
+      case '--aspect-ratio':
+        args.aspectRatio = argv[++i]
+        break
       case '--max-width':
         args.maxWidth = Number(argv[++i])
         break
@@ -205,6 +222,9 @@ function parseArgs(argv: string[]): Args {
         break
       case '--prompt':
         args.prompt = argv[++i]
+        break
+      case '--filename':
+        args.filename = argv[++i]
         break
       case '--raw':
         args.raw = true
@@ -313,6 +333,7 @@ async function invokeOnce(
   model: string,
   prompt: string,
   seed: number,
+  aspectRatio: string,
 ): Promise<InvokeResult> {
   for (let attempt = 1; attempt <= 2; attempt++) {
     let parsed: UltraResponseBody
@@ -324,7 +345,7 @@ async function invokeOnce(
           accept: 'application/json',
           body: JSON.stringify({
             prompt,
-            aspect_ratio: ASPECT_RATIO,
+            aspect_ratio: aspectRatio,
             output_format: 'png',
             seed,
             negative_prompt: NEGATIVE_PROMPT,
@@ -361,10 +382,11 @@ async function generateWithBackoff(
   model: string,
   prompt: string,
   seed: number,
+  aspectRatio: string,
 ): Promise<InvokeResult> {
   for (let backoffAttempt = 0; ; backoffAttempt++) {
     try {
-      return await invokeOnce(client, model, prompt, seed)
+      return await invokeOnce(client, model, prompt, seed, aspectRatio)
     } catch (err) {
       if (backoffAttempt < THROTTLE_BACKOFFS_MS.length) {
         const delay = THROTTLE_BACKOFFS_MS[backoffAttempt]
@@ -400,14 +422,14 @@ async function runAdhocPrompt(args: Args): Promise<void> {
   const seed = args.seed ?? 0
 
   console.log(`${args.dryRun ? '[dry run] ' : ''}Generating 1 ad-hoc image -> ${outDir}`)
-  console.log(`Model: ${args.model}  Region: ${args.region}`)
+  console.log(`Model: ${args.model}  Region: ${args.region}  AspectRatio: ${args.aspectRatio}`)
   console.log(`prompt: ${prompt}`)
 
   if (args.dryRun) return
 
   mkdirSync(outDir, { recursive: true })
   const client = new BedrockRuntimeClient({ region: args.region })
-  const result = await generateWithBackoff(client, args.model, prompt, seed)
+  const result = await generateWithBackoff(client, args.model, prompt, seed, args.aspectRatio)
 
   if (!result.ok) {
     const detail = result.kind === 'soft-filter' ? result.reason : result.error
@@ -417,7 +439,7 @@ async function runAdhocPrompt(args: Args): Promise<void> {
   }
 
   const webp = await toWebp(result.imageBase64, args.maxWidth, args.quality)
-  const outPath = resolve(outDir, `${slugify(rawPrompt)}-${Date.now()}.webp`)
+  const outPath = resolve(outDir, args.filename ?? `${slugify(rawPrompt)}-${Date.now()}.webp`)
   writeFileSync(outPath, webp)
   console.log(`  OK (seed ${result.seedUsed}, ${(webp.length / 1024).toFixed(0)} KB) -> ${outPath}`)
 }
@@ -447,7 +469,7 @@ async function main() {
   console.log(
     `${args.dryRun ? '[dry run] ' : ''}Generating art for ${candidates.length} card(s) -> ${outDir}`,
   )
-  console.log(`Model: ${args.model}  Region: ${args.region}`)
+  console.log(`Model: ${args.model}  Region: ${args.region}  AspectRatio: ${args.aspectRatio}`)
 
   if (!args.dryRun) mkdirSync(outDir, { recursive: true })
   const client = args.dryRun ? null : new BedrockRuntimeClient({ region: args.region })
@@ -467,7 +489,7 @@ async function main() {
 
     if (args.dryRun) continue
 
-    const result = await generateWithBackoff(client!, args.model, prompt, seed)
+    const result = await generateWithBackoff(client!, args.model, prompt, seed, args.aspectRatio)
 
     if (!result.ok) {
       if (result.kind === 'soft-filter') {

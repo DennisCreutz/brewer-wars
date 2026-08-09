@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MAX_PLAYERS, MIN_PLAYERS, type Player } from '../../../domain/warTypes'
 import { fetchAllUsers, type UserSummary } from '../../../data/usersApi'
-import { Identicon } from '../../../ui/Identicon'
+import { PlayerAvatar } from '../../../ui/PlayerAvatar'
 
 interface PlayersStepProps {
   players: Player[]
@@ -98,7 +98,7 @@ export function PlayersStep({ players, onChange }: PlayersStepProps) {
                       {index + 1}
                     </span>
                   )}
-                  <Identicon seed={user.sub} size={56} className="rounded-lg" />
+                  <PlayerAvatar sub={user.sub} email={user.email} size={56} className="rounded-lg" />
                   <span className="w-full truncate text-xs font-semibold text-wood-800">
                     {user.email}
                   </span>

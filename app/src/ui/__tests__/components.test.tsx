@@ -5,6 +5,7 @@ import { PlayerBadge } from '../PlayerBadge'
 import { ModifierCardView } from '../ModifierCardView'
 import { CommanderCounter } from '../CommanderCounter'
 import { PlaceholderArt } from '../PlaceholderArt'
+import { PlayerAvatar, isThomas, avatarPathFor } from '../PlayerAvatar'
 import { getCardIcon } from '../cardIcons'
 import { useWarStore } from '../../store/warStore'
 import cardsData from '../../data/generated/cards.json'
@@ -78,6 +79,55 @@ describe('PlaceholderArt', () => {
     fireEvent.error(container.querySelector('img')!)
     expect(container.querySelector('img')).not.toBeInTheDocument()
     expect(screen.getByText(getCardIcon(card))).toBeInTheDocument()
+  })
+})
+
+describe('isThomas', () => {
+  it('matches an exact email local-part of "thomas", case-insensitively', () => {
+    expect(isThomas('thomas@example.com')).toBe(true)
+    expect(isThomas('Thomas@EXAMPLE.COM')).toBe(true)
+  })
+
+  it('does not match a local-part that merely contains "thomas"', () => {
+    expect(isThomas('thomasmiller@example.com')).toBe(false)
+    expect(isThomas('not-thomas@example.com')).toBe(false)
+  })
+})
+
+describe('avatarPathFor', () => {
+  it("always returns the exclusive path for Thomas's account, regardless of sub", () => {
+    expect(avatarPathFor('sub-1', 'thomas@example.com')).toBe('/avatars/avatar-thomas.webp')
+    expect(avatarPathFor('sub-2', 'Thomas@example.com')).toBe('/avatars/avatar-thomas.webp')
+  })
+
+  it('is deterministic for a non-Thomas account and never resolves to the Thomas path', () => {
+    const first = avatarPathFor('sub-alice', 'alice@example.com')
+    const second = avatarPathFor('sub-alice', 'alice@example.com')
+    expect(first).toBe(second)
+    expect(first).not.toBe('/avatars/avatar-thomas.webp')
+    expect(first).toMatch(/^\/avatars\/avatar-\d+\.webp$/)
+  })
+})
+
+describe('PlayerAvatar', () => {
+  it('attempts to load the pooled avatar for a non-Thomas account', () => {
+    const { container } = render(<PlayerAvatar sub="sub-alice" email="alice@example.com" />)
+    expect(container.querySelector('img')).toHaveAttribute(
+      'src',
+      avatarPathFor('sub-alice', 'alice@example.com'),
+    )
+  })
+
+  it("attempts to load the exclusive avatar for Thomas's account", () => {
+    const { container } = render(<PlayerAvatar sub="sub-thomas" email="thomas@example.com" />)
+    expect(container.querySelector('img')).toHaveAttribute('src', '/avatars/avatar-thomas.webp')
+  })
+
+  it('unmounts the image and leaves the Identicon fallback visible when it fails to load', () => {
+    const { container } = render(<PlayerAvatar sub="sub-alice" email="alice@example.com" />)
+    fireEvent.error(container.querySelector('img')!)
+    expect(container.querySelector('img')).not.toBeInTheDocument()
+    expect(container.querySelector('svg')).toBeInTheDocument()
   })
 })
 
