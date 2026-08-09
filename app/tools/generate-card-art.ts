@@ -59,6 +59,14 @@
  *                        look — e.g. a playful chibi style instead of the
  *                        default painterly-fantasy one — without editing
  *                        the script.
+ *   --style-first        put the style ahead of the subject instead of
+ *                        after it (ignored under --raw). Diffusion models
+ *                        weight earlier tokens more heavily, so a style
+ *                        tag trailing a long, vivid base description can
+ *                        get outweighed by it — this is the lever for
+ *                        that failure mode, seen in practice with a
+ *                        --style-suffix chibi request on a card whose own
+ *                        artPrompt already read as strongly "epic".
  *
  * --- Determinism ---
  * The seed passed to the model is derived from `hashSeed(card.id)` (see
@@ -137,6 +145,7 @@ interface Args {
   raw: boolean
   seed?: number
   styleSuffix?: string
+  styleFirst: boolean
 }
 
 function parseArgs(argv: string[]): Args {
@@ -152,6 +161,7 @@ function parseArgs(argv: string[]): Args {
     maxWidth: 960,
     quality: 82,
     raw: false,
+    styleFirst: false,
   }
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
@@ -204,6 +214,9 @@ function parseArgs(argv: string[]): Args {
       case '--style-suffix':
         args.styleSuffix = argv[++i]
         break
+      case '--style-first':
+        args.styleFirst = true
+        break
       default:
         throw new Error(`Unknown argument: "${arg}"`)
     }
@@ -216,6 +229,17 @@ function parseArgs(argv: string[]): Args {
 function slugify(text: string): string {
   const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
   return slug.slice(0, 40) || 'prompt'
+}
+
+/** Diffusion models generally weight earlier tokens more heavily, so a
+ * style tag trailing a long, vivid base description (e.g. a card whose
+ * artPrompt already reads as "epic"/painterly) can get outweighed by it.
+ * `--style-first` moves the style ahead of the subject instead of after
+ * it, as a lever for exactly that failure mode. */
+function composePrompt(base: string, styleSuffix: string, styleFirst: boolean): string {
+  if (!styleFirst) return `${base}${styleSuffix}`
+  const styleText = styleSuffix.replace(/^,\s*/, '')
+  return `${styleText}, ${base}`
 }
 
 type ManifestStatus = 'ok' | 'failed'
@@ -369,7 +393,9 @@ async function runAdhocPrompt(args: Args): Promise<void> {
   const outDir = args.out ? resolve(process.cwd(), args.out) : TEST_OUT_DIR
   const rawPrompt = args.prompt!.trim()
   if (!rawPrompt) throw new Error('--prompt must not be empty')
-  const prompt = args.raw ? rawPrompt : `${rawPrompt}${args.styleSuffix ?? STYLE_SUFFIX}`
+  const prompt = args.raw
+    ? rawPrompt
+    : composePrompt(rawPrompt, args.styleSuffix ?? STYLE_SUFFIX, args.styleFirst)
   const seed = args.seed ?? 0
 
   console.log(`${args.dryRun ? '[dry run] ' : ''}Generating 1 ad-hoc image -> ${outDir}`)
@@ -432,7 +458,7 @@ async function main() {
 
   for (let i = 0; i < candidates.length; i++) {
     const card = candidates[i]
-    const prompt = `${card.artPrompt}${args.styleSuffix ?? STYLE_SUFFIX}`
+    const prompt = composePrompt(card.artPrompt, args.styleSuffix ?? STYLE_SUFFIX, args.styleFirst)
     const seed = args.reroll ? Math.floor(Math.random() * MAX_SEED) : hashSeed(card.id) % (MAX_SEED + 1)
 
     console.log(`[${i + 1}/${candidates.length}] ${card.id}`)
