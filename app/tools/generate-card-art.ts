@@ -49,10 +49,16 @@
  *                        <slugified-prompt>-<timestamp>.webp. Not recorded
  *                        in the manifest — there's no card id to key it by.
  *   --raw               ad-hoc mode only: send --prompt verbatim, skipping
- *                        the style suffix and negative_prompt
+ *                        the style suffix and negative_prompt entirely
  *   --seed <n>          ad-hoc mode only: fix the seed for a reproducible
  *                        comparison across prompt wording (default: 0,
  *                        i.e. a random seed each run)
+ *   --style-suffix <t>  override STYLE_SUFFIX for this run only, in both
+ *                        catalog mode and ad-hoc mode (ignored under
+ *                        --raw). Use this to trial a different overall
+ *                        look — e.g. a playful chibi style instead of the
+ *                        default painterly-fantasy one — without editing
+ *                        the script.
  *
  * --- Determinism ---
  * The seed passed to the model is derived from `hashSeed(card.id)` (see
@@ -130,6 +136,7 @@ interface Args {
   prompt?: string
   raw: boolean
   seed?: number
+  styleSuffix?: string
 }
 
 function parseArgs(argv: string[]): Args {
@@ -193,6 +200,9 @@ function parseArgs(argv: string[]): Args {
         break
       case '--seed':
         args.seed = Number(argv[++i])
+        break
+      case '--style-suffix':
+        args.styleSuffix = argv[++i]
         break
       default:
         throw new Error(`Unknown argument: "${arg}"`)
@@ -359,7 +369,7 @@ async function runAdhocPrompt(args: Args): Promise<void> {
   const outDir = args.out ? resolve(process.cwd(), args.out) : TEST_OUT_DIR
   const rawPrompt = args.prompt!.trim()
   if (!rawPrompt) throw new Error('--prompt must not be empty')
-  const prompt = args.raw ? rawPrompt : `${rawPrompt}${STYLE_SUFFIX}`
+  const prompt = args.raw ? rawPrompt : `${rawPrompt}${args.styleSuffix ?? STYLE_SUFFIX}`
   const seed = args.seed ?? 0
 
   console.log(`${args.dryRun ? '[dry run] ' : ''}Generating 1 ad-hoc image -> ${outDir}`)
@@ -422,7 +432,7 @@ async function main() {
 
   for (let i = 0; i < candidates.length; i++) {
     const card = candidates[i]
-    const prompt = `${card.artPrompt}${STYLE_SUFFIX}`
+    const prompt = `${card.artPrompt}${args.styleSuffix ?? STYLE_SUFFIX}`
     const seed = args.reroll ? Math.floor(Math.random() * MAX_SEED) : hashSeed(card.id) % (MAX_SEED + 1)
 
     console.log(`[${i + 1}/${candidates.length}] ${card.id}`)
