@@ -6,6 +6,7 @@ import { IDBFactory } from 'fake-indexeddb'
 import '../../../i18n'
 import { CommanderSelectionPage } from '../CommanderSelectionPage'
 import { useWarStore } from '../../../store/warStore'
+import { FakeAuthProvider } from '../../../test/FakeAuthProvider'
 import {
   createPlayerWarState,
   DEFAULT_CUSTOM_OPTIONS,
@@ -21,8 +22,8 @@ import type { CommanderPoolStage } from '../../../data/commanderPoolCache'
 function config(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 0,
@@ -43,6 +44,7 @@ function buildWar(overrides: Partial<War> = {}): War {
     seed: 1,
     createdAt: now,
     updatedAt: now,
+    hostUserId: 'user-alice',
     phase: 'commander-selection',
     config: config(),
     globalDeck: { modifier: 'global', drawPile: [], drawnCards: [] },
@@ -132,15 +134,22 @@ const globalArtCard: ModifierCard = {
   solo: false,
 }
 
-function renderPage(war: War, pool: CommanderSummary[] = [], stage: CommanderPoolStage = 'ready') {
+function renderPage(
+  war: War,
+  pool: CommanderSummary[] = [],
+  stage: CommanderPoolStage = 'ready',
+  sub = 'user-alice',
+) {
   useWarStore.setState({ war, commanderPool: pool, commanderPoolStatus: { stage } })
   return render(
-    <MemoryRouter initialEntries={[`/war/${war.id}/commander-selection`]}>
-      <Routes>
-        <Route path="/war/:warId/commander-selection" element={<CommanderSelectionPage />} />
-        <Route path="/war/:warId/overview" element={<div>Overview Route</div>} />
-      </Routes>
-    </MemoryRouter>,
+    <FakeAuthProvider sub={sub}>
+      <MemoryRouter initialEntries={[`/war/${war.id}/commander-selection`]}>
+        <Routes>
+          <Route path="/war/:warId/commander-selection" element={<CommanderSelectionPage />} />
+          <Route path="/war/:warId/overview" element={<div>Overview Route</div>} />
+        </Routes>
+      </MemoryRouter>
+    </FakeAuthProvider>,
   )
 }
 
@@ -157,15 +166,16 @@ describe('CommanderSelectionPage', () => {
     })
   })
 
-  it('shows the hot-seat curtain first, hiding the grid', () => {
-    renderPage(buildWar(), [commander('1', 'Alpha Prime', ['W'])])
-    expect(screen.getByText(/pass the device to alice/i)).toBeInTheDocument()
+  it('shows a waiting screen for a member whose turn it is not', () => {
+    renderPage(buildWar(), [commander('1', 'Alpha Prime', ['W'])], 'ready', 'user-spectator')
+    expect(screen.getByText(/waiting on the players below/i)).toBeInTheDocument()
     expect(screen.queryByText('Alpha Prime')).not.toBeInTheDocument()
   })
 
   it(
-    'reveals a filtered, searchable grid after the curtain, applies constraints transparently, ' +
-      'shows the manual checklist without blocking selection, and locking in advances the hot seat',
+    'reveals a filtered, searchable grid for the signed-in player, applies constraints ' +
+      'transparently, shows the manual checklist without blocking selection, and locking in ' +
+      'moves them to the waiting screen',
     async () => {
       const user = userEvent.setup()
       const war = buildWar({
@@ -179,8 +189,6 @@ describe('CommanderSelectionPage', () => {
         commander('2', 'Beta Storm', ['U']),
         commander('3', 'Gamma Wolf', ['W']),
       ])
-
-      await user.click(screen.getByRole('button')) // dismiss Alice's curtain
 
       // Transparency: the checkable rule that was actually applied.
       expect(await screen.findByText(/colour w applied/i)).toBeInTheDocument()
@@ -206,8 +214,9 @@ describe('CommanderSelectionPage', () => {
       await user.click(screen.getByText('Alpha Prime'))
       await user.click(screen.getByRole('button', { name: /lock in this commander/i }))
 
-      // Alice is locked in and the curtain flips to Bob automatically.
-      expect(await screen.findByText(/pass the device to bob/i)).toBeInTheDocument()
+      // Alice is locked in and her own screen moves to waiting (concurrent
+      // model — bob isn't gated behind her any more, see ui/TurnGate.tsx).
+      expect(await screen.findByText(/waiting for the others/i)).toBeInTheDocument()
       const alice = useWarStore.getState().war?.players.find((p) => p.playerId === 'alice')
       expect(alice?.commanderLocked).toBe(true)
       expect(alice?.commander).toEqual({
@@ -221,7 +230,6 @@ describe('CommanderSelectionPage', () => {
   it('shows a no-results message when the search matches nothing', async () => {
     const user = userEvent.setup()
     renderPage(buildWar(), [commander('1', 'Alpha Prime')])
-    await user.click(screen.getByRole('button'))
     await user.type(screen.getByPlaceholderText(/search commanders/i), 'zzz-no-such-commander')
     expect(await screen.findByText(/no commanders match every rule/i)).toBeInTheDocument()
   })
@@ -232,7 +240,6 @@ describe('CommanderSelectionPage', () => {
       commander(String(i), `Commander ${String(i).padStart(2, '0')}`),
     )
     renderPage(buildWar(), pool)
-    await user.click(screen.getByRole('button'))
 
     expect(screen.getByText('Showing 60 of 75 commanders')).toBeInTheDocument()
     const loadMore = screen.getByRole('button', { name: /load 15 more/i })
@@ -244,9 +251,7 @@ describe('CommanderSelectionPage', () => {
   })
 
   it('shows a loading screen instead of the grid while the commander pool is not ready', async () => {
-    const user = userEvent.setup()
     renderPage(buildWar(), [], 'fetching')
-    await user.click(screen.getByRole('button')) // curtain still shows regardless of pool status
     expect(screen.getByText(/loading/i)).toBeInTheDocument()
     expect(screen.queryByPlaceholderText(/search commanders/i)).not.toBeInTheDocument()
   })
@@ -264,11 +269,13 @@ describe('CommanderSelectionPage', () => {
       commanderPoolStatus: { stage: 'reading-cache' },
     })
     render(
-      <MemoryRouter initialEntries={[`/war/${war.id}/commander-selection`]}>
-        <Routes>
-          <Route path="/war/:warId/commander-selection" element={<CommanderSelectionPage />} />
-        </Routes>
-      </MemoryRouter>,
+      <FakeAuthProvider sub="user-alice">
+        <MemoryRouter initialEntries={[`/war/${war.id}/commander-selection`]}>
+          <Routes>
+            <Route path="/war/:warId/commander-selection" element={<CommanderSelectionPage />} />
+          </Routes>
+        </MemoryRouter>
+      </FakeAuthProvider>,
     )
 
     await waitFor(() => {
@@ -309,7 +316,6 @@ describe('CommanderSelectionPage', () => {
         commander('2', 'Azorius Strategist', ['W', 'U']),
         commander('3', 'Blue Loner', ['U']),
       ])
-      await user.click(screen.getByRole('button')) // dismiss curtain
 
       // Default mode is "at least": White should keep both W and W/U.
       await user.click(screen.getByRole('button', { name: 'White' }))
@@ -331,7 +337,6 @@ describe('CommanderSelectionPage', () => {
         commander('2', 'Mid Commander', [], { cmc: 4 }),
         commander('3', 'Big Commander', [], { cmc: 6 }),
       ])
-      await user.click(screen.getByRole('button'))
 
       await user.selectOptions(
         screen.getByRole('combobox', { name: /mana value comparison/i }),
@@ -351,7 +356,6 @@ describe('CommanderSelectionPage', () => {
         commander('2', 'Atraxa Ascendant', []),
         commander('3', 'Mondrak Prime', []),
       ])
-      await user.click(screen.getByRole('button'))
 
       await user.selectOptions(screen.getByRole('combobox', { name: /sort by/i }), 'name')
 
@@ -370,7 +374,6 @@ describe('CommanderSelectionPage', () => {
         commander('1', 'Mono White Knight', ['W']),
         commander('2', 'Blue Loner', ['U']),
       ])
-      await user.click(screen.getByRole('button'))
 
       expect(screen.queryByRole('button', { name: /clear filters/i })).not.toBeInTheDocument()
 
@@ -389,7 +392,6 @@ describe('CommanderSelectionPage', () => {
         commander('1', 'Mono White Knight', ['W']),
         commander('2', 'Blue Loner', ['U']),
       ])
-      await user.click(screen.getByRole('button'))
 
       await user.click(screen.getByText('Mono White Knight'))
       expect(screen.getByRole('button', { name: /lock in this commander/i })).toBeInTheDocument()
@@ -404,9 +406,7 @@ describe('CommanderSelectionPage', () => {
 
   describe('global vs. personal modifier panels', () => {
     it('shows an empty-state message on both sides when no commander-target modifiers are active', async () => {
-      const user = userEvent.setup()
       renderPage(buildWar(), [commander('1', 'Alpha Prime')])
-      await user.click(screen.getByRole('button'))
 
       expect(screen.getByRole('heading', { name: /global commander rules/i })).toBeInTheDocument()
       expect(screen.getByRole('heading', { name: /your commander rules/i })).toBeInTheDocument()
@@ -414,7 +414,6 @@ describe('CommanderSelectionPage', () => {
     })
 
     it('splits global modifiers into the left panel and personal modifiers into the right panel', async () => {
-      const user = userEvent.setup()
       const war = buildWar({
         activeGlobalModifiers: [globalFlavorCard, globalArtCard],
         players: [
@@ -427,7 +426,6 @@ describe('CommanderSelectionPage', () => {
         commander('2', 'Beta Storm', ['U'], { hasFlavorText: true }),
         commander('3', 'Gamma Wolf', ['W'], { hasFlavorText: false }),
       ])
-      await user.click(screen.getByRole('button'))
 
       // Sanity check: both the global (flavor text) and personal (colour)
       // checkable constraints are enforced together on the actual grid —

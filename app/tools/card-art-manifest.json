@@ -1,0 +1,2101 @@
+{
+  "rarity-common": {
+    "id": "rarity-common",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1984382351,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a row of identical, low-detail goblin soldiers marching in formation under a dull gray sky",
+    "generatedAt": "2026-08-09T12:17:10.084Z",
+    "status": "ok"
+  },
+  "rarity-uncommon": {
+    "id": "rarity-uncommon",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2527445508,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a small group of modest adventurers with mismatched armor and curious expressions, posing near a wooden signpost",
+    "generatedAt": "2026-08-09T12:17:36.259Z",
+    "status": "ok"
+  },
+  "rarity-rare": {
+    "id": "rarity-rare",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1548919639,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a striking hero mid-battle with a glowing sword, framed by magical runes and dramatic lighting",
+    "generatedAt": "2026-08-09T12:17:58.806Z",
+    "status": "ok"
+  },
+  "rarity-mythic": {
+    "id": "rarity-mythic",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3214523468,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mythical golden huge very old dragon flying over a city.",
+    "generatedAt": "2026-08-09T12:18:22.417Z",
+    "status": "ok"
+  },
+  "price-lt-30-euro": {
+    "id": "price-lt-30-euro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 688881102,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a bargain bin of worn-out magical items on a dusty market stall, with a faded 30 Euro sign",
+    "generatedAt": "2026-08-09T12:18:45.516Z",
+    "status": "ok"
+  },
+  "price-lt-50-euro": {
+    "id": "price-lt-50-euro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2217544752,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a traveling merchant displaying mid-range enchanted goods on a patterned rug, haggling with a robed buyer",
+    "generatedAt": "2026-08-09T12:19:07.163Z",
+    "status": "ok"
+  },
+  "price-lt-100-euro": {
+    "id": "price-lt-100-euro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4218397012,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an upscale magic shop with glowing items in glass cases, each labeled under 100 Euro, with a rich client browsing",
+    "generatedAt": "2026-08-09T12:19:31.684Z",
+    "status": "ok"
+  },
+  "price-lt-150-euro": {
+    "id": "price-lt-150-euro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3936801176,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a boutique magic stall displaying rare items like glowing rings and floating trinkets, with a 150 Euro max sign in enchanted script",
+    "generatedAt": "2026-08-09T12:19:54.514Z",
+    "status": "ok"
+  },
+  "price-lt-300-euro": {
+    "id": "price-lt-300-euro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2362490135,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a secure vault with well-lit magical cases holding powerful artifacts, each tagged with a glowing 300 Euro price label",
+    "generatedAt": "2026-08-09T12:20:16.664Z",
+    "status": "ok"
+  },
+  "price-lt-500-euro": {
+    "id": "price-lt-500-euro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2070458293,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an elite collectors gallery filled with legendary cards and arcane relics behind magical glass, with a 500 Euro entrance sign",
+    "generatedAt": "2026-08-09T12:20:39.298Z",
+    "status": "ok"
+  },
+  "price-gt-1000-euro": {
+    "id": "price-gt-1000-euro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3266514729,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a golden pedestal with a glowing ultra-rare card under glass, surrounded by jewels and enchanted security",
+    "generatedAt": "2026-08-09T12:21:01.581Z",
+    "status": "ok"
+  },
+  "num-decks-lt-20k": {
+    "id": "num-decks-lt-20k",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2172557335,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a commander standing on a large floating leaderboard showing 19,999 decks, surrounded by fans throwing magical streamers",
+    "generatedAt": "2026-08-09T12:21:24.599Z",
+    "status": "ok"
+  },
+  "num-decks-lt-15k": {
+    "id": "num-decks-lt-15k",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4164531443,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a confident MTG commander signing autographs at a mid-sized tournament booth, with enchanted banners showing 15k decks",
+    "generatedAt": "2026-08-09T12:21:46.762Z",
+    "status": "ok"
+  },
+  "num-decks-lt-10k": {
+    "id": "num-decks-lt-10k",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3182659270,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a proud MTG commander standing in front of a scoreboard showing 9,999 decks, with a backdrop of cheering fans and magical confetti",
+    "generatedAt": "2026-08-09T12:22:08.086Z",
+    "status": "ok"
+  },
+  "num-decks-lt-5k": {
+    "id": "num-decks-lt-5k",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 264623281,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a normal looking MTG commander stands in front of a small crowd of about 10 people wearing a t-shirt with the word 4,999 on it",
+    "generatedAt": "2026-08-09T12:22:29.491Z",
+    "status": "ok"
+  },
+  "num-decks-lt-2k": {
+    "id": "num-decks-lt-2k",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 563634678,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a niche commander sitting at a cozy tavern table with a small group of fans, holding a scroll marked 2k builds",
+    "generatedAt": "2026-08-09T12:22:51.754Z",
+    "status": "ok"
+  },
+  "num-decks-lt-1k": {
+    "id": "num-decks-lt-1k",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 564935662,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dusty MTG commander sitting alone on the ground in a dark alleyway of a city, looking lonely. The number 999 is drawn in chalk on the floor.",
+    "generatedAt": "2026-08-09T12:23:14.095Z",
+    "status": "ok"
+  },
+  "num-decks-lt-500": {
+    "id": "num-decks-lt-500",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3823602857,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an obscure commander reading an old book in a dusty archive, surrounded by cobwebbed boxes labeled Decks < 500",
+    "generatedAt": "2026-08-09T12:23:36.184Z",
+    "status": "ok"
+  },
+  "num-decks-lt-200": {
+    "id": "num-decks-lt-200",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 987522958,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a forgotten MTG commander alone in a dusty museum of cards, cobwebs covering the deck counter at 199",
+    "generatedAt": "2026-08-09T12:23:59.087Z",
+    "status": "ok"
+  },
+  "colour-w": {
+    "id": "colour-w",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2110518171,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a radiant battlefield bathed in white mana, with angels descending from the sky and soldiers raising glowing shields",
+    "generatedAt": "2026-08-09T12:24:21.732Z",
+    "status": "ok"
+  },
+  "colour-u": {
+    "id": "colour-u",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2832480853,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a serene library floating above water, filled with magical scrolls and illusions shaped like blue runes and orbs",
+    "generatedAt": "2026-08-09T12:24:45.321Z",
+    "status": "ok"
+  },
+  "colour-b": {
+    "id": "colour-b",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2006789220,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dark crypt pulsing with black mana, skeletal hands reaching out from shadows, and a necromancer casting death spells",
+    "generatedAt": "2026-08-09T12:25:07.217Z",
+    "status": "ok"
+  },
+  "colour-r": {
+    "id": "colour-r",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 257765192,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a fiery battlefield erupting with red mana, with warriors charging through lava and fire elementals leaping from the ground",
+    "generatedAt": "2026-08-09T12:25:29.883Z",
+    "status": "ok"
+  },
+  "colour-g": {
+    "id": "colour-g",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 700824584,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a lush forest overflowing with green mana, dryads and beasts emerging from trees as vines pulse with life",
+    "generatedAt": "2026-08-09T12:25:51.944Z",
+    "status": "ok"
+  },
+  "colour-wu": {
+    "id": "colour-wu",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 699979491,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magical city blending white marble towers and blue crystal spires, angels and scholars working in harmony",
+    "generatedAt": "2026-08-09T12:26:14.687Z",
+    "status": "ok"
+  },
+  "colour-ub": {
+    "id": "colour-ub",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3444792502,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dark coastal fortress cloaked in fog, filled with spies, forbidden tomes, and illusionary guardians",
+    "generatedAt": "2026-08-09T12:26:36.858Z",
+    "status": "ok"
+  },
+  "colour-br": {
+    "id": "colour-br",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2426508806,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a blazing wasteland where necromancers and berserkers fight among bones and fire, surrounded by chaos",
+    "generatedAt": "2026-08-09T12:26:59.181Z",
+    "status": "ok"
+  },
+  "colour-rg": {
+    "id": "colour-rg",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2790849244,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a wild volcanic forest with druids summoning elemental beasts from earth and fire",
+    "generatedAt": "2026-08-09T12:27:22.388Z",
+    "status": "ok"
+  },
+  "colour-gw": {
+    "id": "colour-gw",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1495011261,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a vibrant grove where knights and druids gather, bathed in green and white mana light, surrounded by enchanted wildlife",
+    "generatedAt": "2026-08-09T12:27:45.192Z",
+    "status": "ok"
+  },
+  "colour-wb": {
+    "id": "colour-wb",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3680857404,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a grand cathedral with both holy relics and dark altars, where clerics and necromancers debate law and death",
+    "generatedAt": "2026-08-09T12:28:07.830Z",
+    "status": "ok"
+  },
+  "colour-ur": {
+    "id": "colour-ur",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2112255418,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a chaotic laboratory built into a volcano, lightning and lava clashing as mad wizards experiment with unstable magic",
+    "generatedAt": "2026-08-09T12:28:30.455Z",
+    "status": "ok"
+  },
+  "colour-bg": {
+    "id": "colour-bg",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1752772642,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a corrupted jungle where decay feeds life, with rot shamans summoning skeletal beasts from the soil",
+    "generatedAt": "2026-08-09T12:28:54.535Z",
+    "status": "ok"
+  },
+  "colour-rw": {
+    "id": "colour-rw",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1363051642,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sunlit battlefield where angels and warriors ride flame-forged chariots across golden fields",
+    "generatedAt": "2026-08-09T12:29:17.565Z",
+    "status": "ok"
+  },
+  "colour-gu": {
+    "id": "colour-gu",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 825890949,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a tranquil glade with flowing streams and sentient vines, where druids and sages weave green and blue mana together",
+    "generatedAt": "2026-08-09T12:29:39.153Z",
+    "status": "ok"
+  },
+  "colour-gwu": {
+    "id": "colour-gwu",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4117220519,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magical university at the heart of a garden city, where angels, scholars, and nature spirits study together",
+    "generatedAt": "2026-08-09T12:30:00.745Z",
+    "status": "ok"
+  },
+  "colour-wub": {
+    "id": "colour-wub",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3287258655,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a trio of magical beings each glowing with white, blue, and black mana, performing a synchronized spell in harmony",
+    "generatedAt": "2026-08-09T12:30:24.463Z",
+    "status": "ok"
+  },
+  "colour-ubr": {
+    "id": "colour-ubr",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 927027733,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a grim industrial city where necromancers, mad scientists, and fire-wielders control the streets with dark experiments",
+    "generatedAt": "2026-08-09T12:30:51.156Z",
+    "status": "ok"
+  },
+  "colour-brg": {
+    "id": "colour-brg",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4279281267,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a primal warcamp in a corrupted jungle, with raging shamans, beasts, and undead warriors channeling black, red, and green magic",
+    "generatedAt": "2026-08-09T12:31:15.928Z",
+    "status": "ok"
+  },
+  "colour-rgw": {
+    "id": "colour-rgw",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3751663780,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a holy warfront in a burning savannah, where druids, knights, and pyromancers charge under radiant banners",
+    "generatedAt": "2026-08-09T12:32:10.047Z",
+    "status": "ok"
+  },
+  "colour-wbg": {
+    "id": "colour-wbg",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1926469143,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sacred jungle temple where life, death, and law converge; angels, dryads, and necromancers gather under green, black, and white mana",
+    "generatedAt": "2026-08-09T12:32:39.627Z",
+    "status": "ok"
+  },
+  "colour-urw": {
+    "id": "colour-urw",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 366764151,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sky citadel powered by lightning and scrolls, where pyromancers, strategists, and angelic enforcers study battle tactics",
+    "generatedAt": "2026-08-09T12:33:02.394Z",
+    "status": "ok"
+  },
+  "colour-bgu": {
+    "id": "colour-bgu",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1036526411,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dark marshland laboratory where necromancers, tricksters, and swamp druids combine green, blue, and black magic",
+    "generatedAt": "2026-08-09T12:33:25.497Z",
+    "status": "ok"
+  },
+  "colour-rwb": {
+    "id": "colour-rwb",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1112068066,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sun-scorched holy battlefield where rebels, angels, and vampires fight under a banner of fire, law, and ambition",
+    "generatedAt": "2026-08-09T12:33:47.399Z",
+    "status": "ok"
+  },
+  "colour-gur": {
+    "id": "colour-gur",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 339970855,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a vibrant rainforest research base where elementalists, sages, and druids blend red, green, and blue mana for chaotic magic",
+    "generatedAt": "2026-08-09T12:34:09.765Z",
+    "status": "ok"
+  },
+  "colour-ubrg": {
+    "id": "colour-ubrg",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4013317675,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a chaos-forged city where necromancers, pyromancers, druids, and illusionists battle over raw magical terrain",
+    "generatedAt": "2026-08-09T12:34:31.061Z",
+    "status": "ok"
+  },
+  "colour-wrg": {
+    "id": "colour-wrg",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1902322038,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battlefield where angels, warriors, and shamans unite in a holy crusade under white, red, and green mana",
+    "generatedAt": "2026-08-09T12:34:57.640Z",
+    "status": "ok"
+  },
+  "colour-wug": {
+    "id": "colour-wug",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4139382728,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mystical sky garden tended by dryads, scholars, and angels, where knowledge, growth, and order thrive together",
+    "generatedAt": "2026-08-09T12:35:20.822Z",
+    "status": "ok"
+  },
+  "colour-wub-2": {
+    "id": "colour-wub-2",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1663390402,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, three intertwined mana streams—white, blue, and black—forming the silhouette of a commander rising from the mist",
+    "generatedAt": "2026-08-09T12:35:43.316Z",
+    "status": "ok"
+  },
+  "colour-wur": {
+    "id": "colour-wur",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3169168059,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a bright magical academy with fire labs, libraries, and shrines to justice, powered by red, blue, and white mana",
+    "generatedAt": "2026-08-09T12:36:05.569Z",
+    "status": "ok"
+  },
+  "colour-wubrg": {
+    "id": "colour-wubrg",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 479065295,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, another steppe with lots of different creatures in all colours and shapes.",
+    "generatedAt": "2026-08-09T12:36:26.214Z",
+    "status": "ok"
+  },
+  "mana-value-lt-4": {
+    "id": "mana-value-lt-4",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3130419866,
+    "finishReason": "Filter reason: prompt",
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a series of creatures stand on a  wooden higher platform in the centre of a market and look very unhappy. the creatures are only wearing rags and are tied up. they are offered as slaves and each creature has a pendant with a 1,2 or 3 on it.",
+    "generatedAt": "2026-08-09T12:36:34.062Z",
+    "status": "failed",
+    "error": "Filter reason: prompt"
+  },
+  "mana-value-gt-3": {
+    "id": "mana-value-gt-3",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1579134108,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a giant arcane pillar with mana glyphs from 4 to 10 spiraling upward, glowing with unstable energy",
+    "generatedAt": "2026-08-09T12:36:55.239Z",
+    "status": "ok"
+  },
+  "mana-value-eq-even": {
+    "id": "mana-value-eq-even",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4137170622,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mystical balance scale holding even-numbered mana stones (2, 4, 6), glowing in symmetric harmony",
+    "generatedAt": "2026-08-09T12:37:16.990Z",
+    "status": "ok"
+  },
+  "mana-value-eq-odd": {
+    "id": "mana-value-eq-odd",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2224406053,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, creatures stand in a row on a wall and look sad, with every second space in the row empty. the creatures all have a sign around their neck with a 1,3 or 5 on it.",
+    "generatedAt": "2026-08-09T12:37:37.857Z",
+    "status": "ok"
+  },
+  "salt-score-gt-1": {
+    "id": "salt-score-gt-1",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4185652143,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a frustrated player throwing a card onto the table while opponents groan, with a scoreboard reading Salt Level: 1.2",
+    "generatedAt": "2026-08-09T12:37:59.420Z",
+    "status": "ok"
+  },
+  "salt-score-lt-1": {
+    "id": "salt-score-lt-1",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4146856617,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a peaceful casual game with laughing players and a relaxed table, the scoreboard showing Salt Level: 0.4",
+    "generatedAt": "2026-08-09T12:38:22.727Z",
+    "status": "ok"
+  },
+  "salt-score-gt-1-5": {
+    "id": "salt-score-gt-1-5",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1850739947,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a plate of soup is placed on a table and a huge salt shaker sprinkles far too much salt into the soup so that the salt piles up in the soup and falls off the table.",
+    "generatedAt": "2026-08-09T12:38:44.464Z",
+    "status": "ok"
+  },
+  "only-creatures": {
+    "id": "only-creatures",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 183487008,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battlefield filled entirely with summoned beasts, warriors, and monsters, with no spells or artifacts in sight",
+    "generatedAt": "2026-08-09T12:39:05.929Z",
+    "status": "ok"
+  },
+  "must-have-flying": {
+    "id": "must-have-flying",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1914750158,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sky battle of flying creatures like dragons, birds, and angels clashing above clouds, with nothing touching the ground",
+    "generatedAt": "2026-08-09T12:39:28.945Z",
+    "status": "ok"
+  },
+  "tribal-angel": {
+    "id": "tribal-angel",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3559438403,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a squadron of radiant angels descending from glowing clouds, each holding a golden weapon and shining with divine light",
+    "generatedAt": "2026-08-09T12:39:50.968Z",
+    "status": "ok"
+  },
+  "tribal-demon": {
+    "id": "tribal-demon",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1497063273,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a horde of dark demons emerging from a flaming pit, each with distinct horns, wings, and sinister grins",
+    "generatedAt": "2026-08-09T12:40:13.176Z",
+    "status": "ok"
+  },
+  "tribal-dragon": {
+    "id": "tribal-dragon",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3532402153,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a lineup of massive dragons soaring across a stormy sky, each breathing a different elemental fire",
+    "generatedAt": "2026-08-09T12:40:35.878Z",
+    "status": "ok"
+  },
+  "tribal-elf": {
+    "id": "tribal-elf",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1301671528,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a forest scene with elegant elves leaping between trees, casting spells and wielding carved wooden weapons",
+    "generatedAt": "2026-08-09T12:40:57.632Z",
+    "status": "ok"
+  },
+  "tribal-goblin": {
+    "id": "tribal-goblin",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3448015328,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a chaotic horde of goblins pushing and shoving each other, some riding rockets, others juggling bombs in a desert camp",
+    "generatedAt": "2026-08-09T12:41:19.487Z",
+    "status": "ok"
+  },
+  "tribal-merfolk": {
+    "id": "tribal-merfolk",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3779026308,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a graceful procession of merfolk swimming through glowing coral reefs, casting aquatic magic and singing",
+    "generatedAt": "2026-08-09T12:41:42.836Z",
+    "status": "ok"
+  },
+  "tribal-zombie": {
+    "id": "tribal-zombie",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 415491643,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a swarm of decaying zombies staggering through a haunted graveyard under a blood moon, reaching out with rotting hands",
+    "generatedAt": "2026-08-09T12:42:05.820Z",
+    "status": "ok"
+  },
+  "tribal-vampire": {
+    "id": "tribal-vampire",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3182518165,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a coven of aristocratic vampires in a gothic ballroom, sipping glowing red potions and lurking in shadows",
+    "generatedAt": "2026-08-09T12:42:29.206Z",
+    "status": "ok"
+  },
+  "tribal-human": {
+    "id": "tribal-human",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1411097572,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a village festival with diverse human adventurers celebrating around bonfires, holding tools, weapons, and instruments",
+    "generatedAt": "2026-08-09T12:42:51.409Z",
+    "status": "ok"
+  },
+  "tribal-soldier": {
+    "id": "tribal-soldier",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3718601139,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a disciplined formation of fantasy soldiers in polished armor, standing at attention on a battlefield at dawn",
+    "generatedAt": "2026-08-09T12:43:15.360Z",
+    "status": "ok"
+  },
+  "tribal-sliver": {
+    "id": "tribal-sliver",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2525572221,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a writhing mass of slivers connecting and morphing with each other, forming a hive-like structure in an alien landscape",
+    "generatedAt": "2026-08-09T12:43:38.212Z",
+    "status": "ok"
+  },
+  "tribal-elemental": {
+    "id": "tribal-elemental",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2980301073,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a gathering of elemental beings made of fire, water, earth, and wind, each glowing with its own raw power",
+    "generatedAt": "2026-08-09T12:44:00.804Z",
+    "status": "ok"
+  },
+  "tribal-spirit": {
+    "id": "tribal-spirit",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1210809451,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a spectral procession of translucent spirits drifting through a moonlit forest, leaving glowing trails behind",
+    "generatedAt": "2026-08-09T12:44:23.778Z",
+    "status": "ok"
+  },
+  "tribal-wizard": {
+    "id": "tribal-wizard",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1289784818,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a council of eccentric wizards casting spells in a magical observatory, surrounded by floating scrolls and arcane orbs",
+    "generatedAt": "2026-08-09T12:44:48.007Z",
+    "status": "ok"
+  },
+  "tribal-rogue": {
+    "id": "tribal-rogue",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1863056606,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a group of sneaky rogues in shadowy cloaks sneaking through an alley, each carrying daggers and stolen scrolls",
+    "generatedAt": "2026-08-09T12:45:11.497Z",
+    "status": "ok"
+  },
+  "tribal-warrior": {
+    "id": "tribal-warrior",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 664484438,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battlefield scene with muscular warriors clashing swords mid-charge, wearing battle-worn armor and war paint",
+    "generatedAt": "2026-08-09T12:45:34.782Z",
+    "status": "ok"
+  },
+  "tribal-knight": {
+    "id": "tribal-knight",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3651913693,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a ceremony with noble knights kneeling before a radiant queen, holding ornate shields and polished swords",
+    "generatedAt": "2026-08-09T12:45:55.757Z",
+    "status": "ok"
+  },
+  "tribal-cleric": {
+    "id": "tribal-cleric",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 416024700,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a peaceful temple with clerics in white robes casting healing magic over the wounded, golden light streaming in",
+    "generatedAt": "2026-08-09T12:46:18.463Z",
+    "status": "ok"
+  },
+  "tribal-druid": {
+    "id": "tribal-druid",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3533032664,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sacred grove with druids summoning nature spirits, trees bending inward and animals gathered in a circle",
+    "generatedAt": "2026-08-09T12:46:41.265Z",
+    "status": "ok"
+  },
+  "tribal-shaman": {
+    "id": "tribal-shaman",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3025794546,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mystical shaman surrounded by floating totems and swirling elemental magic, performing a ritual under storm clouds",
+    "generatedAt": "2026-08-09T12:47:04.687Z",
+    "status": "ok"
+  },
+  "tribal-beast": {
+    "id": "tribal-beast",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4055785635,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a stampede of wild fantasy beasts charging through a dense jungle, each with distinct shapes and elemental traits",
+    "generatedAt": "2026-08-09T12:47:29.316Z",
+    "status": "ok"
+  },
+  "tribal-bird": {
+    "id": "tribal-bird",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4294932718,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a flock of Colourful magical birds flying over a floating island, leaving trails of mana light behind them",
+    "generatedAt": "2026-08-09T12:47:51.204Z",
+    "status": "ok"
+  },
+  "tribal-cat": {
+    "id": "tribal-cat",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2260418733,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a pride of armored fantasy cats perched on temple ruins, with glowing eyes and enchanted collars",
+    "generatedAt": "2026-08-09T12:48:15.438Z",
+    "status": "ok"
+  },
+  "tribal-dog": {
+    "id": "tribal-dog",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4018609121,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a loyal pack of battle hounds guarding a treasure hoard, some armored, some playful, in a fantasy canyon",
+    "generatedAt": "2026-08-09T12:48:39.071Z",
+    "status": "ok"
+  },
+  "tribal-horror": {
+    "id": "tribal-horror",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3516694727,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a group of grotesque horror creatures emerging from a shadowy rift, each with twisted limbs and glowing red eyes",
+    "generatedAt": "2026-08-09T12:49:02.163Z",
+    "status": "ok"
+  },
+  "tribal-construct": {
+    "id": "tribal-construct",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1705994015,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an assembly line of steampunk constructs being built by glowing robotic arms in a magical forge",
+    "generatedAt": "2026-08-09T12:49:25.467Z",
+    "status": "ok"
+  },
+  "tribal-golem": {
+    "id": "tribal-golem",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2500901643,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, three towering stone golems standing guard in front of an ancient gate, covered in moss and arcane carvings",
+    "generatedAt": "2026-08-09T12:49:48.696Z",
+    "status": "ok"
+  },
+  "tribal-minotaur": {
+    "id": "tribal-minotaur",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1997937533,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a raging pack of minotaurs charging through a labyrinth, smashing walls with massive axes",
+    "generatedAt": "2026-08-09T12:50:11.525Z",
+    "status": "ok"
+  },
+  "tribal-mutant": {
+    "id": "tribal-mutant",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1167589117,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a lab scene with bubbling vats and grotesque mutant creatures escaping containment, each with mismatched body parts",
+    "generatedAt": "2026-08-09T12:50:34.458Z",
+    "status": "ok"
+  },
+  "tribal-faerie": {
+    "id": "tribal-faerie",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 224507908,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a swarm of mischievous faeries fluttering through an enchanted forest, leaving trails of sparkling dust and laughter",
+    "generatedAt": "2026-08-09T12:50:59.276Z",
+    "status": "ok"
+  },
+  "tribal-kithkin": {
+    "id": "tribal-kithkin",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2173918675,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a tight-knit group of kithkin preparing for battle in a humble village square, rallying behind a wooden banner",
+    "generatedAt": "2026-08-09T12:51:23.277Z",
+    "status": "ok"
+  },
+  "tribal-treefolk": {
+    "id": "tribal-treefolk",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3210425110,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a couple of giant tree creatures stride through a forest.",
+    "generatedAt": "2026-08-09T12:51:45.078Z",
+    "status": "ok"
+  },
+  "tribal-eldrazi": {
+    "id": "tribal-eldrazi",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2360029431,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, towering eldrazi monsters warping reality around them, with gravity-bending limbs and crackling void energy",
+    "generatedAt": "2026-08-09T12:52:07.050Z",
+    "status": "ok"
+  },
+  "tribal-phyrexian": {
+    "id": "tribal-phyrexian",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 835777512,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, The scene should depict a corrupted battlefield dominated by biomechanical horrors—Phyrexian creatures fused with metal and flesh, showing various types like Praetors, Horrors, and Constructs. Highlight their unity and shared grotesque aesthetic: sharp metallic limbs, sinewy bodies, glowing oil, and mechanical enhancements. The background should show a twisted, industrial wasteland with dark skies and spiked towers. The composition must convey the essence of Phyrexia—ruthless, invasive, and all-consuming perfection through unnatural evolution",
+    "generatedAt": "2026-08-09T12:52:29.908Z",
+    "status": "ok"
+  },
+  "tribal-orc": {
+    "id": "tribal-orc",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 632762372,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a group of brutal orcs clashing axes together around a war camp bonfire, their faces marked with red war paint",
+    "generatedAt": "2026-08-09T12:52:53.082Z",
+    "status": "ok"
+  },
+  "tribal-giant": {
+    "id": "tribal-giant",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 193611991,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, towering giants stomping through mountain peaks, each carrying massive weapons carved from stone",
+    "generatedAt": "2026-08-09T12:53:14.721Z",
+    "status": "ok"
+  },
+  "tribal-ogre": {
+    "id": "tribal-ogre",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3965811295,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a few ogers with exaggerated facial features—broad noses, sharp teeth or tusks, and heavy brows standing in a destroyed village.  Many wear crude armor, bones, or leather scraps, often adorned with spikes or trophies from past battles. They skin colors are green, red and green. Their expressions are Angry, aggressive, or dull-witted.",
+    "generatedAt": "2026-08-09T12:53:38.423Z",
+    "status": "ok"
+  },
+  "tribal-sphinx": {
+    "id": "tribal-sphinx",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3370573004,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a council of majestic sphinxes perched atop ancient pyramids, watching with glowing eyes and unreadable expressions",
+    "generatedAt": "2026-08-09T12:53:59.330Z",
+    "status": "ok"
+  },
+  "tribal-devil": {
+    "id": "tribal-devil",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2150034441,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a swarm of mischievous devils dancing in a ring of fire, wielding tiny pitchforks and causing magical chaos",
+    "generatedAt": "2026-08-09T12:54:26.712Z",
+    "status": "ok"
+  },
+  "tribal-kraken": {
+    "id": "tribal-kraken",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3809213005,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a massive kraken rising from the ocean, its tentacles wrapping around a shattered ship under stormy skies",
+    "generatedAt": "2026-08-09T12:54:48.976Z",
+    "status": "ok"
+  },
+  "tribal-leviathan": {
+    "id": "tribal-leviathan",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 739236319,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a colossal sea leviathan gliding beneath glowing waves, its back forming the shape of an island",
+    "generatedAt": "2026-08-09T12:55:10.516Z",
+    "status": "ok"
+  },
+  "tribal-snake": {
+    "id": "tribal-snake",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3739502730,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a den of magical snakes slithering through ancient ruins, their scales glowing with arcane runes",
+    "generatedAt": "2026-08-09T12:55:32.915Z",
+    "status": "ok"
+  },
+  "tribal-insect": {
+    "id": "tribal-insect",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1112609493,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, A swarm of giant insects in a forest. The swam display many many insects of different type (mantis, ants, etc).",
+    "generatedAt": "2026-08-09T12:55:55.693Z",
+    "status": "ok"
+  },
+  "tribal-fungus": {
+    "id": "tribal-fungus",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2201228798,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, humanoid fungi plant and water flowers while the air is filled with the spores of the fungi.",
+    "generatedAt": "2026-08-09T12:56:18.069Z",
+    "status": "ok"
+  },
+  "tribal-dinosaur": {
+    "id": "tribal-dinosaur",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1596950518,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a herd of massive armored dinosaurs thundering through a primeval jungle, some carrying tribal howdahs",
+    "generatedAt": "2026-08-09T12:56:41.008Z",
+    "status": "ok"
+  },
+  "tribal-god": {
+    "id": "tribal-god",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3657323017,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a towering divine figure surrounded by celestial light, standing atop a temple as mortals kneel in awe",
+    "generatedAt": "2026-08-09T12:57:04.066Z",
+    "status": "ok"
+  },
+  "tribal-advisor": {
+    "id": "tribal-advisor",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 852244911,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a group of scholarly advisors in robes debating around a round table covered in scrolls and magical charts",
+    "generatedAt": "2026-08-09T12:57:26.328Z",
+    "status": "ok"
+  },
+  "tribal-samurai": {
+    "id": "tribal-samurai",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3300937301,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a disciplined band of samurai warriors preparing for battle at sunrise, standing in formation with gleaming katanas",
+    "generatedAt": "2026-08-09T12:57:48.998Z",
+    "status": "ok"
+  },
+  "tribal-ninja": {
+    "id": "tribal-ninja",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3389081312,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a team of shadowy ninjas leaping across rooftops under a full moon.",
+    "generatedAt": "2026-08-09T12:58:11.704Z",
+    "status": "ok"
+  },
+  "tribal-moonfolk": {
+    "id": "tribal-moonfolk",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2160557031,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a group of moonfolk floating above a glowing lake under moonlight, casting silver spells with flowing robes",
+    "generatedAt": "2026-08-09T12:58:36.337Z",
+    "status": "ok"
+  },
+  "tribal-djinn": {
+    "id": "tribal-djinn",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 847418413,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, majestic djinn swirling in the air over a desert temple, made of wind and sand, with eyes glowing with wisdom",
+    "generatedAt": "2026-08-09T12:58:59.632Z",
+    "status": "ok"
+  },
+  "tribal-efreet": {
+    "id": "tribal-efreet",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 630531124,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, flaming efreets bursting from molten cracks in a volcanic arena, hurling firebolts with furious expressions",
+    "generatedAt": "2026-08-09T12:59:22.468Z",
+    "status": "ok"
+  },
+  "tribal-frog": {
+    "id": "tribal-frog",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 247327608,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a swamp full of fantasy frogs in armor leaping between giant lily pads, some casting spells or holding tiny spears",
+    "generatedAt": "2026-08-09T12:59:45.442Z",
+    "status": "ok"
+  },
+  "tribal-hydra": {
+    "id": "tribal-hydra",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 834178472,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a colossal hydra with 4 heads rearing up in a canyon, each head roaring terrifying.",
+    "generatedAt": "2026-08-09T13:00:07.001Z",
+    "status": "ok"
+  },
+  "tribal-lizard": {
+    "id": "tribal-lizard",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1200171556,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a pack of scaly lizardfolk patrolling a sun-baked canyon, wielding bone spears and wearing tribal armor",
+    "generatedAt": "2026-08-09T13:00:29.627Z",
+    "status": "ok"
+  },
+  "tribal-rat": {
+    "id": "tribal-rat",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3193561847,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a swarm of sneaky ratfolk darting through sewer tunnels, clutching stolen trinkets and glowing mushrooms",
+    "generatedAt": "2026-08-09T13:00:53.613Z",
+    "status": "ok"
+  },
+  "tribal-scarecrow": {
+    "id": "tribal-scarecrow",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2213693946,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a line of haunted scarecrows standing in a cursed field, stitched from rags and glowing faintly with eerie light",
+    "generatedAt": "2026-08-09T13:01:16.108Z",
+    "status": "ok"
+  },
+  "tribal-serpent": {
+    "id": "tribal-serpent",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 244139397,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a trio of giant magical serpents coiled around a floating ziggurat, their eyes glowing with hypnotic power",
+    "generatedAt": "2026-08-09T13:01:37.097Z",
+    "status": "ok"
+  },
+  "tribal-unicorn": {
+    "id": "tribal-unicorn",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2434713481,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a radiant unicorn herd galloping across a golden meadow, their manes sparkling with stardust",
+    "generatedAt": "2026-08-09T13:02:00.101Z",
+    "status": "ok"
+  },
+  "theme-lifegain": {
+    "id": "theme-lifegain",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1834194564,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a glowing cleric casting a healing spell over their team, with radiant white light and floating heart symbols",
+    "generatedAt": "2026-08-09T13:02:22.516Z",
+    "status": "ok"
+  },
+  "theme-sacrifice": {
+    "id": "theme-sacrifice",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3910615688,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dark altar surrounded by cultists offering creatures to a shadowy force, glowing runes pulsing beneath them",
+    "generatedAt": "2026-08-09T13:02:49.472Z",
+    "status": "ok"
+  },
+  "theme-tokens": {
+    "id": "theme-tokens",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1411617096,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an army of summoned creature tokens charging across a battlefield, each glowing slightly with identical markings",
+    "generatedAt": "2026-08-09T13:03:12.668Z",
+    "status": "ok"
+  },
+  "theme-voltron": {
+    "id": "theme-voltron",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 636013850,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a lone armored warrior surrounded by glowing enchantments and equipment, standing triumphant atop a mountain",
+    "generatedAt": "2026-08-09T13:03:36.333Z",
+    "status": "ok"
+  },
+  "theme-reanimator": {
+    "id": "theme-reanimator",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1823297757,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a necromancer raising spectral warriors from ancient graves under a stormy sky, with swirling green and black energy",
+    "generatedAt": "2026-08-09T13:03:59.411Z",
+    "status": "ok"
+  },
+  "theme-stax": {
+    "id": "theme-stax",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 852320611,
+    "finishReason": "Filter reason: prompt",
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, 3 people looking frightened in a row. the one on the left is tied up with ropes, the one in the centre has his legs cast in cement and can't move, the one on the right has already sunk into quicksand up to his ears and only the tips of his ears and his hair are sticking out",
+    "generatedAt": "2026-08-09T13:04:07.301Z",
+    "status": "failed",
+    "error": "Filter reason: prompt"
+  },
+  "theme-control": {
+    "id": "theme-control",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2500126394,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a series of monsters run through a labyrinth and trigger various traps, while a commander looks down on them from above and laughs manically.",
+    "generatedAt": "2026-08-09T13:04:30.188Z",
+    "status": "ok"
+  },
+  "theme-aggro": {
+    "id": "theme-aggro",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 84869340,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a wild charge of fantasy creatures rushing at full speed across a burning field, swords drawn and spells flying",
+    "generatedAt": "2026-08-09T13:04:53.552Z",
+    "status": "ok"
+  },
+  "theme-combo": {
+    "id": "theme-combo",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 330643851,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a commander stands in front of a whiteboard which is completely filled with complicated formulas",
+    "generatedAt": "2026-08-09T13:05:16.162Z",
+    "status": "ok"
+  },
+  "theme-enchantress": {
+    "id": "theme-enchantress",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 444949425,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a graceful mage surrounded by floating enchantments, each forming glowing patterns around her",
+    "generatedAt": "2026-08-09T13:05:37.147Z",
+    "status": "ok"
+  },
+  "theme-artifacts": {
+    "id": "theme-artifacts",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3518821345,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a workshop filled with animated magical constructs and spinning relics, with an artificer pulling levers at the center",
+    "generatedAt": "2026-08-09T13:06:01.157Z",
+    "status": "ok"
+  },
+  "theme-mill": {
+    "id": "theme-mill",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2087240879,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a water mill which has various playing cards in its millstone",
+    "generatedAt": "2026-08-09T13:06:22.352Z",
+    "status": "ok"
+  },
+  "theme-landfall": {
+    "id": "theme-landfall",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3792143196,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a huge field onto which different types of land (grass, volcano, stream, etc.) fall from the sky.",
+    "generatedAt": "2026-08-09T13:06:43.694Z",
+    "status": "ok"
+  },
+  "theme-spellslinger": {
+    "id": "theme-spellslinger",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2146859182,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a wizard who has a machine gun as a magic wand and fires it manically. but no bullets come out of the machine gun, only spells.",
+    "generatedAt": "2026-08-09T13:07:05.642Z",
+    "status": "ok"
+  },
+  "theme-mutate": {
+    "id": "theme-mutate",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3063540698,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a twisted creature mid-transformation, merging with others into a single powerful beast with shifting limbs and faces",
+    "generatedAt": "2026-08-09T13:07:27.734Z",
+    "status": "ok"
+  },
+  "theme-group-hug": {
+    "id": "theme-group-hug",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2649978378,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a joyful gathering of fantasy creatures sharing cards, mana, and gifts around a glowing campfire in peace",
+    "generatedAt": "2026-08-09T13:07:50.941Z",
+    "status": "ok"
+  },
+  "theme-steal-and-copy": {
+    "id": "theme-steal-and-copy",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4281302266,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, two monsters facing each other and pointing at each other and looking exactly the same",
+    "generatedAt": "2026-08-09T13:08:12.326Z",
+    "status": "ok"
+  },
+  "theme-proliferate": {
+    "id": "theme-proliferate",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3171299412,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an elf who hastily and in a gold shiny orbs on different piles and gold shiny orbs puts",
+    "generatedAt": "2026-08-09T13:08:33.568Z",
+    "status": "ok"
+  },
+  "theme-poison-infect": {
+    "id": "theme-poison-infect",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3016435349,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sinister assassin infecting a battlefield with green-black venom, opponents turning sickly with glowing wounds",
+    "generatedAt": "2026-08-09T13:08:56.033Z",
+    "status": "ok"
+  },
+  "theme-superfriends": {
+    "id": "theme-superfriends",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2856401025,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a powerful alliance of planeswalkers casting spells in unison from a circular summit surrounded by mana symbols",
+    "generatedAt": "2026-08-09T13:09:19.195Z",
+    "status": "ok"
+  },
+  "theme-chaos": {
+    "id": "theme-chaos",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3932809273,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magical battlefield in disarray: spells flying in random directions, creatures teleporting, and portals opening wildly",
+    "generatedAt": "2026-08-09T13:09:42.303Z",
+    "status": "ok"
+  },
+  "theme-cascade": {
+    "id": "theme-cascade",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1742574264,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magical chain reaction where each cast spell unleashes another, shown as cascading scrolls and glowing effects tumbling forward",
+    "generatedAt": "2026-08-09T13:10:04.622Z",
+    "status": "ok"
+  },
+  "theme-storm": {
+    "id": "theme-storm",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 740155450,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a whirlwind of spells being cast in rapid succession, each lighting up the battlefield like fireworks from a single caster",
+    "generatedAt": "2026-08-09T13:10:27.455Z",
+    "status": "ok"
+  },
+  "theme-blink": {
+    "id": "theme-blink",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1983504731,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a creature vanishing in a flash of white-blue light and reappearing elsewhere mid-battle, leaving spark trails behind",
+    "generatedAt": "2026-08-09T13:10:48.805Z",
+    "status": "ok"
+  },
+  "theme-energy": {
+    "id": "theme-energy",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3343939506,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mage charging glowing energy nodes that power constructs and spells, with lightning arcing between magical coils",
+    "generatedAt": "2026-08-09T13:11:11.837Z",
+    "status": "ok"
+  },
+  "theme-shrines": {
+    "id": "theme-shrines",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 591118105,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a spiritual mountain landscape with glowing elemental shrines aligned in harmony, each emanating unique magical auras",
+    "generatedAt": "2026-08-09T13:11:35.104Z",
+    "status": "ok"
+  },
+  "theme-gates": {
+    "id": "theme-gates",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 852134429,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sprawling multiColoured city with mystical gates standing tall at each district, each glowing with different mana",
+    "generatedAt": "2026-08-09T13:11:57.765Z",
+    "status": "ok"
+  },
+  "theme-defenders": {
+    "id": "theme-defenders",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3689158612,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a wall of towering fantasy guardians standing firm, shielding a magical city from incoming creatures and spells",
+    "generatedAt": "2026-08-09T13:12:20.742Z",
+    "status": "ok"
+  },
+  "theme-treasure": {
+    "id": "theme-treasure",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2815131501,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a greedy pirate mage conjuring glowing treasure tokens, with gold coins, gems, and magical artifacts piling around",
+    "generatedAt": "2026-08-09T13:12:44.486Z",
+    "status": "ok"
+  },
+  "theme-clue": {
+    "id": "theme-clue",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3230458993,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a wizard detective examining a glowing clue token in a dark forest, surrounded by arcane evidence and magical footprints",
+    "generatedAt": "2026-08-09T13:13:07.000Z",
+    "status": "ok"
+  },
+  "theme-food": {
+    "id": "theme-food",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1766563824,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magical banquet where enchanted foods float and sparkle, with creatures feasting around a glowing feast table",
+    "generatedAt": "2026-08-09T13:13:30.020Z",
+    "status": "ok"
+  },
+  "theme-historic-spells": {
+    "id": "theme-historic-spells",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4231906991,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an ancient mage surrounded by glowing artifacts, legendary creatures, and dusty scrolls as time flows around him",
+    "generatedAt": "2026-08-09T13:13:51.308Z",
+    "status": "ok"
+  },
+  "theme-dungeon-and-venture": {
+    "id": "theme-dungeon-and-venture",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 120938336,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a group of adventurers entering a glowing dungeon doorway, torches lit, traps triggered, and magical paths unfolding",
+    "generatedAt": "2026-08-09T13:14:13.160Z",
+    "status": "ok"
+  },
+  "theme-equipment": {
+    "id": "theme-equipment",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 451676111,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a warrior standing in a forge chamber as animated gear flies to them — enchanted swords, helmets, and armor snapping into place",
+    "generatedAt": "2026-08-09T13:14:36.230Z",
+    "status": "ok"
+  },
+  "theme-madness": {
+    "id": "theme-madness",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1232802001,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a crazed sorcerer casting spells in a chaotic room of torn scrolls and swirling madness energy",
+    "generatedAt": "2026-08-09T13:15:04.820Z",
+    "status": "ok"
+  },
+  "theme-discard-matters": {
+    "id": "theme-discard-matters",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1906785689,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sly mage discarding glowing cards into a void, only for ghostly versions to rise from the discard pile and attack",
+    "generatedAt": "2026-08-09T13:15:27.698Z",
+    "status": "ok"
+  },
+  "theme-legendary-matters": {
+    "id": "theme-legendary-matters",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1238777337,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an ancient being carved in stone on a cliff face, surrounded by mythic symbols and swirling winds",
+    "generatedAt": "2026-08-09T13:15:48.694Z",
+    "status": "ok"
+  },
+  "theme-exile-matters": {
+    "id": "theme-exile-matters",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 524981124,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mage casting spells into a shimmering void, where exiled cards orbit in stasis, ready to be reused",
+    "generatedAt": "2026-08-09T13:16:10.495Z",
+    "status": "ok"
+  },
+  "theme-morph-and-manifest": {
+    "id": "theme-morph-and-manifest",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3792383989,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battlefield of cloaked creatures transforming into powerful monsters, with glowing runes revealing their true forms",
+    "generatedAt": "2026-08-09T13:16:32.793Z",
+    "status": "ok"
+  },
+  "theme-sneak-attack-and-cheat-costs": {
+    "id": "theme-sneak-attack-and-cheat-costs",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3894697204,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a crate lying on the ground in front of a wall. it is night and the crates and the wall are illuminated by streetlights. the shadow of the crate is the silhouette of a large dragon.",
+    "generatedAt": "2026-08-09T13:16:53.535Z",
+    "status": "ok"
+  },
+  "theme-damage-doublers": {
+    "id": "theme-damage-doublers",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1120939639,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a spellcaster duplicating a fireball midair, the blast reflecting off a glowing mirror and striking twice as hard",
+    "generatedAt": "2026-08-09T13:17:14.799Z",
+    "status": "ok"
+  },
+  "theme-life-swap-and-exchange": {
+    "id": "theme-life-swap-and-exchange",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1572744079,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, two players connected by a magical tether, exchanging glowing life essences as numbers flip above their heads",
+    "generatedAt": "2026-08-09T13:17:36.489Z",
+    "status": "ok"
+  },
+  "all-creatures-wear-hats": {
+    "id": "all-creatures-wear-hats",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2690523189,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battlefield where every fantasy creature, from dragons to goblins, proudly wears a unique hat — some absurd, some majestic",
+    "generatedAt": "2026-08-09T13:17:58.874Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-wings-in-their-artwork": {
+    "id": "all-creatures-must-have-wings-in-their-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 669653496,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a sky full of winged versions of classic fantasy creatures, including flying elephants, goblins, and beasts",
+    "generatedAt": "2026-08-09T13:18:20.494Z",
+    "status": "ok"
+  },
+  "only-creatures-with-swords-in-their-artwork": {
+    "id": "only-creatures-with-swords-in-their-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1846972871,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a lineup of diverse creatures all brandishing glowing swords, standing ready for combat in a magical arena",
+    "generatedAt": "2026-08-09T13:18:45.372Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-beards": {
+    "id": "all-creatures-must-have-beards",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1991780846,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an army of fantasy creatures, from elves to demons, all sporting epic beards of various styles and Colours",
+    "generatedAt": "2026-08-09T13:19:07.617Z",
+    "status": "ok"
+  },
+  "all-cards-must-have-at-least-one-flavor-text": {
+    "id": "all-cards-must-have-at-least-one-flavor-text",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1278106802,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a scroll-covered scene where cards float midair, each inscribed with glowing, poetic flavor text being read by a sage",
+    "generatedAt": "2026-08-09T13:19:30.722Z",
+    "status": "ok"
+  },
+  "all-creatures-must-be-smiling": {
+    "id": "all-creatures-must-be-smiling",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 61188887,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a cheerful battle scene where every creature, regardless of type, is smiling or grinning with exaggerated joy",
+    "generatedAt": "2026-08-09T13:19:52.173Z",
+    "status": "ok"
+  },
+  "all-creatures-must-be-holding-something": {
+    "id": "all-creatures-must-be-holding-something",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 648191709,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a group of fantasy creatures each holding something unusual — weapons, books, fruits, or other magical objects",
+    "generatedAt": "2026-08-09T13:20:14.016Z",
+    "status": "ok"
+  },
+  "all-creatures-must-be-riding-something": {
+    "id": "all-creatures-must-be-riding-something",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4044371320,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a fantasy battlefield where all creatures are mounted on various things: beasts, clouds, machines, or flying carpets",
+    "generatedAt": "2026-08-09T13:20:35.521Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-not-two-eyes": {
+    "id": "all-creatures-must-have-not-two-eyes",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3764296451,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a surreal battlefield filled with one-eyed, three-eyed, or eyeless fantasy creatures staring with unusual intensity",
+    "generatedAt": "2026-08-09T13:20:57.081Z",
+    "status": "ok"
+  },
+  "all-creatures-must-be-wearing-armor": {
+    "id": "all-creatures-must-be-wearing-armor",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 839262641,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a fantasy battlefield where every creature wears ornate or practical armor, some shining, others worn and battle-scarred",
+    "generatedAt": "2026-08-09T13:21:18.211Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-glowing-eyes": {
+    "id": "all-creatures-must-have-glowing-eyes",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 113471706,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dark arena filled with creatures whose eyes glow intensely — in all Colours — cutting through the shadows",
+    "generatedAt": "2026-08-09T13:21:39.769Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-a-tail": {
+    "id": "all-creatures-must-have-a-tail",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3574299823,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a wild forest where every creature, from angels to elementals, features a tail of some kind — scaly, furry, or magical",
+    "generatedAt": "2026-08-09T13:22:02.409Z",
+    "status": "ok"
+  },
+  "only-cards-featuring-books-in-the-artwork": {
+    "id": "only-cards-featuring-books-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3029385309,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a library battlefield where every creature or artifact has at least one magical book in the scene — floating, reading, or bound",
+    "generatedAt": "2026-08-09T13:22:24.467Z",
+    "status": "ok"
+  },
+  "only-cards-with-exactly-one-word-in-their-name": {
+    "id": "only-cards-with-exactly-one-word-in-their-name",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2903910842,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a card showcase scene with glowing magical cards labeled with only one-word names like Inferno, Dominance, and Unity",
+    "generatedAt": "2026-08-09T13:22:46.887Z",
+    "status": "ok"
+  },
+  "only-cards-with-a-skull-in-the-artwork": {
+    "id": "only-cards-with-a-skull-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4105579154,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dark fantasy scene where every card prominently features a skull — on banners, armor, or as ominous symbols",
+    "generatedAt": "2026-08-09T13:23:10.538Z",
+    "status": "ok"
+  },
+  "only-cards-where-the-character-is-looking-left": {
+    "id": "only-cards-where-the-character-is-looking-left",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1186322882,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a goblin looking to the left in the portrait close-up and looking very tense. a bead of sweat runs down his cheek.",
+    "generatedAt": "2026-08-09T13:23:32.544Z",
+    "status": "ok"
+  },
+  "only-creatures-with-an-odd-power": {
+    "id": "only-creatures-with-an-odd-power",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3170280915,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battlefield of fantasy creatures each displaying odd-numbered power stats carved or glowing on them: 1, 3, 5",
+    "generatedAt": "2026-08-09T13:23:56.899Z",
+    "status": "ok"
+  },
+  "only-creatures-with-an-even-toughness": {
+    "id": "only-creatures-with-an-even-toughness",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2892965911,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a parade of creatures with magical shields showing even-numbered toughness: 2, 4, 6 — glowing visibly on their armor",
+    "generatedAt": "2026-08-09T13:24:18.384Z",
+    "status": "ok"
+  },
+  "only-instants-with-a-single-sentence-of-rules-text": {
+    "id": "only-instants-with-a-single-sentence-of-rules-text",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 56857195,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a glowing scroll labeled as an instant spell with exactly one concise sentence, floating above a casting wizard",
+    "generatedAt": "2026-08-09T13:24:39.500Z",
+    "status": "ok"
+  },
+  "only-creatures-with-their-mouth-open-in-the-artwork": {
+    "id": "only-creatures-with-their-mouth-open-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1326452028,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battle scene where every creature is mid-roar or scream, mouths wide open in action and aggression",
+    "generatedAt": "2026-08-09T13:25:01.991Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-a-blue-sky-in-the-background": {
+    "id": "all-creatures-must-have-a-blue-sky-in-the-background",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1554265372,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a battlefield under a clear blue sky, where every creature and setting is framed by bright daylight",
+    "generatedAt": "2026-08-09T13:25:23.996Z",
+    "status": "ok"
+  },
+  "only-cards-with-bones-in-the-artwork-or-the-word-bones-in-the-text": {
+    "id": "only-cards-with-bones-in-the-artwork-or-the-word-bones-in-the-text",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4092261772,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dark setting where every card features bones — skeletal remains, bone armor, or bone-carved weapons — or has bone-themed names",
+    "generatedAt": "2026-08-09T13:25:45.713Z",
+    "status": "ok"
+  },
+  "all-creatures-must-be-holding-a-weapon": {
+    "id": "all-creatures-must-be-holding-a-weapon",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1888934101,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a combat-heavy fantasy scene where every creature grips a weapon — swords, axes, spears, or magical tools",
+    "generatedAt": "2026-08-09T13:26:08.159Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-a-halo-or-glowing-aura": {
+    "id": "all-creatures-must-have-a-halo-or-glowing-aura",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1286708932,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a radiant battlefield where every creature is surrounded by halos or glowing magical auras",
+    "generatedAt": "2026-08-09T13:26:29.997Z",
+    "status": "ok"
+  },
+  "only-creatures-with-visible-fangs": {
+    "id": "only-creatures-with-visible-fangs",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1132759265,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a fearsome group of fantasy creatures all baring sharp fangs, caught mid-snarl or roar",
+    "generatedAt": "2026-08-09T13:26:51.123Z",
+    "status": "ok"
+  },
+  "only-artifacts-shaped-like-a-circle": {
+    "id": "only-artifacts-shaped-like-a-circle",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3520868927,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a chamber of ancient circular artifacts — rings, orbs, and disks — each floating and glowing with magic",
+    "generatedAt": "2026-08-09T13:27:14.165Z",
+    "status": "ok"
+  },
+  "all-creatures-must-have-horns": {
+    "id": "all-creatures-must-have-horns",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2874407096,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a wild fantasy landscape filled with creatures of all types, each proudly displaying horns — curled, jagged, or glowing",
+    "generatedAt": "2026-08-09T13:27:36.931Z",
+    "status": "ok"
+  },
+  "only-cards-featuring-fire-in-the-artwork": {
+    "id": "only-cards-featuring-fire-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2358974813,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a fiery battlefield where every cards artwork features fire — burning weapons, flames, or magical infernos",
+    "generatedAt": "2026-08-09T13:27:59.263Z",
+    "status": "ok"
+  },
+  "only-cards-featuring-a-moon-or-sun-in-the-artwork": {
+    "id": "only-cards-featuring-a-moon-or-sun-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4058525845,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mystic setting where every card prominently features a glowing moon or blazing sun in the background",
+    "generatedAt": "2026-08-09T13:28:24.005Z",
+    "status": "ok"
+  },
+  "only-creatures-with-exactly-four-legs": {
+    "id": "only-creatures-with-exactly-four-legs",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1006614852,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a lineup of fantasy creatures, all walking on exactly four legs — centaurs, wolves, quadrupedal beasts — in motion",
+    "generatedAt": "2026-08-09T13:28:46.832Z",
+    "status": "ok"
+  },
+  "commander-must-wear-a-hat": {
+    "id": "commander-must-wear-a-hat",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 558799744,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a heroic MTG commander at the center of a battlefield, proudly wearing a large, ornate hat as part of their identity",
+    "generatedAt": "2026-08-09T13:29:08.934Z",
+    "status": "ok"
+  },
+  "commander-must-have-wings-in-the-artwork": {
+    "id": "commander-must-have-wings-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2683753190,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a flying MTG commander with angelic or draconic wings, soaring above the battlefield surrounded by glowing wind trails",
+    "generatedAt": "2026-08-09T13:29:31.975Z",
+    "status": "ok"
+  },
+  "commander-must-have-a-beard": {
+    "id": "commander-must-have-a-beard",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 660640336,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a legendary commander with a long, distinguished beard flowing in the wind, standing atop a cliff overlooking battle",
+    "generatedAt": "2026-08-09T13:29:53.847Z",
+    "status": "ok"
+  },
+  "commander-must-be-holding-a-weapon": {
+    "id": "commander-must-be-holding-a-weapon",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 557046579,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a bold commander holding a powerful magical weapon — a glowing sword, staff, or axe — ready to lead their army",
+    "generatedAt": "2026-08-09T13:30:16.717Z",
+    "status": "ok"
+  },
+  "commander-must-be-smiling": {
+    "id": "commander-must-be-smiling",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4024679533,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a smiling commander posing confidently on the battlefield, radiating charisma and joy with a glowing aura",
+    "generatedAt": "2026-08-09T13:30:38.989Z",
+    "status": "ok"
+  },
+  "commander-must-have-glowing-eyes": {
+    "id": "commander-must-have-glowing-eyes",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1316084234,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a powerful commander with intense glowing eyes — white, red, or blue — casting spells with magical focus",
+    "generatedAt": "2026-08-09T13:31:02.285Z",
+    "status": "ok"
+  },
+  "commander-must-be-riding-something": {
+    "id": "commander-must-be-riding-something",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2681827860,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a commander riding a fantastical creature such as a griffin, beast, or dragon across a stormy sky or battlefield",
+    "generatedAt": "2026-08-09T13:31:23.936Z",
+    "status": "ok"
+  },
+  "commander-must-be-wearing-armor": {
+    "id": "commander-must-be-wearing-armor",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2446824856,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a commander fully clad in ornate armor, plated with glowing sigils and battle marks from previous victories",
+    "generatedAt": "2026-08-09T13:31:45.917Z",
+    "status": "ok"
+  },
+  "commander-must-have-a-tail": {
+    "id": "commander-must-have-a-tail",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 226047060,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a fantasy commander with a long tail — scaled, furred, or magical — prominently shown in the center of the image",
+    "generatedAt": "2026-08-09T13:32:05.703Z",
+    "status": "ok"
+  },
+  "commander-must-be-holding-a-book": {
+    "id": "commander-must-be-holding-a-book",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2622585320,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a scholarly commander in ornate robes holding an ancient book mid-casting, glowing runes floating from its pages",
+    "generatedAt": "2026-08-09T13:32:27.872Z",
+    "status": "ok"
+  },
+  "commander-must-have-fire-in-the-artwork": {
+    "id": "commander-must-have-fire-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3520554055,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a fiery battlefield with a commander emerging from flames, wielding fire magic or weapons made of flame",
+    "generatedAt": "2026-08-09T13:32:50.262Z",
+    "status": "ok"
+  },
+  "commander-must-have-a-skull-in-the-artwork": {
+    "id": "commander-must-have-a-skull-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 839400249,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a grim commander adorned with bone armor or carrying a skull-topped staff, with skeletal motifs throughout the scene",
+    "generatedAt": "2026-08-09T13:33:11.854Z",
+    "status": "ok"
+  },
+  "commander-must-have-lightning-in-the-background": {
+    "id": "commander-must-have-lightning-in-the-background",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2031242507,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dramatic scene where a commander stands amidst a storm, lightning bolts illuminating their silhouette from behind",
+    "generatedAt": "2026-08-09T13:33:35.249Z",
+    "status": "ok"
+  },
+  "commander-must-have-blue-sky-in-the-background": {
+    "id": "commander-must-have-blue-sky-in-the-background",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 809102848,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a radiant commander standing tall under a wide open blue sky, clouds parted by beams of sunlight above",
+    "generatedAt": "2026-08-09T13:33:57.868Z",
+    "status": "ok"
+  },
+  "commander-must-have-a-visible-moon-in-the-artwork": {
+    "id": "commander-must-have-a-visible-moon-in-the-artwork",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3328430893,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a mystical commander standing under a night sky with a large full moon prominently glowing in the background",
+    "generatedAt": "2026-08-09T13:34:21.350Z",
+    "status": "ok"
+  },
+  "commander-must-have-flavor-text": {
+    "id": "commander-must-have-flavor-text",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 4176168961,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magical card floating midair, with glowing flavor text etched into its frame, being read by a wise sage",
+    "generatedAt": "2026-08-09T13:34:43.486Z",
+    "status": "ok"
+  },
+  "commander-must-have-more-than-one-creature-type": {
+    "id": "commander-must-have-more-than-one-creature-type",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2112876876,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a single creature that got a head like a boar, one hand like a human, one hand like a crab and a fur like a bear.",
+    "generatedAt": "2026-08-09T13:35:03.884Z",
+    "status": "ok"
+  },
+  "1-point-for-every-opponent-eliminated": {
+    "id": "1-point-for-every-opponent-eliminated",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3751735541,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a victorious commander casting down the last opponent, with banners rising and magical score counters appearing above",
+    "generatedAt": "2026-08-09T13:36:13.360Z",
+    "status": "ok"
+  },
+  "2-points-for-winning-the-game": {
+    "id": "2-points-for-winning-the-game",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1241044621,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a triumphant commander standing atop a defeated battlefield, arms raised as glowing +2 Points float in the air",
+    "generatedAt": "2026-08-09T13:36:37.956Z",
+    "status": "ok"
+  },
+  "1-point-for-casting-your-commander-3-times": {
+    "id": "1-point-for-casting-your-commander-3-times",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 404933601,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a spellcaster repeatedly summoning their commander through a glowing portal, magical counters tracking each casting",
+    "generatedAt": "2026-08-09T13:37:00.873Z",
+    "status": "ok"
+  },
+  "1-point-for-eliminating-an-opponent-with-commander-damage": {
+    "id": "1-point-for-eliminating-an-opponent-with-commander-damage",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 367836429,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a dramatic commander delivering a final blow to an opponent with glowing commander damage counters reaching lethal levels",
+    "generatedAt": "2026-08-09T13:38:50.508Z",
+    "status": "ok"
+  },
+  "1-point-for-using-an-alternative-win-condition": {
+    "id": "1-point-for-using-an-alternative-win-condition",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3832510168,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a player winning the game through a strange magical ritual — not by combat — with glowing text saying You Win!",
+    "generatedAt": "2026-08-09T13:39:14.271Z",
+    "status": "ok"
+  },
+  "1-point-for-taking-more-than-5-minutes-for-a-turn": {
+    "id": "1-point-for-taking-more-than-5-minutes-for-a-turn",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 475912955,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a stressed wizard with scrolls and timers floating around them, as annoyed opponents wait with crossed arms",
+    "generatedAt": "2026-08-09T13:39:37.880Z",
+    "status": "ok"
+  },
+  "1-point-for-casting-a-spell-with-mana-value-10-or-greater": {
+    "id": "1-point-for-casting-a-spell-with-mana-value-10-or-greater",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2178382360,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a line-up of magical orbs, each labeled 10 to 15, radiating mana energy of different intensity",
+    "generatedAt": "2026-08-09T13:40:01.274Z",
+    "status": "ok"
+  },
+  "1-point-for-winning-without-dealing-combat-damage": {
+    "id": "1-point-for-winning-without-dealing-combat-damage",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3876973212,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a peaceful player meditating while their opponents fall one by one, with no battle shown — only spell effects and clever strategy",
+    "generatedAt": "2026-08-09T13:40:23.592Z",
+    "status": "ok"
+  },
+  "1-point-for-controlling-a-permanent-from-each-opponent": {
+    "id": "1-point-for-controlling-a-permanent-from-each-opponent",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1106221807,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a triumphant player controlling a battlefield filled with every card type — creature, enchantment, land, artifact, planeswalker",
+    "generatedAt": "2026-08-09T13:41:54.145Z",
+    "status": "ok"
+  },
+  "2-point-for-saving-an-opponent-from-elimination": {
+    "id": "2-point-for-saving-an-opponent-from-elimination",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3590565704,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a heroic player shielding an opponent with a magical barrier as a deadly spell narrowly misses its target",
+    "generatedAt": "2026-08-09T13:42:16.050Z",
+    "status": "ok"
+  },
+  "1-point-for-eliminating-an-opponent-with-a-one-drop": {
+    "id": "1-point-for-eliminating-an-opponent-with-a-one-drop",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3181926,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a very very small monster hit a normal size human in the leg and he screams in pain.",
+    "generatedAt": "2026-08-09T13:42:38.023Z",
+    "status": "ok"
+  },
+  "1-point-for-countering-a-spell-that-would-have-won-the-game": {
+    "id": "1-point-for-countering-a-spell-that-would-have-won-the-game",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 2274885138,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a spellcaster intercepting a massive spell midair with a glowing counterspell, saving the game from certain loss",
+    "generatedAt": "2026-08-09T13:43:01.264Z",
+    "status": "ok"
+  },
+  "2-points-for-eliminating-two-opponents-in-the-same-turn": {
+    "id": "2-points-for-eliminating-two-opponents-in-the-same-turn",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3141515496,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a commander casting a powerful combo that knocks out two opponents at once, with both vanishing in glowing flashes",
+    "generatedAt": "2026-08-09T13:44:43.607Z",
+    "status": "ok"
+  },
+  "1-points-for-eliminating-the-last-opponent-in-a-noncombat-way": {
+    "id": "1-points-for-eliminating-the-last-opponent-in-a-noncombat-way",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1740443315,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a victorious player standing alone in a ruined battlefield after defeating the final opponent, fireworks in the sky",
+    "generatedAt": "2026-08-09T13:45:06.234Z",
+    "status": "ok"
+  },
+  "1-points-for-dealing-20-damage-in-a-single-combat-phase": {
+    "id": "1-points-for-dealing-20-damage-in-a-single-combat-phase",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3336588717,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a blazing battlefield where a player deals over 20 damage in a single explosive action, overwhelming enemies with fire and force",
+    "generatedAt": "2026-08-09T13:45:27.389Z",
+    "status": "ok"
+  },
+  "2-points-for-winning-with-less-than-5-life-remaining": {
+    "id": "2-points-for-winning-with-less-than-5-life-remaining",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 735308388,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a man kneels behind the finish line and is extremely exhausted and sweating. Behind him, some people are running towards the finish line.",
+    "generatedAt": "2026-08-09T13:47:11.298Z",
+    "status": "ok"
+  },
+  "1-points-for-resolving-an-ultimate-ability-from-a-planeswalker": {
+    "id": "1-points-for-resolving-an-ultimate-ability-from-a-planeswalker",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3745379365,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magician with glowing eyes and a powerful aura casts a spell with his mighty wand.",
+    "generatedAt": "2026-08-09T13:48:51.054Z",
+    "status": "ok"
+  },
+  "1-points-for-ending-the-game-with-100-life": {
+    "id": "1-points-for-ending-the-game-with-100-life",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1287233151,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, An extremely fat man wearing a white robe that says ‘100+’ and being served by various beautiful women.",
+    "generatedAt": "2026-08-09T13:49:16.059Z",
+    "status": "ok"
+  },
+  "1-point-for-not-casting-your-commander-in-the-entire-game": {
+    "id": "1-point-for-not-casting-your-commander-in-the-entire-game",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1524689166,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, An extremely old wizard sitting on the bench. his eyes have cataracts, he looks tired and he has a very, very long white beard.",
+    "generatedAt": "2026-08-09T13:49:37.966Z",
+    "status": "ok"
+  },
+  "1-point-for-missing-a-trigger-that-would-have-changed-the-game": {
+    "id": "1-point-for-missing-a-trigger-that-would-have-changed-the-game",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 887519409,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, A magician stands in his library looking completely confused and bored.",
+    "generatedAt": "2026-08-09T13:49:59.972Z",
+    "status": "ok"
+  },
+  "1-point-for-being-eliminated-first": {
+    "id": "1-point-for-being-eliminated-first",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 1119507927,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, A magician sits on a basketball bench and has \"loser\" written on his robe",
+    "generatedAt": "2026-08-09T13:50:21.804Z",
+    "status": "ok"
+  },
+  "1-point-for-attacking-the-same-player-three-times-in-a-row": {
+    "id": "1-point-for-attacking-the-same-player-three-times-in-a-row",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 824322487,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, an aggressive mage standing on the left side of the screen shooting a barrage of fireballs at another fearful looking mage on the right side of the screen. in the background 2 more mages are just watching.",
+    "generatedAt": "2026-08-09T13:51:53.637Z",
+    "status": "ok"
+  },
+  "2-points-for-using-an-infinite-combo-to-win-the-game": {
+    "id": "2-points-for-using-an-infinite-combo-to-win-the-game",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 822569756,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a magician who manically casts various spells and has a large infinity sign hovering above his head",
+    "generatedAt": "2026-08-09T13:52:16.318Z",
+    "status": "ok"
+  },
+  "2-points-for-eliminating-an-opponent-before-turn-5": {
+    "id": "2-points-for-eliminating-an-opponent-before-turn-5",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 249553239,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a villain who stabs a knife into the back of a man dressed only in his underwear while the other man is putting on his armour.",
+    "generatedAt": "2026-08-09T13:52:38.976Z",
+    "status": "ok"
+  },
+  "2-points-for-eliminating-an-opponent-who-had-no-non-land-permanents-on-board": {
+    "id": "2-points-for-eliminating-an-opponent-who-had-no-non-land-permanents-on-board",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 881097932,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a thieving villain stealing a baby's lollipop",
+    "generatedAt": "2026-08-09T13:53:00.840Z",
+    "status": "ok"
+  },
+  "1-point-for-attacking-without-shouting-the-name-of-the-player-that-gets-attacked": {
+    "id": "1-point-for-attacking-without-shouting-the-name-of-the-player-that-gets-attacked",
+    "model": "stability.stable-image-ultra-v1:1",
+    "seedUsed": 3201384019,
+    "finishReason": null,
+    "prompt": "chibi fantasy style, super-deformed proportions, big round head, tiny body, huge sparkling eyes, rosy cheeks, pastel color palette, soft cel-shaded illustration, playful and whimsical, no text, no border, a warrior running manically towards an enemy army with a speech bubble over his head saying \"THOMAS!!!!\" and shouting this.",
+    "generatedAt": "2026-08-09T13:54:51.305Z",
+    "status": "ok"
+  }
+}

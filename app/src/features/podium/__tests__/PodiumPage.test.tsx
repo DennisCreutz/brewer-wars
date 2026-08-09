@@ -20,8 +20,8 @@ const PLAYER_IDS = ['alice', 'bob']
 function config(overrides: Partial<WarConfig> = {}): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 1,
@@ -46,7 +46,7 @@ async function playThroughToConcluded(
   seed = 5,
 ): Promise<War> {
   const { startNewWar, dispatch } = useWarStore.getState()
-  let war = await startNewWar(config(overrides), seed)
+  let war = await startNewWar(config(overrides), 'test-host', seed)
   war = await dispatch({ type: 'RUN_PREPARATION_DRAW' })
   war = await dispatch({ type: 'ADVANCE_TO_PERSONAL_DRAW' })
   for (const playerId of PLAYER_IDS) {

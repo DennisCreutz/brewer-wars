@@ -1,12 +1,17 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useWarStore } from '../warStore'
-import { DEFAULT_CUSTOM_OPTIONS, DEFAULT_VOTE_POINTS, DEFAULT_WIN_POINTS, type WarConfig } from '../../domain/warTypes'
+import {
+  DEFAULT_CUSTOM_OPTIONS,
+  DEFAULT_VOTE_POINTS,
+  DEFAULT_WIN_POINTS,
+  type WarConfig,
+} from '../../domain/warTypes'
 
 function config(): WarConfig {
   return {
     players: [
-      { id: 'alice', name: 'Alice' },
-      { id: 'bob', name: 'Bob' },
+      { id: 'alice', name: 'Alice', userId: 'user-alice' },
+      { id: 'bob', name: 'Bob', userId: 'user-bob' },
     ],
     disabledCardIds: [],
     globalCount: 1,
@@ -32,7 +37,7 @@ describe('useWarStore', () => {
   })
 
   it('startNewWar creates, persists, and sets the current war', async () => {
-    const war = await useWarStore.getState().startNewWar(config(), 1)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 1)
     expect(war.phase).toBe('preparation')
     expect(useWarStore.getState().war?.id).toBe(war.id)
 
@@ -42,7 +47,7 @@ describe('useWarStore', () => {
   })
 
   it('dispatch runs the reducer, persists the result, and updates state', async () => {
-    await useWarStore.getState().startNewWar(config(), 2)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 2)
     const updated = await useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })
     expect(updated.preparationDrawComplete).toBe(true)
     expect(useWarStore.getState().war?.preparationDrawComplete).toBe(true)
@@ -52,33 +57,35 @@ describe('useWarStore', () => {
   })
 
   it('dispatch throws if no war is loaded', async () => {
-    await expect(useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' })).rejects.toThrow()
+    await expect(
+      useWarStore.getState().dispatch({ type: 'RUN_PREPARATION_DRAW' }),
+    ).rejects.toThrow()
   })
 
   it('refreshWarList reflects saved wars', async () => {
-    const war = await useWarStore.getState().startNewWar(config(), 3)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 3)
     await useWarStore.getState().refreshWarList()
     const list = useWarStore.getState().warList
     expect(list.some((w) => w.id === war.id)).toBe(true)
   })
 
   it('deleteWar removes it from storage and clears it if it was current', async () => {
-    const war = await useWarStore.getState().startNewWar(config(), 4)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 4)
     await useWarStore.getState().deleteWar(war.id)
     expect(useWarStore.getState().war).toBeNull()
     expect(await useWarStore.getState().loadWar(war.id)).toBeNull()
   })
 
   it('exitToLanding clears the current war without deleting it from storage', async () => {
-    const war = await useWarStore.getState().startNewWar(config(), 5)
+    const war = await useWarStore.getState().startNewWar(config(), 'test-host', 5)
     useWarStore.getState().exitToLanding()
     expect(useWarStore.getState().war).toBeNull()
     expect(await useWarStore.getState().loadWar(war.id)).not.toBeNull()
   })
 
   it('resetAllWars wipes every saved war and the current one, and clears warList', async () => {
-    const warA = await useWarStore.getState().startNewWar(config(), 6)
-    await useWarStore.getState().startNewWar(config(), 7)
+    const warA = await useWarStore.getState().startNewWar(config(), 'test-host', 6)
+    await useWarStore.getState().startNewWar(config(), 'test-host', 7)
     await useWarStore.getState().refreshWarList()
     expect(useWarStore.getState().warList.length).toBeGreaterThanOrEqual(2)
 

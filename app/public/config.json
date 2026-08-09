@@ -1,0 +1,6 @@
+{
+  "apiBaseUrl": "https://api.brewer-wars.com",
+  "cognitoAuthority": "https://cognito-idp.eu-central-1.amazonaws.com/REPLACE_WITH_USER_POOL_ID",
+  "cognitoClientId": "REPLACE_WITH_APP_CLIENT_ID",
+  "cognitoDomain": "https://auth.brewer-wars.com"
+}

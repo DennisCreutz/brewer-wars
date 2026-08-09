@@ -11,6 +11,7 @@ import { CommanderCounter } from '../../ui/CommanderCounter'
 import { useLoadedWar } from '../../router/useLoadedWar'
 import { useWarStore } from '../../store/warStore'
 import { warPhasePath } from '../../router/paths'
+import { useCurrentUserId } from '../../auth/useIsAdmin'
 import type { ModifierCard } from '../../domain/cardTypes'
 
 /** Three slightly offset/rotated card-backs, front card at `rotate-0`. Kept
@@ -108,6 +109,7 @@ export function PreparationPage() {
   const dispatch = useWarStore((s) => s.dispatch)
   const ensureCommanderPool = useWarStore((s) => s.ensureCommanderPool)
   const commanderPoolStatus = useWarStore((s) => s.commanderPoolStatus)
+  const myUserId = useCurrentUserId()
   const [isDrawing, setIsDrawing] = useState(false)
   const [isAdvancing, setIsAdvancing] = useState(false)
 
@@ -151,20 +153,26 @@ export function PreparationPage() {
     }
   }
 
+  const isHost = myUserId !== null && myUserId === war.hostUserId
+
   return (
     <PageShell title={t('preparation.title')}>
       {!war.preparationDrawComplete ? (
         <Panel ornate className="mx-auto max-w-xl text-center">
           <PanelTitle>{t('preparation.title')}</PanelTitle>
           <p className="mb-6 text-wood-700">{t('preparation.intro')}</p>
-          <Button
-            variant="primary"
-            size="lg"
-            disabled={isDrawing}
-            onClick={() => void handleStartWar()}
-          >
-            ⚔️ {isDrawing ? t('preparation.drawing') : t('preparation.startWar')}
-          </Button>
+          {isHost ? (
+            <Button
+              variant="primary"
+              size="lg"
+              disabled={isDrawing}
+              onClick={() => void handleStartWar()}
+            >
+              ⚔️ {isDrawing ? t('preparation.drawing') : t('preparation.startWar')}
+            </Button>
+          ) : (
+            <p className="text-sm italic text-wood-500">{t('preparation.hostOnlyHint')}</p>
+          )}
         </Panel>
       ) : (
         <div className="flex flex-col gap-6">
@@ -188,16 +196,22 @@ export function PreparationPage() {
             )}
           </Panel>
 
-          <div className="flex justify-end">
-            <Button
-              variant="primary"
-              size="lg"
-              disabled={isAdvancing}
-              onClick={() => void handleContinue()}
-            >
-              {t('preparation.continueToPersonalDraw')}
-            </Button>
-          </div>
+          {isHost ? (
+            <div className="flex justify-end">
+              <Button
+                variant="primary"
+                size="lg"
+                disabled={isAdvancing}
+                onClick={() => void handleContinue()}
+              >
+                {t('preparation.continueToPersonalDraw')}
+              </Button>
+            </div>
+          ) : (
+            <p className="text-right text-sm italic text-wood-500">
+              {t('preparation.hostOnlyHint')}
+            </p>
+          )}
         </div>
       )}
     </PageShell>

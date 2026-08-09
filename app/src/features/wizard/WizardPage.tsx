@@ -1,11 +1,11 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from 'react-oidc-context'
 import { ALL_CARDS, useWarStore } from '../../store/warStore'
 import { computeWizardLimits } from '../../domain/validation'
 import {
   DEFAULT_CUSTOM_OPTIONS,
-  DEFAULT_PLAYER_COUNT,
   DEFAULT_VOTE_POINTS,
   DEFAULT_WIN_POINTS,
   MAX_PLAYERS,
@@ -51,7 +51,7 @@ const DEFAULT_PERSONAL_COUNT = 3
 const DEFAULT_SCORE_COUNT = 1
 
 function createDefaultPlayers(): Player[] {
-  return Array.from({ length: DEFAULT_PLAYER_COUNT }, () => ({ id: crypto.randomUUID(), name: '' }))
+  return []
 }
 
 function StepIndicator({ steps, current }: { steps: readonly string[]; current: number }) {
@@ -108,6 +108,7 @@ export function WizardPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const startNewWar = useWarStore((s) => s.startNewWar)
+  const auth = useAuth()
 
   const [step, setStep] = useState(0)
 
@@ -147,10 +148,7 @@ export function WizardPage() {
   const personalCount = Math.min(personalCountRaw, limits.personal)
   const scoreCount = scoreDisabledByGameMode ? 0 : Math.min(scoreCountRaw, limits.score)
 
-  const playersValid =
-    players.length >= MIN_PLAYERS &&
-    players.length <= MAX_PLAYERS &&
-    players.every((p) => p.name.trim().length > 0)
+  const playersValid = players.length >= MIN_PLAYERS && players.length <= MAX_PLAYERS
 
   const pointsValid =
     Number.isInteger(winPoints) &&
@@ -191,11 +189,17 @@ export function WizardPage() {
     // that violates the wizard's own rules.
     if (!playersValid || !pointsValid || isSubmitting) return
 
+    const hostUserId = auth.user?.profile?.sub
+    if (!hostUserId) {
+      setSubmitError(t('common.unknownError'))
+      return
+    }
+
     setSubmitError(null)
     setIsSubmitting(true)
 
     const config: WarConfig = {
-      players: players.map((p) => ({ id: p.id, name: p.name.trim() })),
+      players,
       disabledCardIds: [...disabledCardIds],
       globalCount,
       personalCount,
@@ -207,7 +211,7 @@ export function WizardPage() {
     }
 
     try {
-      const war = await startNewWar(config)
+      const war = await startNewWar(config, hostUserId)
       navigate(warPhasePath(war.id, war.phase))
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : t('common.unknownError'))
@@ -308,12 +312,7 @@ export function WizardPage() {
         </Panel>
 
         <div className="flex items-center justify-between gap-4">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={goBack}
-            disabled={isSubmitting}
-          >
+          <Button type="button" variant="secondary" onClick={goBack} disabled={isSubmitting}>
             {step === 0 ? t('common.buttons.exitToMenu') : t('common.buttons.back')}
           </Button>
           <Button type="submit" variant="primary" disabled={!canGoNext || isSubmitting}>

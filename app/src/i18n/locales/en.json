@@ -2,6 +2,7 @@
   "common": {
     "appName": "Brewer Wars",
     "tagline": "Draw your fate. Build your deck. Claim your glory.",
+    "configError": "Failed to load configuration",
     "phases": {
       "preparation": "Preparation",
       "personal-draw": "Personal Draw",
@@ -14,6 +15,7 @@
       "next": "Next",
       "back": "Back",
       "exitToMenu": "Exit to Menu",
+      "mainMenu": "Main Menu",
       "cancel": "Cancel",
       "confirm": "Confirm",
       "continue": "Continue",
@@ -21,16 +23,17 @@
       "conclude": "Conclude",
       "openInScryfall": "Open in Scryfall",
       "delete": "Delete",
-      "retry": "Retry"
+      "retry": "Retry",
+      "signOut": "Sign out"
     },
     "language": "Language",
     "loading": "Loading…",
     "players": "Players",
     "player": "Player",
     "unknownError": "Something went wrong. Please try again.",
-    "hotSeat": {
-      "prompt": "Pass the device to {{name}}",
-      "reveal": "Tap when you're ready and no one else is looking"
+    "waitingOn": {
+      "heading": "Waiting on {{name}}",
+      "subheading": "Still waiting on:"
     }
   },
   "landing": {
@@ -61,7 +64,8 @@
       "addPlayer": "Add Player",
       "removePlayer": "Remove",
       "namePlaceholder": "Player {{index}} name",
-      "minMaxHint": "Between {{min}} and {{max}} players."
+      "minMaxHint": "Between {{min}} and {{max}} players.",
+      "noAccounts": "No accounts found. Ask an admin to create one for each player before starting a war."
     },
     "modifiers": {
       "title": "Choose your modifiers",
@@ -113,6 +117,7 @@
   "preparation": {
     "title": "Preparation Phase",
     "intro": "The global and score modifiers are drawn for everyone before personal draws begin.",
+    "hostOnlyHint": "Only the war's host can run this step.",
     "startWar": "Start War",
     "drawing": "Drawing modifiers…",
     "globalModifiers": "Global Modifiers",
@@ -148,7 +153,8 @@
       "zero-commanders": "That would leave zero valid commanders — redrawing…"
     },
     "done": "{{name}} is done drawing",
-    "passDevice": "Pass the device to the next player",
+    "waitingForOthers": "You're all set! Waiting for the others to draw.",
+    "notAPlayer": "Waiting on the players below to draw their personal modifiers.",
     "allDone": "Everyone has drawn their personal modifiers",
     "continueToCommanderSelection": "Continue to Commander Selection",
     "lowCommanderCount": {
@@ -161,7 +167,8 @@
   },
   "commanderSelection": {
     "title": "Commander Selection",
-    "hotSeatPrompt": "Pass the device to {{name}}",
+    "waitingForOthers": "Commander locked in! Waiting for the others to choose.",
+    "notAPlayer": "Waiting on the players below to choose their commander.",
     "instructions": "Choose your commander from the filtered list below.",
     "checkedRules": "Automatically checked",
     "manualRules": "Verify yourself",
@@ -225,6 +232,9 @@
   },
   "scoring": {
     "title": "Points & Voting",
+    "hostOnlyHint": "Only the war's host can edit this.",
+    "voteWaitingForOthers": "Vote cast! Waiting for the others to vote.",
+    "voteNotAPlayer": "Waiting on the players below to cast their vote.",
     "revealTitle": "The Big Reveal",
     "gameWinner": "Who won the game?",
     "winBonusHint": "+{{points}} points",
@@ -271,5 +281,10 @@
     "totalLabel": "Total",
     "newWar": "Start a New War",
     "backToLanding": "Home"
+  },
+  "auth": {
+    "redirecting": "Redirecting to sign in…",
+    "completingSignIn": "Completing sign-in…",
+    "error": "Sign-in failed"
   }
 }

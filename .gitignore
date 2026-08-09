@@ -519,3 +519,25 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,visualstudio,visualstudiocode,react
+
+.env
+
+### Terraform / Terragrunt ###
+**/.terraform/*
+**/.terragrunt-cache/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+### Backend Lambda build output ###
+backend/dist/
+
+### Playwright MCP debug artifacts ###
+.playwright-mcp/

@@ -5,16 +5,18 @@ import { PageShell } from '../../ui/PageShell'
 import { LoadingScreen } from '../../ui/LoadingScreen'
 import { Panel, PanelTitle } from '../../ui/Panel'
 import { Button } from '../../ui/Button'
-import { HotSeatGate } from '../../ui/HotSeatGate'
+import { WaitingPanel } from '../../ui/WaitingPanel'
 import { CommanderCounter } from '../../ui/CommanderCounter'
 import { useCommanderFilter } from '../../ui/useCommanderFilter'
 import { useLoadedWar } from '../../router/useLoadedWar'
 import { useWarStore } from '../../store/warStore'
 import { warPhasePath } from '../../router/paths'
+import { useCurrentUserId } from '../../auth/useIsAdmin'
 import {
   activeCommanderConstraintsFor,
-  getActiveCommanderSelectionPlayer,
+  getMyPlayerId,
   getPlayerName,
+  isCommanderSelectionComplete,
 } from '../../domain/war'
 import { splitAllModifiersForDisplay } from '../../domain/commanderCheck'
 import {
@@ -113,7 +115,9 @@ function CommanderTile({
           {commander.rarity} • CMC {commander.cmc}
         </span>
         <span className="truncate text-xs tracking-wide text-parchment-200/60">
-          {commander.edhrecRank !== null ? `EDHREC #${commander.edhrecRank}` : t('commanderSelection.edhrecRankUnknown')}
+          {commander.edhrecRank !== null
+            ? `EDHREC #${commander.edhrecRank}`
+            : t('commanderSelection.edhrecRankUnknown')}
           {' • '}
           {commander.numDecks !== null
             ? t('commanderSelection.edhrecDeckCount', { count: commander.numDecks })
@@ -639,6 +643,7 @@ export function CommanderSelectionPage() {
   const dispatch = useWarStore((s) => s.dispatch)
   const commanderPool = useWarStore((s) => s.commanderPool)
   const ensureCommanderPool = useWarStore((s) => s.ensureCommanderPool)
+  const myUserId = useCurrentUserId()
   const [isAdvancing, setIsAdvancing] = useState(false)
 
   // Defensive: Preparation normally warms this cache first, but a direct
@@ -649,9 +654,7 @@ export function CommanderSelectionPage() {
 
   if (status === 'loading' || !war) return <LoadingScreen />
 
-  const activePlayer = getActiveCommanderSelectionPlayer(war)
-
-  if (!activePlayer) {
+  if (isCommanderSelectionComplete(war)) {
     async function handleAdvance() {
       if (!war) return
       setIsAdvancing(true)
@@ -683,17 +686,33 @@ export function CommanderSelectionPage() {
     )
   }
 
-  const playerName = getPlayerName(war.config.players, activePlayer.playerId)
+  // Concurrent, not queued: several members can genuinely still be picking
+  // at once now that everyone has their own device (see ui/TurnGate.tsx) —
+  // there's no single "active" player to hand a curtain to any more.
+  const pendingPlayers = war.players
+    .filter((p) => !p.commanderLocked)
+    .map((p) => ({ id: p.playerId, name: getPlayerName(war.config.players, p.playerId) }))
+
+  const myPlayerId = getMyPlayerId(war.config.players, myUserId)
+  const myPlayer = myPlayerId ? war.players.find((p) => p.playerId === myPlayerId) : undefined
+  const isMyTurn = !!myPlayer && !myPlayer.commanderLocked
+
+  if (!isMyTurn) {
+    return (
+      <PageShell title={t('commanderSelection.title')}>
+        <WaitingPanel
+          heading={
+            myPlayer ? t('commanderSelection.waitingForOthers') : t('commanderSelection.notAPlayer')
+          }
+          pendingPlayers={pendingPlayers}
+        />
+      </PageShell>
+    )
+  }
 
   return (
     <PageShell title={t('commanderSelection.title')}>
-      <HotSeatGate playerId={activePlayer.playerId} playerName={playerName}>
-        <PlayerCommanderPicker
-          key={activePlayer.playerId}
-          war={war}
-          playerId={activePlayer.playerId}
-        />
-      </HotSeatGate>
+      <PlayerCommanderPicker key={myPlayer.playerId} war={war} playerId={myPlayer.playerId} />
     </PageShell>
   )
 }

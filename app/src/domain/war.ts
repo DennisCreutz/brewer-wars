@@ -5,13 +5,7 @@
  * Scryfall/EDHREC data, keeping the whole module synchronous and testable.
  */
 import type { ModifierCard } from './cardTypes'
-import {
-  createDeck,
-  drawCards,
-  drawDraftRound,
-  resolveDraftPick,
-  type Deck,
-} from './draw'
+import { createDeck, drawCards, drawDraftRound, resolveDraftPick, type Deck } from './draw'
 import { deriveSeed, mulberry32, randomSeed } from './rng'
 import { computeScoring } from './scoring'
 import {
@@ -33,7 +27,12 @@ export class WarStateError extends Error {}
 // Creation
 // ---------------------------------------------------------------------------
 
-export function createWar(config: WarConfig, allCards: readonly ModifierCard[], seed = randomSeed()): War {
+export function createWar(
+  config: WarConfig,
+  allCards: readonly ModifierCard[],
+  hostUserId: string,
+  seed = randomSeed(),
+): War {
   if (config.players.length < 1) throw new WarStateError('A war needs at least one player')
 
   const enabledCards = allCards.filter((c) => !config.disabledCardIds.includes(c.id))
@@ -48,11 +47,18 @@ export function createWar(config: WarConfig, allCards: readonly ModifierCard[], 
         decks: Object.fromEntries(
           config.players.map((p) => [
             p.id,
-            createDeck('personal', [...enabledCards], mulberry32(deriveSeed(seed, 'personal', p.id))),
+            createDeck(
+              'personal',
+              [...enabledCards],
+              mulberry32(deriveSeed(seed, 'personal', p.id)),
+            ),
           ]),
         ),
       }
-    : { mode: 'shared', deck: createDeck('personal', [...enabledCards], mulberry32(deriveSeed(seed, 'personal'))) }
+    : {
+        mode: 'shared',
+        deck: createDeck('personal', [...enabledCards], mulberry32(deriveSeed(seed, 'personal'))),
+      }
 
   const now = new Date().toISOString()
 
@@ -61,6 +67,7 @@ export function createWar(config: WarConfig, allCards: readonly ModifierCard[], 
     seed,
     createdAt: now,
     updatedAt: now,
+    hostUserId,
     phase: 'preparation',
     config,
     globalDeck,
@@ -110,7 +117,9 @@ export type WarAction =
 
 function requirePhase(war: War, ...phases: Phase[]) {
   if (!phases.includes(war.phase)) {
-    throw new WarStateError(`Action requires phase ${phases.join('|')}, but war is in "${war.phase}"`)
+    throw new WarStateError(
+      `Action requires phase ${phases.join('|')}, but war is in "${war.phase}"`,
+    )
   }
 }
 
@@ -120,7 +129,11 @@ function findPlayer(war: War, playerId: PlayerId): PlayerWarState {
   return player
 }
 
-function updatePlayer(war: War, playerId: PlayerId, update: (p: PlayerWarState) => PlayerWarState): War {
+function updatePlayer(
+  war: War,
+  playerId: PlayerId,
+  update: (p: PlayerWarState) => PlayerWarState,
+): War {
   return {
     ...war,
     players: war.players.map((p) => (p.playerId === playerId ? update(p) : p)),
@@ -128,7 +141,9 @@ function updatePlayer(war: War, playerId: PlayerId, update: (p: PlayerWarState) 
 }
 
 function getPersonalDeck(war: War, playerId: PlayerId): Deck {
-  return war.personalDecks.mode === 'shared' ? war.personalDecks.deck : war.personalDecks.decks[playerId]
+  return war.personalDecks.mode === 'shared'
+    ? war.personalDecks.deck
+    : war.personalDecks.decks[playerId]
 }
 
 function setPersonalDeck(war: War, playerId: PlayerId, deck: Deck): War {
@@ -200,7 +215,8 @@ export function warReducer(war: War, action: WarAction): War {
     case 'DRAW_PERSONAL_MODIFIER': {
       requirePhase(war, 'personal-draw')
       const player = findPlayer(war, action.playerId)
-      if (player.personalDrawComplete) throw new WarStateError('This player already finished their personal draw')
+      if (player.personalDrawComplete)
+        throw new WarStateError('This player already finished their personal draw')
       if (player.pendingDraft) throw new WarStateError('Resolve the pending draft pick first')
 
       return touch(performPersonalDraw(war, action.playerId))
@@ -222,7 +238,10 @@ export function warReducer(war: War, action: WarAction): War {
       let next = updatePlayer(war, action.playerId, (p) => ({
         ...p,
         personalModifiers: p.personalModifiers.slice(0, -1),
-        personalDrawLog: [...p.personalDrawLog, { card: last, accepted: false, reason: 'zero-commanders' as const }],
+        personalDrawLog: [
+          ...p.personalDrawLog,
+          { card: last, accepted: false, reason: 'zero-commanders' as const },
+        ],
         personalDrawComplete: false,
       }))
       next = performPersonalDraw(next, action.playerId)
@@ -267,8 +286,10 @@ export function warReducer(war: War, action: WarAction): War {
     case 'START_DRAFT_ROUND': {
       requirePhase(war, 'personal-draw')
       const player = findPlayer(war, action.playerId)
-      if (player.personalDrawComplete) throw new WarStateError('This player already finished their personal draw')
-      if (player.pendingDraft) throw new WarStateError('A draft round is already pending for this player')
+      if (player.personalDrawComplete)
+        throw new WarStateError('This player already finished their personal draw')
+      if (player.pendingDraft)
+        throw new WarStateError('A draft round is already pending for this player')
 
       const deck = getPersonalDeck(war, action.playerId)
       const round = drawDraftRound(deck, player.personalModifiers, 3)
@@ -287,10 +308,13 @@ export function warReducer(war: War, action: WarAction): War {
       const player = findPlayer(war, action.playerId)
       if (!player.pendingDraft) throw new WarStateError('No draft round is pending for this player')
       const chosen = player.pendingDraft.find((c) => c.id === action.cardId)
-      if (!chosen) throw new WarStateError(`Card "${action.cardId}" was not one of the drafted candidates`)
+      if (!chosen)
+        throw new WarStateError(`Card "${action.cardId}" was not one of the drafted candidates`)
 
       const deck = getPersonalDeck(war, action.playerId)
-      const rand = mulberry32(deriveSeed(war.seed, 'draft-return', action.playerId, player.personalModifiers.length))
+      const rand = mulberry32(
+        deriveSeed(war.seed, 'draft-return', action.playerId, player.personalModifiers.length),
+      )
       const resolvedDeck = resolveDraftPick(deck, player.pendingDraft, chosen, rand)
       const personalModifiers = [...player.personalModifiers, chosen]
       const personalDrawComplete =
@@ -317,7 +341,8 @@ export function warReducer(war: War, action: WarAction): War {
     case 'SELECT_COMMANDER': {
       requirePhase(war, 'commander-selection')
       const player = findPlayer(war, action.playerId)
-      if (player.commanderLocked) throw new WarStateError('This player already locked in their commander')
+      if (player.commanderLocked)
+        throw new WarStateError('This player already locked in their commander')
       return touch(
         updatePlayer(war, action.playerId, (p) => ({
           ...p,
@@ -433,4 +458,21 @@ export function activeCommanderConstraintsFor(war: War, playerId: PlayerId): Mod
 
 export function getPlayerName(players: readonly Player[], playerId: PlayerId): string {
   return players.find((p) => p.id === playerId)?.name ?? playerId
+}
+
+/** The Cognito `sub` a given `playerId` is bound to — used by ui/TurnGate.tsx
+ * to decide whether the signed-in account should see the action UI for
+ * this player's turn or a waiting/summary screen instead. */
+export function getPlayerUserId(players: readonly Player[], playerId: PlayerId): string | null {
+  return players.find((p) => p.id === playerId)?.userId ?? null
+}
+
+/** The `playerId` this signed-in account is bound to within the war, if
+ * any (a war's host is not necessarily one of its players). */
+export function getMyPlayerId(
+  players: readonly Player[],
+  myUserId: string | null,
+): PlayerId | null {
+  if (!myUserId) return null
+  return players.find((p) => p.userId === myUserId)?.id ?? null
 }

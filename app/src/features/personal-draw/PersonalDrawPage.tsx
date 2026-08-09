@@ -8,14 +8,16 @@ import { Panel, PanelTitle } from '../../ui/Panel'
 import { Button } from '../../ui/Button'
 import { ModifierCardView } from '../../ui/ModifierCardView'
 import { CommanderCounter } from '../../ui/CommanderCounter'
-import { HotSeatGate } from '../../ui/HotSeatGate'
+import { WaitingPanel } from '../../ui/WaitingPanel'
 import { useLoadedWar } from '../../router/useLoadedWar'
 import { useWarStore } from '../../store/warStore'
 import { warPhasePath } from '../../router/paths'
+import { useCurrentUserId } from '../../auth/useIsAdmin'
 import {
   activeCommanderConstraintsFor,
-  getActivePersonalDrawPlayer,
+  getMyPlayerId,
   getPlayerName,
+  isPersonalDrawComplete,
 } from '../../domain/war'
 import { effectiveCustomOptions } from '../../domain/warTypes'
 import type { DrawLogEntry } from '../../domain/draw'
@@ -258,9 +260,9 @@ export function PersonalDrawPage() {
   const navigate = useNavigate()
   const { war, status } = useLoadedWar('personal-draw')
   const dispatch = useWarStore((s) => s.dispatch)
+  const myUserId = useCurrentUserId()
   const { isProcessing, drawOne, startDraft, pickDraft, redrawAllPersonalModifiers } =
     usePersonalDrawEngine()
-  const [pinnedPlayerId, setPinnedPlayerId] = useState<string | null>(null)
   const [playback, setPlayback] = useState<DrawPlaybackState | null>(null)
   const [isAdvancing, setIsAdvancing] = useState(false)
   // Generation key (playerId + draw-log length — which only ever grows,
@@ -274,26 +276,6 @@ export function PersonalDrawPage() {
 
   if (status === 'loading' || !war) return <LoadingScreen />
 
-  // Pin whichever player is active the first time we see a loaded war, then
-  // leave the pin alone until `handlePassDevice` explicitly advances it.
-  // This deliberately does NOT track `getActivePersonalDrawPlayer(war)`
-  // reactively on every render: the domain layer transiently flips a
-  // player's `personalDrawComplete` true -> false -> true while
-  // usePersonalDrawEngine's zero-commander safety net corrects a card mid
-  // draw (REDRAW_ZERO_COMMANDER_MODIFIER in domain/war.ts) — tracking it
-  // live would make the active-player selector momentarily "skip" to the
-  // next player and yank their curtain up mid-turn. Pinning + an explicit
-  // advance-on-confirm keeps the currently-displayed player stable for the
-  // whole of their turn, redraws included.
-  if (pinnedPlayerId === null) {
-    const next = getActivePersonalDrawPlayer(war)
-    if (next) setPinnedPlayerId(next.playerId)
-  }
-
-  const displayPlayer = pinnedPlayerId
-    ? (war.players.find((p) => p.playerId === pinnedPlayerId) ?? null)
-    : null
-
   const handleContinueToCommanderSelection = async () => {
     setIsAdvancing(true)
     try {
@@ -304,7 +286,7 @@ export function PersonalDrawPage() {
     }
   }
 
-  if (!displayPlayer) {
+  if (isPersonalDrawComplete(war)) {
     return (
       <PageShell title={t('personalDraw.title')}>
         <Panel ornate className="mx-auto max-w-xl text-center">
@@ -322,19 +304,30 @@ export function PersonalDrawPage() {
     )
   }
 
-  const playerId = displayPlayer.playerId
-  const playerName = getPlayerName(war.config.players, playerId)
-  const draft = effectiveCustomOptions(war.config).draft
+  // Every player still mid-draw is shown together in the waiting screen
+  // for whoever isn't one of them — there's no single "active" player any
+  // more, since nothing serializes turns once every member has their own
+  // device (see ui/TurnGate.tsx).
+  const pendingPlayers = war.players
+    .filter((p) => !p.personalDrawComplete)
+    .map((p) => ({ id: p.playerId, name: getPlayerName(war.config.players, p.playerId) }))
+
+  const myPlayerId = getMyPlayerId(war.config.players, myUserId)
+  const myPlayer = myPlayerId ? war.players.find((p) => p.playerId === myPlayerId) : undefined
+
   // Only trust `personalDrawComplete` once the engine is fully settled —
-  // otherwise this too could catch the transient mid-redraw blip described
-  // above and flash the "you're done" confirmation before reverting.
-  const handIsComplete = !isProcessing && displayPlayer.personalDrawComplete
+  // otherwise this could catch the transient mid-redraw blip caused by the
+  // zero-commander safety net (REDRAW_ZERO_COMMANDER_MODIFIER in
+  // domain/war.ts).
+  const handIsComplete = !!myPlayer && !isProcessing && myPlayer.personalDrawComplete
   // Live commander count is only meaningful once the hand is actually
   // complete — `null` both while the pool hasn't loaded yet AND while the
   // player is still mid-draw (countPotentialCommanders is otherwise cheap,
   // but there's no reason to evaluate it before it could matter).
-  const commanderCount = handIsComplete ? countPotentialCommanders(war, playerId) : null
-  const lowCommanderPromptKey = `${playerId}:${displayPlayer.personalDrawLog.length}`
+  const commanderCount = handIsComplete ? countPotentialCommanders(war, myPlayer!.playerId) : null
+  const lowCommanderPromptKey = myPlayer
+    ? `${myPlayer.playerId}:${myPlayer.personalDrawLog.length}`
+    : null
   // Non-null exactly when the low-commander-count prompt should show,
   // carrying the count along so the JSX below doesn't need a non-null
   // assertion. Guards: a positive-but-low count (0 is defensively excluded
@@ -345,20 +338,42 @@ export function PersonalDrawPage() {
   // before their first card), and not already dismissed for this exact
   // generation of their hand.
   const lowCommanderCount =
+    myPlayer &&
     commanderCount !== null &&
     commanderCount > 0 &&
     commanderCount < LOW_COMMANDER_COUNT_THRESHOLD &&
-    displayPlayer.personalModifiers.length > 0 &&
+    myPlayer.personalModifiers.length > 0 &&
     keptLowCommanderPromptFor !== lowCommanderPromptKey
       ? commanderCount
       : null
-  const isConfirmingFinish = handIsComplete && lowCommanderCount === null
+
+  // Still my responsibility if I haven't finished drawing yet, or I have
+  // but there's a still-pending low-commander-count decision to make
+  // before this player is truly "done" — once that's dismissed (redraw or
+  // explicit keep), this flips straight to false and the page shows the
+  // waiting screen with no extra "pass it on" step, per the concurrent,
+  // per-device model (see ui/TurnGate.tsx).
+  const isMyTurn = !!myPlayer && (!myPlayer.personalDrawComplete || lowCommanderCount !== null)
+
+  if (!isMyTurn) {
+    return (
+      <PageShell title={t('personalDraw.title')}>
+        <WaitingPanel
+          heading={myPlayer ? t('personalDraw.waitingForOthers') : t('personalDraw.notAPlayer')}
+          pendingPlayers={pendingPlayers}
+        />
+      </PageShell>
+    )
+  }
+
+  const playerId = myPlayer.playerId
+  const draft = effectiveCustomOptions(war.config).draft
 
   /** Diffs the player's draw log against `startLength` (captured right
    * before the draw/pick) to find the newly-appended entries for sequential
    * playback. Reads straight from the store rather than the stale
-   * render-time `displayPlayer` closure, since `drawOne`/`pickDraft` may
-   * have looped through several auto-redraws by the time they resolve. */
+   * render-time `myPlayer` closure, since `drawOne`/`pickDraft` may have
+   * looped through several auto-redraws by the time they resolve. */
   const capturePlayback = (startLength: number) => {
     const freshPlayer = useWarStore.getState().war?.players.find((p) => p.playerId === playerId)
     if (!freshPlayer) return
@@ -366,7 +381,7 @@ export function PersonalDrawPage() {
   }
 
   const handleDrawOne = () => {
-    const startLength = displayPlayer.personalDrawLog.length
+    const startLength = myPlayer.personalDrawLog.length
     void drawOne(playerId).then(() => capturePlayback(startLength))
   }
 
@@ -375,20 +390,13 @@ export function PersonalDrawPage() {
   }
 
   const handlePickDraft = (cardId: string) => {
-    const startLength = displayPlayer.personalDrawLog.length
+    const startLength = myPlayer.personalDrawLog.length
     void pickDraft(playerId, cardId).then(() => capturePlayback(startLength))
-  }
-
-  const handlePassDevice = () => {
-    const freshWar = useWarStore.getState().war
-    const next = freshWar ? getActivePersonalDrawPlayer(freshWar) : null
-    setPinnedPlayerId(next?.playerId ?? null)
-    setPlayback(null)
   }
 
   const handleRedrawAll = () => {
     // The playback panel would otherwise keep showing cards that this
-    // action is about to discard — clear it, same as a real pass-device.
+    // action is about to discard.
     setPlayback(null)
     void redrawAllPersonalModifiers(playerId)
   }
@@ -399,58 +407,45 @@ export function PersonalDrawPage() {
 
   return (
     <PageShell title={t('personalDraw.title')}>
-      <HotSeatGate playerId={playerId} playerName={playerName}>
-        <div className="flex flex-col gap-6">
-          <Panel>
-            <PanelTitle>{t('personalDraw.yourModifiers')}</PanelTitle>
-            {displayPlayer.personalModifiers.length === 0 ? (
-              <p className="text-wood-600">{t('personalDraw.noneYet')}</p>
-            ) : (
-              <div className="flex flex-wrap gap-3">
-                {displayPlayer.personalModifiers.map((card) => (
-                  <ModifierCardView key={card.id} card={card} size="sm" />
-                ))}
-              </div>
-            )}
-          </Panel>
-
-          <CommanderCounter
-            modifiers={activeCommanderConstraintsFor(war, playerId)}
-            label={t('personalDraw.commanderCounterPersonal')}
-          />
-
-          {playback && playback.playerId === playerId && (
-            <DrawPlayback entries={playback.entries} />
-          )}
-
-          {lowCommanderCount !== null ? (
-            <LowCommanderPrompt
-              count={lowCommanderCount}
-              isProcessing={isProcessing}
-              onRedrawAll={handleRedrawAll}
-              onKeep={handleKeepDespiteLowCount}
-            />
-          ) : isConfirmingFinish ? (
-            <Panel ornate className="mx-auto max-w-xl text-center">
-              <p className="mb-4 font-heading text-xl text-wood-800">
-                🎉 {t('personalDraw.done', { name: playerName })}
-              </p>
-              <Button variant="primary" size="lg" onClick={handlePassDevice}>
-                {t('personalDraw.passDevice')}
-              </Button>
-            </Panel>
+      <div className="flex flex-col gap-6">
+        <Panel>
+          <PanelTitle>{t('personalDraw.yourModifiers')}</PanelTitle>
+          {myPlayer.personalModifiers.length === 0 ? (
+            <p className="text-wood-600">{t('personalDraw.noneYet')}</p>
           ) : (
-            <DrawControls
-              draft={draft}
-              pendingDraft={displayPlayer.pendingDraft}
-              isProcessing={isProcessing}
-              onDrawOne={handleDrawOne}
-              onStartDraft={handleStartDraft}
-              onPickDraft={handlePickDraft}
-            />
+            <div className="flex flex-wrap gap-3">
+              {myPlayer.personalModifiers.map((card) => (
+                <ModifierCardView key={card.id} card={card} size="sm" />
+              ))}
+            </div>
           )}
-        </div>
-      </HotSeatGate>
+        </Panel>
+
+        <CommanderCounter
+          modifiers={activeCommanderConstraintsFor(war, playerId)}
+          label={t('personalDraw.commanderCounterPersonal')}
+        />
+
+        {playback && playback.playerId === playerId && <DrawPlayback entries={playback.entries} />}
+
+        {lowCommanderCount !== null ? (
+          <LowCommanderPrompt
+            count={lowCommanderCount}
+            isProcessing={isProcessing}
+            onRedrawAll={handleRedrawAll}
+            onKeep={handleKeepDespiteLowCount}
+          />
+        ) : (
+          <DrawControls
+            draft={draft}
+            pendingDraft={myPlayer.pendingDraft}
+            isProcessing={isProcessing}
+            onDrawOne={handleDrawOne}
+            onStartDraft={handleStartDraft}
+            onPickDraft={handlePickDraft}
+          />
+        )}
+      </div>
     </PageShell>
   )
 }

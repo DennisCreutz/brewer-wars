@@ -14,20 +14,26 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "tools:import-cards": "tsx tools/import-cards.ts",
-    "tools:build-edhrec-data": "tsx tools/build-edhrec-data.ts"
+    "tools:build-edhrec-data": "tsx tools/build-edhrec-data.ts",
+    "tools:generate-card-art:test": "tsx tools/generate-card-art.ts --test --count 1 --random",
+    "tools:generate-card-art": "tsx tools/generate-card-art.ts",
+    "tools:generate-card-art:prompt": "tsx tools/generate-card-art.ts"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.43.0",
     "i18next": "^26.3.6",
     "idb": "^8.0.3",
+    "oidc-client-ts": "^3.5.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-i18next": "^17.0.11",
+    "react-oidc-context": "^3.3.1",
     "react-router-dom": "^7.18.2",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1106.0",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
@@ -40,8 +46,10 @@
     "@vitest/ui": "^4.1.10",
     "fake-indexeddb": "^6.2.5",
     "jsdom": "^29.1.1",
+    "msw": "^2.15.0",
     "oxlint": "^1.75.0",
     "prettier": "^3.9.6",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.5",
     "typescript": "~6.0.2",
