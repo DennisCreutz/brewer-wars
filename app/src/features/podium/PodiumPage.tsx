@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { PageShell } from '../../ui/PageShell'
@@ -7,8 +6,8 @@ import { Panel, PanelTitle } from '../../ui/Panel'
 import { Button } from '../../ui/Button'
 import { PlayerBadge } from '../../ui/PlayerBadge'
 import { useLoadedWar } from '../../router/useLoadedWar'
+import { useGoHome } from '../../router/useGoHome'
 import { paths } from '../../router/paths'
-import { useWarStore } from '../../store/warStore'
 import { getPlayerName } from '../../domain/war'
 import { usePodiumConfetti } from './usePodiumConfetti'
 import type { PlayerId, War } from '../../domain/warTypes'
@@ -158,31 +157,9 @@ function RankedList({
 function PodiumActions() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const exitToLanding = useWarStore((s) => s.exitToLanding)
-  const exitOnUnmount = useRef(false)
-
-  // react-router-dom v7 schedules navigation via `startTransition`
-  // internally, so `navigate()` here does not take effect on this very
-  // render — it's applied on a later, lower-priority pass. Calling
-  // `exitToLanding()` synchronously and immediately (the naive approach)
-  // would race it: `useLoadedWar`'s reactive "the store's war is null but
-  // the URL still names this war" effect can commit *before* the route
-  // change does, and "self-heals" by reloading the very war we're trying
-  // to exit — undoing the exit entirely. Deferring the store clear to
-  // this component's own unmount (which happens exactly once the route
-  // has actually changed away from the podium) sidesteps the race
-  // completely instead of guessing at scheduling/timing.
-  useEffect(
-    () => () => {
-      if (exitOnUnmount.current) exitToLanding()
-    },
-    [exitToLanding],
-  )
-
-  function handleBackToLanding() {
-    exitOnUnmount.current = true
-    navigate(paths.landing)
-  }
+  // See router/useGoHome.ts for why leaving safely needs more than a plain
+  // navigate() — the race this sidesteps was originally discovered here.
+  const handleBackToLanding = useGoHome()
 
   return (
     <div className="flex flex-wrap justify-center gap-4 pb-4">
