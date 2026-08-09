@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { hashSeed } from '../domain/rng'
 import { getCardIcon } from './cardIcons'
 import type { ModifierCard } from '../domain/cardTypes'
@@ -11,12 +12,11 @@ const ICON_SIZE_CLASSES = {
 /**
  * Deterministic procedural artwork standing in for commissioned card art:
  * a two-tone gradient (hue derived from the card id, so it's stable across
- * renders/reloads) plus a curated emoji icon. Once real artwork lands per
- * card (see `artPrompt` in cards.json for the intended scene), it can
- * simply replace this component's output for that id — nothing else in
- * the app needs to change.
+ * renders/reloads) plus a curated emoji icon. Always rendered as the base
+ * layer — see `PlaceholderArt` below for the generated-art overlay that
+ * sits on top of this and falls back to it.
  */
-export function PlaceholderArt({
+function GradientFallback({
   card,
   className = '',
   size = 'md',
@@ -41,6 +41,42 @@ export function PlaceholderArt({
       <span className={`drop-shadow-lg leading-none select-none ${ICON_SIZE_CLASSES[size]}`}>
         {getCardIcon(card)}
       </span>
+    </div>
+  )
+}
+
+/**
+ * Card art: tries the generated image at `/art/<id>.webp` (see
+ * `tools/generate-card-art.ts`) layered over the deterministic gradient
+ * fallback above. If the file doesn't exist — never generated, permanently
+ * rejected by the model's content filter, or a `--test`-only run — the
+ * `<img>` fails to load and unmounts, leaving the unchanged gradient+icon
+ * visible underneath. No lookup table, no build-time join: whether a given
+ * card has real art is decided entirely by whether the file is there.
+ */
+export function PlaceholderArt({
+  card,
+  className = '',
+  size = 'md',
+}: {
+  card: ModifierCard
+  className?: string
+  size?: 'sm' | 'md' | 'lg'
+}) {
+  const [artFailed, setArtFailed] = useState(false)
+
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      <GradientFallback card={card} size={size} className="absolute inset-0" />
+      {!artFailed && (
+        <img
+          src={`/art/${card.id}.webp`}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={() => setArtFailed(true)}
+        />
+      )}
     </div>
   )
 }

@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Scratch output from `npm run tools:generate-card-art:test` — never committed.
+tools/card-art-test/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

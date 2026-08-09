@@ -14,7 +14,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "tools:import-cards": "tsx tools/import-cards.ts",
-    "tools:build-edhrec-data": "tsx tools/build-edhrec-data.ts"
+    "tools:build-edhrec-data": "tsx tools/build-edhrec-data.ts",
+    "tools:generate-card-art:test": "tsx tools/generate-card-art.ts --test --count 1 --random",
+    "tools:generate-card-art": "tsx tools/generate-card-art.ts"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
@@ -30,6 +32,7 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1106.0",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
@@ -45,6 +48,7 @@
     "msw": "^2.15.0",
     "oxlint": "^1.75.0",
     "prettier": "^3.9.6",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.5",
     "typescript": "~6.0.2",

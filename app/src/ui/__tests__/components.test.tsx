@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import '../../i18n'
 import { PlayerBadge } from '../PlayerBadge'
 import { ModifierCardView } from '../ModifierCardView'
 import { CommanderCounter } from '../CommanderCounter'
+import { PlaceholderArt } from '../PlaceholderArt'
+import { getCardIcon } from '../cardIcons'
 import { useWarStore } from '../../store/warStore'
 import cardsData from '../../data/generated/cards.json'
 import type { ModifierCard } from '../../domain/cardTypes'
@@ -54,6 +56,28 @@ describe('ModifierCardView', () => {
     const globalCard = cards.find((c) => c.modifier === 'global')!
     render(<ModifierCardView card={globalCard} />)
     expect(screen.getByText('Global')).toBeInTheDocument()
+  })
+})
+
+describe('PlaceholderArt', () => {
+  it('attempts to load generated art at the predictable per-card path', () => {
+    const card = cards.find((c) => c.id === 'tribal-angel')!
+    const { container } = render(<PlaceholderArt card={card} />)
+    expect(container.querySelector('img')).toHaveAttribute('src', '/art/tribal-angel.webp')
+  })
+
+  it('shows the gradient + icon fallback underneath, before the art has loaded or failed', () => {
+    const card = cards.find((c) => c.id === 'tribal-angel')!
+    render(<PlaceholderArt card={card} />)
+    expect(screen.getByText(getCardIcon(card))).toBeInTheDocument()
+  })
+
+  it('unmounts the art and leaves the unchanged gradient + icon fallback visible when it fails to load', () => {
+    const card = cards.find((c) => c.id === 'tribal-angel')!
+    const { container } = render(<PlaceholderArt card={card} />)
+    fireEvent.error(container.querySelector('img')!)
+    expect(container.querySelector('img')).not.toBeInTheDocument()
+    expect(screen.getByText(getCardIcon(card))).toBeInTheDocument()
   })
 })
 
