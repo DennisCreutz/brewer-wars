@@ -6,10 +6,17 @@
  * before writing into `public/art/<id>.webp`.
  *
  * This is a one-off, PAID, external batch job — not part of any build
- * step. Two npm scripts drive it (see package.json):
+ * step. Three npm scripts drive it (see package.json):
  *
- *   npm run tools:generate-card-art:test   # one random card -> tools/card-art-test/
- *   npm run tools:generate-card-art        # all undone cards -> public/art/
+ *   npm run tools:generate-card-art:test     # one random card -> tools/card-art-test/
+ *   npm run tools:generate-card-art          # all undone cards -> public/art/
+ *   npm run tools:generate-card-art:prompt -- --prompt "..."
+ *                                             # one ad-hoc image from a
+ *                                             # prompt you write yourself,
+ *                                             # for experimenting with the
+ *                                             # style suffix/negative
+ *                                             # prompt independent of any
+ *                                             # card's artPrompt
  *
  * The render path needs no knowledge of this tool's success or failure:
  * `ui/PlaceholderArt.tsx` always tries `/art/<id>.webp` and falls back to
@@ -36,6 +43,16 @@
  *   --region <region>   Bedrock region (default: us-west-2)
  *   --max-width <px>    sharp resize target, long edge (default: 960)
  *   --quality <0-100>   sharp WebP quality (default: 82)
+ *   --prompt <text>     ad-hoc mode: ignore the card catalog entirely and
+ *                        generate exactly one image from this prompt,
+ *                        written to the test folder (or --out) as
+ *                        <slugified-prompt>-<timestamp>.webp. Not recorded
+ *                        in the manifest — there's no card id to key it by.
+ *   --raw               ad-hoc mode only: send --prompt verbatim, skipping
+ *                        the style suffix and negative_prompt
+ *   --seed <n>          ad-hoc mode only: fix the seed for a reproducible
+ *                        comparison across prompt wording (default: 0,
+ *                        i.e. a random seed each run)
  *
  * --- Determinism ---
  * The seed passed to the model is derived from `hashSeed(card.id)` (see
@@ -110,6 +127,9 @@ interface Args {
   region: string
   maxWidth: number
   quality: number
+  prompt?: string
+  raw: boolean
+  seed?: number
 }
 
 function parseArgs(argv: string[]): Args {
@@ -124,6 +144,7 @@ function parseArgs(argv: string[]): Args {
     region: DEFAULT_REGION,
     maxWidth: 960,
     quality: 82,
+    raw: false,
   }
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
@@ -164,11 +185,27 @@ function parseArgs(argv: string[]): Args {
       case '--quality':
         args.quality = Number(argv[++i])
         break
+      case '--prompt':
+        args.prompt = argv[++i]
+        break
+      case '--raw':
+        args.raw = true
+        break
+      case '--seed':
+        args.seed = Number(argv[++i])
+        break
       default:
         throw new Error(`Unknown argument: "${arg}"`)
     }
   }
   return args
+}
+
+/** Filesystem-safe stand-in for a card id when there isn't one — ad-hoc
+ * prompt mode has no catalog entry to key its output filename by. */
+function slugify(text: string): string {
+  const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+  return slug.slice(0, 40) || 'prompt'
 }
 
 type ManifestStatus = 'ok' | 'failed'
@@ -314,8 +351,48 @@ async function toWebp(pngBase64: string, maxWidth: number, quality: number): Pro
   return sharp(raw).resize({ width: maxWidth, withoutEnlargement: true }).webp({ quality }).toBuffer()
 }
 
+/** Ad-hoc mode: generate exactly one image from a prompt given on the
+ * command line, bypassing the card catalog entirely. There's no card id
+ * to key a manifest entry by, so this never touches card-art-manifest.json
+ * — every run is independent, same as --test. */
+async function runAdhocPrompt(args: Args): Promise<void> {
+  const outDir = args.out ? resolve(process.cwd(), args.out) : TEST_OUT_DIR
+  const rawPrompt = args.prompt!.trim()
+  if (!rawPrompt) throw new Error('--prompt must not be empty')
+  const prompt = args.raw ? rawPrompt : `${rawPrompt}${STYLE_SUFFIX}`
+  const seed = args.seed ?? 0
+
+  console.log(`${args.dryRun ? '[dry run] ' : ''}Generating 1 ad-hoc image -> ${outDir}`)
+  console.log(`Model: ${args.model}  Region: ${args.region}`)
+  console.log(`prompt: ${prompt}`)
+
+  if (args.dryRun) return
+
+  mkdirSync(outDir, { recursive: true })
+  const client = new BedrockRuntimeClient({ region: args.region })
+  const result = await generateWithBackoff(client, args.model, prompt, seed)
+
+  if (!result.ok) {
+    const detail = result.kind === 'soft-filter' ? result.reason : result.error
+    console.log(`  FAILED (${result.kind}): ${detail}`)
+    process.exitCode = 1
+    return
+  }
+
+  const webp = await toWebp(result.imageBase64, args.maxWidth, args.quality)
+  const outPath = resolve(outDir, `${slugify(rawPrompt)}-${Date.now()}.webp`)
+  writeFileSync(outPath, webp)
+  console.log(`  OK (seed ${result.seedUsed}, ${(webp.length / 1024).toFixed(0)} KB) -> ${outPath}`)
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2))
+
+  if (args.prompt !== undefined) {
+    await runAdhocPrompt(args)
+    return
+  }
+
   const allCards = JSON.parse(readFileSync(CARDS_JSON, 'utf-8')) as ModifierCard[]
   const manifest = args.test ? {} : loadManifest()
   const candidates = pickCandidates(allCards, manifest, args)

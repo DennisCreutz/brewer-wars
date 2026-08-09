@@ -16,7 +16,8 @@
     "tools:import-cards": "tsx tools/import-cards.ts",
     "tools:build-edhrec-data": "tsx tools/build-edhrec-data.ts",
     "tools:generate-card-art:test": "tsx tools/generate-card-art.ts --test --count 1 --random",
-    "tools:generate-card-art": "tsx tools/generate-card-art.ts"
+    "tools:generate-card-art": "tsx tools/generate-card-art.ts",
+    "tools:generate-card-art:prompt": "tsx tools/generate-card-art.ts"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
