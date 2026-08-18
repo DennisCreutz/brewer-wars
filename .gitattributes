@@ -1,0 +1,9 @@
+# Force LF line endings for shell scripts regardless of a checkout
+# machine's core.autocrlf setting — a script checked out with CRLF breaks
+# its shebang ("/usr/bin/env: 'bash\r': No such file or directory").
+*.sh text eol=lf
+
+# Keep the rest on whatever line endings they already have but still
+# normalize to LF in the repository itself, avoiding noisy whitespace-only
+# diffs from mixed line endings across contributors' machines.
+* text=auto eol=lf
