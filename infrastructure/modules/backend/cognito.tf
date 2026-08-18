@@ -4,6 +4,25 @@ resource "aws_cognito_user_pool" "this" {
   # No self-registration: only admins (via CLI/console) create accounts.
   admin_create_user_config {
     allow_admin_create_user_only = true
+
+    invite_message_template {
+      sms_message   = "Brewer Wars: your username is {username} and temporary password is {####}"
+      email_subject = "You've been drafted into Brewer Wars"
+      email_message = <<-EOT
+        Hey {username},
+
+        You've been added as a player in Brewer Wars, the digital companion for our Commander
+        modifier-draft games.
+
+        Sign in here: https://${var.domain_name}
+
+        Your temporary password is: {####}
+
+        You'll be asked to choose a new password the first time you log in.
+
+        See you at the table!
+      EOT
+    }
   }
 
   username_attributes = ["email"]
@@ -113,7 +132,7 @@ resource "aws_cognito_user_pool_client" "web" {
     refresh_token = "days"
   }
 
-  enable_token_revocation              = true
+  enable_token_revocation = true
 }
 
 output "user_pool_id" {
