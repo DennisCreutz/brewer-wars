@@ -10,12 +10,12 @@ FRONTEND_DIR="$REPO_ROOT/infrastructure/live/eu-central-1/prod/frontend"
 APP_DIR="$REPO_ROOT/app"
 
 echo "==> Reading Terraform outputs"
-API_URL=$(terragrunt output -raw api_url --terragrunt-working-dir "$BACKEND_DIR")
-USER_POOL_ID=$(terragrunt output -raw user_pool_id --terragrunt-working-dir "$BACKEND_DIR")
-CLIENT_ID=$(terragrunt output -raw user_pool_client_id --terragrunt-working-dir "$BACKEND_DIR")
-AUTH_DOMAIN=$(terragrunt output -raw auth_domain --terragrunt-working-dir "$BACKEND_DIR")
-BUCKET_NAME=$(terragrunt output -raw bucket_name --terragrunt-working-dir "$FRONTEND_DIR")
-DISTRIBUTION_ID=$(terragrunt output -raw distribution_id --terragrunt-working-dir "$FRONTEND_DIR")
+API_URL=$(terragrunt --working-dir "$BACKEND_DIR" output -raw api_url)
+USER_POOL_ID=$(terragrunt --working-dir "$BACKEND_DIR" output -raw user_pool_id)
+CLIENT_ID=$(terragrunt --working-dir "$BACKEND_DIR" output -raw user_pool_client_id)
+AUTH_DOMAIN=$(terragrunt --working-dir "$BACKEND_DIR" output -raw auth_domain)
+BUCKET_NAME=$(terragrunt --working-dir "$FRONTEND_DIR" output -raw bucket_name)
+DISTRIBUTION_ID=$(terragrunt --working-dir "$FRONTEND_DIR" output -raw distribution_id)
 
 echo "==> Building backend Lambda bundles"
 (cd "$REPO_ROOT/backend" && npm install && node build.mjs)

@@ -28,5 +28,5 @@ inputs = {
   # the custom Cognito domain requires. Falls back to the free
   # Cognito-hosted prefix domain until that's resolved — flip to true and
   # re-apply once `frontend` succeeds.
-  use_custom_auth_domain = false
+  use_custom_auth_domain = true
 }
