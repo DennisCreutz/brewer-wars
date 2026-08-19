@@ -23,12 +23,16 @@ const DIFFICULTY_GLOW: Record<number, string> = {
 
 export type ModifierCardSize = 'sm' | 'md' | 'lg'
 
+// `w-[min(_,100%)]` gives each size a target width that still shrinks to
+// fit a narrow flex/grid parent instead of overflowing it — a straight
+// `w-96` (384px) card is wider than an entire 360px phone viewport once
+// padding is subtracted, which is exactly what was happening before.
 const SIZE_CLASSES: Record<
   ModifierCardSize,
   { root: string; art: string; name: string; badge: string; meta: string; desc: string }
 > = {
   sm: {
-    root: 'w-52',
+    root: 'w-[min(13rem,100%)]',
     art: 'h-28',
     name: 'text-sm',
     badge: 'text-[10px] px-2 py-0.5',
@@ -36,7 +40,7 @@ const SIZE_CLASSES: Record<
     desc: 'text-xs leading-snug line-clamp-4',
   },
   md: {
-    root: 'w-72',
+    root: 'w-[min(18rem,100%)]',
     art: 'h-40',
     name: 'text-lg',
     badge: 'text-xs px-2.5 py-1',
@@ -44,7 +48,7 @@ const SIZE_CLASSES: Record<
     desc: 'text-sm leading-snug line-clamp-5',
   },
   lg: {
-    root: 'w-96',
+    root: 'w-[min(24rem,100%)]',
     art: 'h-56',
     name: 'text-2xl',
     badge: 'text-sm px-3 py-1',
@@ -64,7 +68,12 @@ export interface ModifierCardViewProps {
 /** The MTG-styled modifier card: name, modifier-kind badge, category/type
  * line, placeholder artwork, and a difficulty-tier glow (cosmetic rarity
  * ramp derived from the original sheet's "Type" column — see cardTypes.ts). */
-export function ModifierCardView({ card, size = 'md', rejected = false, className = '' }: ModifierCardViewProps) {
+export function ModifierCardView({
+  card,
+  size = 'md',
+  rejected = false,
+  className = '',
+}: ModifierCardViewProps) {
   const sizes = SIZE_CLASSES[size]
   return (
     <div

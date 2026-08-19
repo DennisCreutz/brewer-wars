@@ -16,18 +16,18 @@ export function PageShell({
   const goHome = useGoHome()
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 py-6 sm:px-6">
-      <header className="mb-6 flex items-center justify-between gap-4">
-        <div>
+      <header className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="min-w-0">
           <p className="font-display text-sm uppercase tracking-[0.2em] text-royal-300">
             {t('common.appName')}
           </p>
           {title && (
-            <h1 className="font-heading text-3xl font-bold text-parchment-50 text-shadow-title">
+            <h1 className="truncate font-heading text-2xl font-bold text-parchment-50 text-shadow-title sm:text-3xl">
               {title}
             </h1>
           )}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {right}
           <Button
             variant="ghost"
