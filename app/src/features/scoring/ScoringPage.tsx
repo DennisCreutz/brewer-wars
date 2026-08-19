@@ -550,15 +550,19 @@ function LiveTotalPanel({ war }: { war: War }) {
   return (
     <Panel>
       <PanelTitle>{t('scoring.liveTotal')}</PanelTitle>
+      {/* Total is placed right after the player column (not last) so the
+       * headline number is never the thing scrolled off-screen on a narrow
+       * phone — the win/vote/card breakdown is secondary detail, reachable
+       * via the horizontal scroll this table already needed at min-w. */}
       <div className="overflow-x-auto">
         <table className="w-full min-w-[420px] text-left text-sm">
           <thead>
             <tr className="border-b border-wood-300/60 text-xs font-semibold uppercase tracking-wide text-wood-600">
               <th className="py-2 pr-2">{t('common.player')}</th>
+              <th className="px-2 py-2 text-right">{t('scoring.colTotal')}</th>
               <th className="px-2 py-2 text-right">{t('scoring.colWin')}</th>
               <th className="px-2 py-2 text-right">{t('scoring.colVotes')}</th>
-              <th className="px-2 py-2 text-right">{t('scoring.colCards')}</th>
-              <th className="py-2 pl-2 text-right">{t('scoring.colTotal')}</th>
+              <th className="py-2 pl-2 text-right">{t('scoring.colCards')}</th>
             </tr>
           </thead>
           <tbody>
@@ -572,12 +576,12 @@ function LiveTotalPanel({ war }: { war: War }) {
                     commanderImageUrl={commanderImageFor(war, b.playerId)}
                   />
                 </td>
-                <td className="px-2 py-2 text-right text-wood-800">{b.winPoints}</td>
-                <td className="px-2 py-2 text-right text-wood-800">{b.votePoints}</td>
-                <td className="px-2 py-2 text-right text-wood-800">{b.scoreCardPoints}</td>
-                <td className="py-2 pl-2 text-right font-heading text-lg font-bold text-royal-600">
+                <td className="px-2 py-2 text-right font-heading text-lg font-bold text-royal-600">
                   {b.total}
                 </td>
+                <td className="px-2 py-2 text-right text-wood-800">{b.winPoints}</td>
+                <td className="px-2 py-2 text-right text-wood-800">{b.votePoints}</td>
+                <td className="py-2 pl-2 text-right text-wood-800">{b.scoreCardPoints}</td>
               </tr>
             ))}
           </tbody>

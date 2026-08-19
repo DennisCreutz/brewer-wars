@@ -147,6 +147,11 @@
     "commanderCounterPersonal": "Your Potential Commanders",
     "whatHappened": "What Just Happened",
     "cardKept": "Kept!",
+    "drawSummaryNoRejections": "Drew 1 card — kept right away.",
+    "drawSummary_one": "Drew {{total}} cards — {{count}} rejected, 1 kept.",
+    "drawSummary_other": "Drew {{total}} cards — {{count}} rejected, 1 kept.",
+    "yourNewModifier": "Your new modifier:",
+    "rejectedAttempts": "Rejected along the way",
     "rejectionReasons": {
       "conflict": "Conflicts with a modifier you already have — discarded.",
       "solo-not-first": "A solo effect can only ever be your sole modifier — discarded.",
@@ -284,6 +289,7 @@
   },
   "auth": {
     "redirecting": "Redirecting to sign in…",
+    "signingOut": "Signing you out…",
     "completingSignIn": "Completing sign-in…",
     "error": "Sign-in failed"
   }

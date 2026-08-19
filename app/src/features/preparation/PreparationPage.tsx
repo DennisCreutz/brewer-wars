@@ -80,12 +80,22 @@ function DeckStack({ pulseCount }: { pulseCount: number }) {
 function CardRevealGrid({ cards }: { cards: ModifierCard[] }) {
   const reduceMotion = useReducedMotion()
   return (
-    <div className="flex flex-wrap items-start gap-4" style={{ perspective: 1200 }}>
+    // Stacked (deck on top, cards below at full width) below `sm:` — side
+    // by side, the DeckStack + gap alone eats over a third of a 360px
+    // viewport (this app's 18px root font-size scales every Tailwind rem
+    // unit up too), squeezing the cards themselves down to an
+    // unreadably narrow, heavily-truncated sliver. Side by side returns
+    // once there's enough width for it to not fight the card for room.
+    <div
+      className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap"
+      style={{ perspective: 1200 }}
+    >
       <DeckStack pulseCount={cards.length} />
-      <div className="flex flex-1 flex-wrap gap-4">
+      <div className="flex min-w-0 w-full flex-1 flex-wrap gap-4">
         {cards.map((card, index) => (
           <motion.div
             key={card.id}
+            className="min-w-0 flex-1"
             initial={reduceMotion ? false : DECK_DRAW_INITIAL}
             animate={DECK_DRAW_ANIMATE}
             transition={

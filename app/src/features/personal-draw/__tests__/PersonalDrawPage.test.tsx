@@ -178,7 +178,15 @@ describe('PersonalDrawPage', () => {
       await waitFor(() => {
         expect(screen.getByText(/that would leave zero valid commanders/i)).toBeInTheDocument()
       })
-      expect(screen.getByText('Kept!')).toBeInTheDocument()
+      // Explicit summary line stating total attempts and rejected/kept
+      // counts, so a multi-redraw playback never reads as "I got N cards".
+      expect(screen.getByText(/drew 2 cards.*1 rejected, 1 kept/i)).toBeInTheDocument()
+      // The kept card gets its own sub-heading and a non-color-only
+      // (checkmark) indicator, arriving last after the rejected chip.
+      await waitFor(() => {
+        expect(screen.getByText('Your new modifier:')).toBeInTheDocument()
+      })
+      expect(screen.getAllByText('Kept!').length).toBeGreaterThan(0)
       // The "drawn from a deck" animation's face-down stack sits beside
       // the playback sequence (3 decorative card backs).
       expect(screen.getAllByText('🂠')).toHaveLength(3)

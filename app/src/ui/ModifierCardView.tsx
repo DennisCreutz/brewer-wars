@@ -23,12 +23,23 @@ const DIFFICULTY_GLOW: Record<number, string> = {
 
 export type ModifierCardSize = 'sm' | 'md' | 'lg'
 
+// `w-full max-w-*` (percentage width + a capped max-width) — NOT
+// `w-[min(_,100%)]` — is what actually lets these cards shrink inside a
+// narrow flex/grid parent. A CSS `min()` mixing an absolute length with a
+// percentage is ambiguous during intrinsic/min-content sizing (percentages
+// don't resolve at that point), so browsers fall back to the absolute
+// operand as the element's minimum content contribution — which, combined
+// with flex/grid items' default `min-width: auto`, forces ANCESTORS to
+// blow out to fit it instead of ever letting the card shrink. `w-full` is
+// a plain percentage (ignored/treated as auto for intrinsic sizing, so it
+// imposes no minimum), and `max-w-*` only ever caps growth — the
+// combination is the standard, unambiguous "fluid but capped" pattern.
 const SIZE_CLASSES: Record<
   ModifierCardSize,
   { root: string; art: string; name: string; badge: string; meta: string; desc: string }
 > = {
   sm: {
-    root: 'w-52',
+    root: 'w-full max-w-52',
     art: 'h-28',
     name: 'text-sm',
     badge: 'text-[10px] px-2 py-0.5',
@@ -36,7 +47,7 @@ const SIZE_CLASSES: Record<
     desc: 'text-xs leading-snug line-clamp-4',
   },
   md: {
-    root: 'w-72',
+    root: 'w-full max-w-72',
     art: 'h-40',
     name: 'text-lg',
     badge: 'text-xs px-2.5 py-1',
@@ -44,7 +55,7 @@ const SIZE_CLASSES: Record<
     desc: 'text-sm leading-snug line-clamp-5',
   },
   lg: {
-    root: 'w-96',
+    root: 'w-full max-w-96',
     art: 'h-56',
     name: 'text-2xl',
     badge: 'text-sm px-3 py-1',
@@ -64,16 +75,21 @@ export interface ModifierCardViewProps {
 /** The MTG-styled modifier card: name, modifier-kind badge, category/type
  * line, placeholder artwork, and a difficulty-tier glow (cosmetic rarity
  * ramp derived from the original sheet's "Type" column — see cardTypes.ts). */
-export function ModifierCardView({ card, size = 'md', rejected = false, className = '' }: ModifierCardViewProps) {
+export function ModifierCardView({
+  card,
+  size = 'md',
+  rejected = false,
+  className = '',
+}: ModifierCardViewProps) {
   const sizes = SIZE_CLASSES[size]
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-xl border-2 border-wood-700 bg-parchment-50 transition-opacity ${sizes.root} ${DIFFICULTY_GLOW[card.difficulty]} ${rejected ? 'opacity-40 grayscale' : ''} ${className}`}
+      className={`flex min-w-0 flex-col overflow-hidden rounded-xl border-2 border-wood-700 bg-parchment-50 transition-opacity ${sizes.root} ${DIFFICULTY_GLOW[card.difficulty]} ${rejected ? 'opacity-40 grayscale' : ''} ${className}`}
     >
       <div className="flex items-center justify-between gap-1.5 bg-wood-700 px-2.5 py-1.5">
         <span
           title={card.name}
-          className={`truncate font-heading font-semibold text-parchment-50 ${sizes.name}`}
+          className={`min-w-0 flex-1 truncate font-heading font-semibold text-parchment-50 ${sizes.name}`}
         >
           {card.name}
         </span>
