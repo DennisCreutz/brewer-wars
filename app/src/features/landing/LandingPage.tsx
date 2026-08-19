@@ -42,7 +42,7 @@ function WarListItem({ war }: { war: WarSummary }) {
       <Button
         variant="danger"
         size="md"
-        className="px-3 py-1.5 text-xs"
+        className="min-h-9 px-3 py-1.5 text-xs"
         onClick={() => {
           if (window.confirm(t('landing.deleteConfirm'))) void deleteWar(war.id)
         }}
@@ -77,7 +77,12 @@ export function LandingPage() {
     <div className="flex min-h-screen flex-col items-center justify-center gap-10 px-4 py-12">
       <div className="absolute top-4 right-4 flex items-center gap-3 text-sm text-parchment-200/80">
         <span>{auth.user?.profile.preferred_username ?? auth.user?.profile.email}</span>
-        <Button variant="secondary" size="md" className="px-3 py-1.5 text-xs" onClick={() => void signOut()}>
+        <Button
+          variant="secondary"
+          size="md"
+          className="min-h-9 px-3 py-1.5 text-xs"
+          onClick={() => void signOut()}
+        >
           {t('common.buttons.signOut')}
         </Button>
       </div>
@@ -105,7 +110,7 @@ export function LandingPage() {
               <Button
                 variant="danger"
                 size="md"
-                className="px-3 py-1.5 text-xs"
+                className="min-h-9 px-3 py-1.5 text-xs"
                 onClick={handleResetAllWars}
               >
                 🗑️ {t('landing.resetAllGames')}
