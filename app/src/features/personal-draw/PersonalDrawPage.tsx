@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -7,6 +7,7 @@ import { LoadingScreen } from '../../ui/LoadingScreen'
 import { Panel, PanelTitle } from '../../ui/Panel'
 import { Button } from '../../ui/Button'
 import { ModifierCardView } from '../../ui/ModifierCardView'
+import { getCardIcon } from '../../ui/cardIcons'
 import { CommanderCounter } from '../../ui/CommanderCounter'
 import { WaitingPanel } from '../../ui/WaitingPanel'
 import { useLoadedWar } from '../../router/useLoadedWar'
@@ -98,49 +99,141 @@ function DeckStack({ size, pulseCount }: { size: 'sm' | 'md'; pulseCount: number
   )
 }
 
+/** Duration (ms) each rejected chip stays "pending" before the next one
+ * reveals — gives the sequence a genuine one-at-a-time feel rather than a
+ * fixed stagger applied to everything at once. The kept card always
+ * arrives last, after every rejected chip has appeared. */
+const REJECTED_REVEAL_STEP_MS = 380
+
+/**
+ * Compact chip standing in for a single rejected draw attempt — deliberately
+ * NOT a full `ModifierCardView`, so a run of several auto-redraws reads as
+ * a short subordinate list rather than a wall of near-identical mini-cards.
+ */
+function RejectedAttemptChip({ entry }: { entry: DrawLogEntry }) {
+  const { t } = useTranslation()
+  return (
+    <div className="flex items-center gap-2 rounded-lg border border-ember-800/40 bg-ember-950/20 px-2.5 py-1.5">
+      <span aria-hidden="true" className="shrink-0 text-base opacity-70">
+        {getCardIcon(entry.card)}
+      </span>
+      <span aria-hidden="true" className="shrink-0 text-sm font-bold text-ember-400">
+        ✕
+      </span>
+      <div className="min-w-0">
+        <p className="truncate text-xs font-semibold text-wood-100">{entry.card.name}</p>
+        <p className="text-[11px] leading-snug text-ember-300">
+          {entry.reason && t(`personalDraw.rejectionReasons.${entry.reason}`)}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 /**
  * Sequential "what just happened" playback for a single draw/pick action:
  * every card the engine looked at and rejected — including cards auto-
- * redrawn by the zero-commander safety net in usePersonalDrawEngine — in
- * order, followed by the one card that was ultimately kept. This is what
- * makes the auto-redraw mechanic visible instead of silently happening.
- * Cards fly/flip in from a `DeckStack`, as though drawn off it in turn.
+ * redrawn by the zero-commander safety net in usePersonalDrawEngine —
+ * shown as a compact, subordinate strip of chips, followed by the one
+ * card that was ultimately kept, rendered as a full, clearly more
+ * prominent `ModifierCardView` under its own heading. This is what makes
+ * the auto-redraw mechanic visible (and *not* confusable with "I got 3
+ * modifiers") instead of silently happening.
  */
 function DrawPlayback({ entries }: { entries: DrawLogEntry[] }) {
   const { t } = useTranslation()
   const reduceMotion = useReducedMotion()
   const rejected = entries.filter((entry) => !entry.accepted)
   const kept = [...entries].reverse().find((entry) => entry.accepted)
-  const sequence = kept ? [...rejected, kept] : rejected
+  const total = kept ? rejected.length + 1 : rejected.length
 
-  if (sequence.length === 0) return null
+  // Sequential reveal state: how many rejected chips are currently shown,
+  // and whether the kept card has arrived yet. With reduced motion, skip
+  // straight to the fully-revealed final state.
+  const [revealedRejected, setRevealedRejected] = useState(reduceMotion ? rejected.length : 0)
+  const [keptRevealed, setKeptRevealed] = useState(reduceMotion ? !!kept : false)
+
+  useEffect(() => {
+    if (reduceMotion) return
+    setRevealedRejected(0)
+    setKeptRevealed(false)
+    const timers: ReturnType<typeof setTimeout>[] = []
+    rejected.forEach((_, index) => {
+      timers.push(
+        setTimeout(() => setRevealedRejected(index + 1), REJECTED_REVEAL_STEP_MS * (index + 1)),
+      )
+    })
+    if (kept) {
+      timers.push(
+        setTimeout(() => setKeptRevealed(true), REJECTED_REVEAL_STEP_MS * (rejected.length + 1)),
+      )
+    }
+    return () => timers.forEach(clearTimeout)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed by identity of `entries` at call sites
+  }, [entries])
+
+  if (total === 0) return null
+
+  const summary =
+    rejected.length === 0
+      ? t('personalDraw.drawSummaryNoRejections')
+      : t('personalDraw.drawSummary', { count: rejected.length, total })
 
   return (
     <Panel>
       <PanelTitle>{t('personalDraw.whatHappened')}</PanelTitle>
       <div className="flex flex-wrap items-start gap-4" style={{ perspective: 1200 }}>
-        <DeckStack size="sm" pulseCount={sequence.length} />
-        <div className="flex flex-1 flex-wrap items-start gap-4">
-          {sequence.map((entry, index) => (
-            <motion.div
-              key={`${entry.card.id}-${index}`}
-              initial={reduceMotion ? false : DECK_DRAW_INITIAL}
-              animate={DECK_DRAW_ANIMATE}
-              transition={reduceMotion ? { duration: 0 } : { duration: 0.45, delay: index * 0.3 }}
-              className="flex flex-col items-center gap-1"
-            >
-              <ModifierCardView card={entry.card} size="sm" rejected={!entry.accepted} />
-              <p
-                className={`max-w-36 text-center text-[11px] font-semibold ${
-                  entry.accepted ? 'text-verdant-300' : 'text-ember-300'
-                }`}
-              >
-                {entry.accepted
-                  ? t('personalDraw.cardKept')
-                  : entry.reason && t(`personalDraw.rejectionReasons.${entry.reason}`)}
+        <DeckStack size="sm" pulseCount={total} />
+        <div className="min-w-0 flex-1">
+          <p className="mb-3 text-sm font-semibold text-wood-700">{summary}</p>
+
+          {rejected.length > 0 && (
+            <div className="mb-4">
+              <p className="mb-2 text-xs font-bold uppercase tracking-wide text-wood-500">
+                {t('personalDraw.rejectedAttempts')}
               </p>
-            </motion.div>
-          ))}
+              <div className="flex flex-wrap gap-2">
+                {rejected.slice(0, revealedRejected).map((entry, index) => (
+                  <motion.div
+                    key={`${entry.card.id}-${index}`}
+                    initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={
+                      reduceMotion ? { duration: 0 } : { duration: 0.25, ease: 'easeOut' }
+                    }
+                  >
+                    <RejectedAttemptChip entry={entry} />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {kept && keptRevealed && (
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-wide text-verdant-700">
+                {t('personalDraw.yourNewModifier')}
+              </p>
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.9, y: 12 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={
+                  reduceMotion ? { duration: 0 } : { duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }
+                }
+                className="flex items-start gap-2"
+              >
+                <ModifierCardView card={kept.card} size="sm" />
+                <span
+                  aria-hidden="true"
+                  className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-verdant-600 text-sm font-bold text-white"
+                  title={t('personalDraw.cardKept')}
+                >
+                  ✓
+                </span>
+              </motion.div>
+              <p className="sr-only">{t('personalDraw.cardKept')}</p>
+            </div>
+          )}
         </div>
       </div>
     </Panel>
