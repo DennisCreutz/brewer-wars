@@ -74,13 +74,23 @@ export function LandingPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-10 px-4 py-12">
-      <div className="absolute top-4 right-4 flex items-center gap-3 text-sm text-parchment-200/80">
-        <span>{auth.user?.profile.preferred_username ?? auth.user?.profile.email}</span>
+    // No `justify-center` + a floating `absolute` corner element here
+    // anymore — that combination meant any extra content (a resumable war
+    // in the list below, a longer username, a warListError message) grew
+    // the vertically-centered block's height, which pushed its *top* edge
+    // up into the fixed-position sign-out corner, overlapping the "Brewer
+    // Wars" heading on short mobile viewports. The sign-out row is now a
+    // normal flex child (in-flow, right-aligned) so the rest of the
+    // content always flows below it instead of risking an overlap.
+    <div className="flex min-h-screen flex-col items-center gap-8 px-4 py-8 sm:py-12">
+      <div className="flex w-full max-w-xl items-center justify-end gap-3 text-sm text-parchment-200/80">
+        <span className="truncate">
+          {auth.user?.profile.preferred_username ?? auth.user?.profile.email}
+        </span>
         <Button
           variant="secondary"
           size="md"
-          className="min-h-9 px-3 py-1.5 text-xs"
+          className="min-h-9 shrink-0 px-3 py-1.5 text-xs"
           onClick={() => void signOut()}
         >
           {t('common.buttons.signOut')}

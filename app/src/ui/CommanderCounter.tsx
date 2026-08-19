@@ -15,11 +15,11 @@ export function CommanderCounter({
 
   return (
     <div className="flex flex-col gap-1.5 rounded-xl border-2 border-royal-400/60 bg-wood-800/80 px-4 py-2.5 shadow-card">
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <span className="text-2xl" aria-hidden="true">
           🃏
         </span>
-        <div className="flex flex-col leading-tight">
+        <div className="flex min-w-0 flex-1 flex-col leading-tight">
           <span className="text-[10px] font-semibold uppercase tracking-wide text-parchment-200/70">
             {label ?? t('preparation.commanderCounter')}
           </span>
@@ -60,7 +60,9 @@ export function CommanderCounter({
       </div>
       {/* Always visible, not just a hover tooltip — easy to miss a caveat
        * this important if it only shows up on mouseover. */}
-      <p className="text-[11px] leading-snug text-parchment-200/60">⚠️ {t('commanderCounter.scryfallNote')}</p>
+      <p className="text-[11px] leading-snug text-parchment-200/60">
+        ⚠️ {t('commanderCounter.scryfallNote')}
+      </p>
     </div>
   )
 }
